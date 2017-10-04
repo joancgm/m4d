@@ -1,0 +1,38 @@
+c: comment 2-d channel fully developed flow Rd=9550 (Kasagi inlet)
+
+c: constant Rd d 1 9550 	      	   fixed Reynolds number
+	
+c: infile inn.grid.001c.1f1.47 1   set up grid
+c: infile inn.init 1		   initialize variables
+
+-----    parameters for varying solution procedure ----------
+c: constant ITERDO i 1 20       always do at least 20 iterations
+c: constant dU1tol d 1 1.e-8    cease iterations when dU1rms < dU1tol
+c: constant ITERBIJ i 1 5      subiteration of bij equations
+c: constant CBIJ i 1 10        center solves of bij eqs
+
+--------- start convergence file -----------------
+c: arraydump out/converge Rd Rtau Ro vlamc dpdx ""  
+
+---------- start calculation -----------------
+c: infile inn.iter2d.umarvs 1000
+c: infile inn.after 1            check, save and post process 
+
+----------- add pressure solution for Kasagi inlet ------
+c: infile inn.iter2d.pressure 1
+c: interp_ptog 1 pp pg               interp to grid to save
+
+----------- change abcd to use for Kasagi backstep -------
+c: edit idsum i 1 n 1 set 1 1 1 add idim 1 1 add jdim 1 1 add kdim 1 1 end
+c: constant jdend i 1 2
+c: edit jdend i 1 n 1 a jdim 1 1 end
+c: edit abcd d 1 n idsum 
+      set -5 1 1 set 0 2 2 add 2 3 jdend 
+      end
+
+------------- save results -----------------
+c: arraydump out/varinit idim4d abcd U1 pg qturb omturb bij ""
+c: arraydump out/dpdx Rd dpdx vlamc ""
+
+c: arraydumpmore out/converge timespace ""
+c: end

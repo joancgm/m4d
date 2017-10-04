@@ -1,0 +1,23 @@
+c: comment 2-d channel fully developed flow Rd=40000
+
+c: constant Rd d 1 40000 	      	   fixed Reynolds number
+	
+c: infile inn.grid.001c.1f1.47 1   set up grid
+c: infile inn.init 1		   initialize variables
+
+-----    parameters for varying solution procedure ----------
+c: constant ITERDO i 1 20       always do at least 20 iterations
+c: constant dU1tol d 1 1.e-8    cease iterations when dU1rms < dU1tol
+c: constant ITERBIJ i 1 5      subiteration of bij equations
+c: constant CBIJ i 1 10        center solves of bij eqs
+
+--------- start convergence file -----------------
+c: arraydump out/converge Rd Rtau Ro vlamc dpdx ""  
+
+---------- start calculation -----------------
+c: infile inn.iter2d.umarvs 1000
+c: infile inn.after 1            check, save and post process 
+
+c: arraydumpmore out/converge timespace ""
+c: end
+

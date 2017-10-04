@@ -1,0 +1,27 @@
+----------- fix dpdx or zrotation -------------------
+c: areaflowint a 1 -100 100 -100 100 U1  ""     integrate for u1ave
+c: copypart averages 1 x 8 8 8
+            u1ave 1 x 1 1 1  
+
+------------modify dpdx to target specified Rdfix ------
+c: if Rdfix > 0 continue find NORDFIX
+c: algebra du1ave "" u1ave "" 1. 0. -1.         1/u1ave
+c: algebra dpdxlo "" dpdx "" 1.2 0. 1.          upper limit
+c: algebra dpdxhi "" dpdx "" .8 0. 1.           lower limit
+c: algebra dpdx "" dpdx "" du1ave 0. 1.         dpdx=dpdx/u1ave
+c: function dpdx min dpdx dpdxhi                apply limits
+c: function dpdx max dpdx dpdxlo
+c: algebra U1 "" U1 "" du1ave 0. 1.             scale U1
+NORDFIX
+------------ if Rdfix not set and Ro is set, fix zrotation ------
+c: if Rdfix > 0 find NORO1 continue
+c: if Ro > 0 continue find NORO2
+c: algebra zrotnew Ro u1ave "" 1. 0. 1.
+c: algebra zrotnew zrotnew D "" 1. 0. -1.
+c: algebra zrotation "" zrotation zrotnew 1. 0. 1.
+c: algebra zrotation "" zrotation "" .5 0. 1.
+NORO1 NORO2
+
+
+
+

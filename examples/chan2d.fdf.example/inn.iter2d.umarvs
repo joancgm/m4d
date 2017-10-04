@@ -1,0 +1,23 @@
+-----------------check for done ---------------------------
+c: if ITER < ITERDO find OMITTOL continue
+c: if rmsmmu < dU1tol find ENDOFITER continue
+OMITTOL
+----------x momentum equation, relax using turbulent viscosity---------
+c: viscmarvheat			use this eddy viscosity on dU1 only
+c: coefviscstep vmarvheat 3     
+c: coefadd 0 2 2 1. 3 1.                sum lam and 'turb' and put in 0
+c: momrhsr new 2 bij dpdx zrotation ""  r.h.s. momentum, use only lam coef
+c: eqnsolves rhsU1 "" dU1  new  2 i w  
+   j 1 end 0                            solve for dU1 using 'turb' relax             
+c: algebra U1 ""  U1 dU1 1. 0. 1.       update U1
+-------------------------
+c: infile inn.fix.dpdx.Ro 1              fix dpdx or zrotation if needed
+c: infile inn.iter.marvs 1               do an iteration of MARVS model 
+c: edit ITER i 1 n 1  add 1  1 1  end    add 1 to ITER
+
+---------------- dump convergence info -------------------
+c: rmsminmax dU1 U1 dq qturb ""
+c: copy rmsmm rmsmmu            
+c: arraydumpmore out/converge ITER u1ave dpdx zrotation rmsmmu rmsmmqobij ""
+
+ENDOFITER

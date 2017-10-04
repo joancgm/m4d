@@ -1,0 +1,67 @@
+c: comment 2-d channel fully developed flow
+
+c: constant Rd d 1 6000 	      	est. Reynolds number
+c: constant Rtau d 1 194                Rtau based on delta like K&A
+c: algebra Rtau "" Rtau "" 2. 0. 1.     for Rtau based on D
+
+c: infile inn.grid.001c.1f1.47 1   set up grid
+c: infile inn.init 1		   initialize variables
+
+---------- set up for 100*Ro based file numbers ------------
+c: constant Rocase i 1 0                
+c: constant out/converge s 1 out/converge#Rocase
+c: constant out/varinit s 1 out/varinit#Rocase
+c: constant out/UdUm s 1 out/UdUm#Rocase
+c: constant out/errorcheck s 1 out/errorcheck#Rocase
+	
+-----    parameters for varying solution procedure ----------
+c: constant ITERDO i 1 20       always do at least 20 iterations
+c: constant dU1tol d 1 1.e-8    cease iterations when dU1rms < dU1tol
+c: constant ITERBIJ i 1 2      subiteration of bij equations
+c: constant CBIJ i 1 10        center solves of bij eqs
+--------- start convergence file -----------------
+c: arraydump out/converge Rd Rtau Ro vlamc dpdx ""  
+
+---------- start calculation -----------------
+c: infile inn.iter2d.umarvs 1000      up to 1000 iterations
+c: infile inn.after 1            check, save and post process 
+
+------------ Ro = 0.01 calculation -------------------
+c: constant Ro d 1 .01
+c: constant Rocase i 1 1
+c: infile inn.next.Ro 1
+
+------------ Ro = 0.05 calculation -------------------
+c: constant Ro d 1 .05
+c: constant Rocase i 1 5
+c: infile inn.next.Ro 1
+
+------------ Ro = 0.1 calculation -------------------
+c: constant Ro d 1 .1
+c: constant Rocase i 1 10
+c: infile inn.next.Ro 1
+
+------------ Ro = 0.15 calculation -------------------
+c: constant Ro d 1 .15
+c: constant Rocase i 1 15
+c: infile inn.next.Ro 1
+
+------------ Ro = 0.2 calculation -------------------
+c: constant Ro d 1 .2
+c: constant Rocase i 1 20
+c: infile inn.next.Ro 1
+
+------------ Ro = 0.5 calculation -------------------
+c: constant Ro d 1 .5
+c: constant Rocase i 1 50
+c: constant ITERBIJ i 1 1      subiteration of bij equations
+c: constant CBIJ i 1 2         center solves of bij eqs
+c: infile inn.next.Ro 1
+
+------------- plot results ---------
+c: constant p.defaultdir s 1 ../../jgm   default dir for color.map etc
+c: infile inn.plotKA 1
+
+c: arraydumpmore out/converge timespace ""
+c: end
+

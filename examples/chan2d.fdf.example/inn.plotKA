@@ -1,0 +1,32 @@
+c: alias xyz 3 x y z
+
+c: arrayread 1 out/UdUm0
+c: copy UdUm U0
+c: arrayread 1 out/UdUm1
+c: copy UdUm U.01
+c: arrayread 1 out/UdUm5
+c: copy UdUm U.05
+c: arrayread 1 out/UdUm10
+c: copy UdUm U.10
+c: arrayread 1 out/UdUm15
+c: copy UdUm U.15
+c: arrayread 1 out/UdUm20
+c: copy UdUm U.20
+c: arrayread 1 out/UdUm50
+c: copy UdUm U.50
+
+c: lineoutput out/lineKAUdUm y U0 U.01 U.05 U.10 U.15 U.20 U.50 "" b 0 -1 0 0 1 e
+
+c: constant p.defaultdir s 1 ../../jgm   default dir for color.map etc
+c: lineplot image out/lineKAUdUm "U/Um for KA Ro=0 .01 .05 .10 .20 .50        each slipped by 0.2"
+    160 660 150 650 1 7
+    -y/h -1 1 .5 "  " 0 2.4 .2
+    y -1 0  U0 1 1.2  2 2 ' '
+    y -1 0  U.01 1 1. 26 2 ' '
+    y -1 0  U.05 1 .8 5 2 ' '
+    y -1 0  U.10 1 .6 2 2 ' '
+    y -1 0 U.15 1 .4 26 2 ' '
+    y -1 0  U.20 1 .2 5 2 ' '
+    y -1 0  U.50 1 0 2 2 ' '
+    end
+c: image outgif image out/KAUdUm end

@@ -1,0 +1,4 @@
+------------------ each ITERDUMP iterations ------------
+c: if ITER % ITERDUMP continue find NODUMP
+c: arraydumpmore out/converge ITER u1ave dpdx rmsmmu rmsmmqobij ""
+NODUMP

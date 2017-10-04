@@ -1,0 +1,24 @@
+---- for rho=1 and near wall at j=2 set factors and yplusnw ----
+o: comment ***  calc factors for y+ U+
+c: alias xyz 3 x y z		  consider xyz as arrays x, y, and z	 
+c: copy y ytowall		  copy y to ytowall 
+c: copypart ytowall 1 x 1 1 1
+            ywall 1 x 1 1 1   			  y at first pt(the wall)
+c: algebra mywall "" ywall "" -1. 0. 1.		 -ywall	
+c: algebra ytowall "" ytowall "" 1. mywall 1.    subtract ywall
+c: copypart ytowall 3 i 0 1 1 j 0 2 2 k 0 1 1
+            ynw 1 x 1 1 1			 ynw = near wall y
+c: copypart U1 3 i 0 1 1 j 0 2 2 k 0 1 1
+            Unw 1 x 1 1 1			 Unw = U near wall
+c: algebra dudy Unw ynw "" 1. 0. -1.		 dU/dy wall
+c: algebra Utau dudy vlamc "" 1. 0. 1.		
+c: algebra Utau "" Utau "" 1. 0. .5              Utau=sqrt(vlamc dY/dy)
+c: algebra ypfac Utau vlamc "" 1. 0. -1.         factor for y+ 
+c: algebra upfac "" Utau "" 1. 0. -1.            factor for U+ and q+
+c: algebra ompfac vlamc Utau "" 1. 0. -2.        factor for om+
+
+c: algebra ypnw ynw ypfac "" 1. 0. 1.            near wall yplus
+
+
+
+

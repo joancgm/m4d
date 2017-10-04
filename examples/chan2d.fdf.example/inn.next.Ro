@@ -1,0 +1,7 @@
+-------- add on calc from next Ro --------------
+c: algebra zrotation Ro D "" 1. 0. -1.   Ro=OmegaD/Umean
+c: constant ITER i 1 0
+c: arraydump out/converge Rd Rtau Ro vlamc dpdx "" 
+c: infile inn.iter2d.umarvs 1000      up to 1000 iterations
+c: infile inn.after 1            check, save and post process
+

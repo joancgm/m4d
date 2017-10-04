@@ -1,0 +1,21 @@
+-------- save, check and post process -----------
+c: arraydump out/varinit idim4d abcd U1 qturb omturb bij ""
+
+---------- calc Rdc ------------------
+c: areaflowint a 1 -100 100 -100 100 U1  ""
+c: copypart averages 1 x 8 8 8
+            u1ave 1 x 1 1 1
+c: algebra Rdc u1ave D "" 1. 0. 1.
+c: algebra Rdc Rdc vlamc "" 1. 0. -1.
+-------  error check -----------
+c: infile inn.errorcheck 1       check for errors
+c: if ERRORS > 0 continue find NOERROR
+c: comment  stopping due to poor results, look at file errorcheck
+c: end
+NOERROR
+--------  save U/Um for later plots -----------
+c: algebra du1ave "" u1ave "" 1. 0. -1.
+c: algebra UdUm "" U1 "" du1ave 0. 1.
+c: arraydump out/UdUm UdUm "
+
+

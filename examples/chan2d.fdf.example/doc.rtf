@@ -1,0 +1,82 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf320
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue255;\red128\green0\blue128;\red0\green128\blue0;
+\red0\green0\blue0;\red128\green0\blue128;}
+\margl1440\margr1440\vieww10780\viewh16340\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\b\fs28 \cf0 2-D Fully Developed Stationary or Rotating Channel\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b0 \cf0 Steady calculations of x-momentum with the MARVS Reynolds stress model and frame rotation.  Input for 3 examples is given here. \
+1. Conditions corresponding to the DNS of Kristoffersen and Andersson (1993) with Rtau=194 and Ro=0 to 0.5. This is a basic test case to check the Reynolds stress model is correctly implemented. The example is like in Moore and Moore, 2009, except that here the MARVS variation of the MARV model is used. \
+2. Conditions to set up the inlet profiles for the Kasagi backstep example, Rd=9550.\
+3. Conditions for Rd=40,000.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b \cf2 1. Unix instructions
+\b0 \cf0  to run the K&A example\
+Bring up a terminal window and cd to chan2d.fdf.example, then \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf2 mkdir out\cf0 \
+\cf2 ../../a.m4d < in.marvsRtau194.Roall > out/print\
+mv out outKA\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b \cf3 Input\cf0 /\cf4 Output\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b0 \cf0 The primary input file - \cf3 in.marvsRtau194.Roall \cf0 uses several other input files for specific tasks.\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf3 inn.grid.001c.1f1.47\cf5  - set up the grid using the \cf0 using the master geometry, \cf3 geom.cartesian\cf0 , the wall boundary condition, and other geometric arrays.\cf3 \
+inn.init \cf5 - initializations, including uniform velocity, Reynolds stress model variables, the laminar viscosity, dpdx, and zrotation if Ro is set.\cf3 \
+inn.iter2d.umarvs\cf5  - take 1 iteration of the 2-d steady flow procedure to solve x-momentum and the Reynolds stress equations. Because the flow is 2d and fully developed there is no convection term in the equations. Because the flow is steady there is no time term. This makes the combination of momentum and the Reynolds stress model "stiffer". To aid convergence of the iterative procedure an eddy viscosity model is used for relaxation. I.e., only for calculating the \ul change\ulnone  in U1 over the iteration, so that the converged solution is unaffected by this addition. inn.iter2d.umarvs\cf3  \cf5 adds\cf0  per-iteration convergence info to file \cf4 out/converge.\cf3 \
+inn.fix.dpdx.Ro \cf5 - used by inn.iter2d.umarvs\cf3  \cf5 to recalculate dpdx if calculation specifies a fixed Rd, or to recalculate zrotation if Ro is set and fixed Rtau is specified.\cf3 \
+inn.iter.marvs\cf5  - \cf0 used by\cf5  inn.iter2d.umarvs.\cf3  \cf5 Do 1 iteration to update the Reynolds stress model properties. This uses \
+\cf3 inn.iter.bij \cf5 to update bij. Because of the "stiffness" of the equations, it matters how rapidly the bij equations are converged per iteration compared with momentum. Two parameters set in the primary input file to control this. They are ITERBIJ, used in inn.iter.marvs, and CBIJ used in inn.iter.bij.\cf3 \
+inn.after\cf5  - post calculation tasks. Calculate the Reynolds number, save the results on files \cf4 out/varinit \cf5 and \cf4  out/UdUm \cf5 and check for errors using \cf3 inn.errorcheck\cf5 , ending the run if one occurs.\
+\cf3 inn.errorcheck \cf5 - checks that the velocity converged, that the near wall point is at a y+ < 1, (using \cf3 inn.yplusnw\cf5 ) and that the converged results are turbulent flow. Gives file \cf4 out/errorcheck\cf5 . The final parameter dumped is the number of errors, ERRORS. If this is > 0, look where it occurred in file \cf4 out/errorcheck \cf5 and then in file inn.errorcheck for suggestions.\cf3 \
+inn.next.Ro \cf5 - reinitialize some parameters and do a calculation with a different Ro.\cf3 \
+inn.plotKA \cf5 - plot U/Umean for all the\cf0  Kristoffersen and Andersson rotation rates. Gives the lineplot file \cf4 out/lineKAUdUm\cf5 , and the plot \cf4 out/KAUdUm.gif \cf5 to compare with Moore & Moore 2006, FIg. 13.4.1 (included).\cf3 \
+	\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b \cf2 2. Unix instructions
+\b0 \cf0  to run the Kasagi inlet example, Rd=9550\
+Bring up a terminal window and cd to chan2d.fdf.example, then \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf2 mkdir out\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf2 ../../a.m4d < in.marvsRd9550 > out/print\
+mv out out.Rd9550\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b \cf3 Input\cf0 /\cf4 Output\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b0 \cf0 The primary input file, \cf6 in.marvsRd9550\cf5 , uses the input files described above (except for inn.next.Ro and inn.plotKA) then uses \cf6 inn.iter2d.pressure\cf5  to calculate the y variations of pressure due to the Reynolds stresses, before saving the results files \cf4 out/varinit\cf5  and \cf4 out/dpdx \cf5 needed for backstep.example.\
+\cf0 \
+
+\b \cf2 3. Unix instructions 
+\b0 \cf5 to run the \cf0 higher Reynolds number, Rd=40k\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf2 mkdir out\cf0 \
+\cf2 ../../a.m4d < in.marvsRd40k > out/print\
+mv out out.Rd40k\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 the errorcheck file lists 1 error due to the near wall point being at a y+ of 1.06. For higher Reynolds numbers the near wall grid should be refined so it is less than 1.\cf2 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf0 Compare results with those obtained by jgm.\cf3 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b \cf0 Post-processing of output by jgm\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b0 \cf5 Put all three out directories into out.jgm. Delete the print files (very large, 29Mb, 7Mb, 13Mb).\
+\cf2 \
+}

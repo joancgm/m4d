@@ -1,0 +1,46 @@
+ ----- 2d init uniform velocity, Umean=1  ------------------
+c: varinit U1 0 1. 0. 0.
+c: varinit U2 0 0. 0. 0.
+c: varinit U3 0 0. 0. 0.
+c: varinit rho 0 1. 1. 1.
+c: constant ITER i 1 0   
+c: constant TIME d 1 0
+--------------------- initialize Reynolds stress model--------
+c: varinit qturb 0 1 0. 0.	          initialize large 
+c: varinit omturb 0 1 1 0
+c: edit bij d 4 i 0 j 0 k 0  L 6
+        set 0 1 idim 1 jdim 1 kdim 1 6  end
+c: varinit wallzero 0 1 0 0
+c: constant qmin d 1 .01e-5
+c: constant ommin d 1 .00001
+
+------------------- laminar viscosity = D/Rd (U=1 rho=1) ----------
+c: algebra vlamc D Rd "" 1. 0. -1.  
+c: edit vlam d 3 i -1 j -1 k -1
+            set vlamc 1 idim 1 jdim 1 kdim  end
+
+--------------------  dpdx from Rtau or laminar ------------------
+c: if Rtau > 0 continue find NORTAU
+c: algebra Utau Rtau vlamc "" 1. 0. 1.
+c: algebra Utau Utau D "" 1. 0. -1.       Utau=Rtau*vlam/D
+c: algebra dpdx Utau Utau "" 2. 0. 1.
+c: algebra dpdx dpdx D "" 1. 0. -1.
+c: algebra dpdx "" dpdx "" -1. 0. 1.
+NORTAU
+c: if dpdx < 0 find HAVEDPDX continue
+c: algebra dpdxlam vlamc D "" 1. 0. -2.
+c: algebra dpdxlam "" dpdxlam "" -12. 0. 1.   dpdx for laminar flow
+c: copy dpdxlam dpdx                          start with lam as est.
+c: copy Rd Rdfix                must be fixed Rd if dpdx wasn't set
+HAVEDPDX
+
+---------------------- zrotation from Ro -------------------
+c: if Ro > 0 continue find NORO
+c: algebra zrotation Ro D "" 1. 0. -1.   Ro=OmegaD/Umean 
+NORO
+---------------------- other initializations ---------
+c: coefinit 5                   max 5 coefficient sets
+c: coefvisc vlam 2		laminar coefficients, set 2
+c: constant prlam d 1 1.        using heat viscosity for relaxation
+
+

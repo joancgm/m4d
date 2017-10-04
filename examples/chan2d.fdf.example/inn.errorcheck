@@ -1,0 +1,51 @@
+-------------- check for ERRORS -----------
+c: arraydump out/errorcheck Rd Rdc Ro zrotation ITER dpdx ""
+c: constant ERRORS i 1 0
+c: arraydumpmore out/errorcheck dU1tol rmsmmu ""
+
+---------- convergence of U1 ---- (if fail modify procedure or increase iterations)
+c: if rmsmmu < dU1tol find OK continue
+c: edit ERRORS i 1 n 1  add 1  1 1  end 
+c: arraydumpmore out/errorcheck ERRORS ""
+OK
+c: arraydumpmore out/errorcheck rmsmmqobij ""
+
+-------- qturbrms > 0.001 ?  (if fail start with a higher Rd or lower rotation solution)
+c: if rmsmmqobij > 0.001 find OK continue
+c: edit ERRORS i 1 n 1  add 1  1 1  end 
+c: arraydumpmore out/errorcheck ERRORS ""
+OK
+c: infile inn.yplusnw 1  
+
+---------- y+ near wall < 1 ? (if fail refine near wall grid)
+c: arraydumpmore out/errorcheck ypnw ynw ""
+c: if ypnw < 1 find OK continue
+c: edit ERRORS i 1 n 1  add 1  1 1  end 
+c: arraydumpmore out/errorcheck ERRORS ""
+OK
+c: copypart qturb  3 i 0 1 1 j 0 2 2 k 0 1 1
+            qnw 1 x 1 1 1
+c: valueat qmid qturb 0. 0. 0.
+
+------- min values of qturb > qmin ? (if fail decrease qmin)
+c: arraydumpmore out/errorcheck qmin qnw ""
+c: if qnw > qmin find OK continue
+c: edit ERRORS i 1 n 1  add 1  1 1  end 
+c: arraydumpmore out/errorcheck ERRORS ""
+OK
+c: arraydumpmore out/errorcheck qmin qmid ""
+c: if qmid > qmin find OK continue
+c: edit ERRORS i 1 n 1  add 1  1 1  end 
+c: arraydumpmore out/errorcheck ERRORS ""
+OK
+
+------- min value of omturb > ommin ? (if fail decrease ommin)     
+c: valueat ommid omturb 0. 0. 0.
+c: arraydumpmore out/errorcheck ommin ommid ""
+c: if ommid > ommin find OK continue
+c: edit ERRORS i 1 n 1  add 1  1 1  end 
+c: arraydumpmore out/errorcheck ERRORS ""
+OK
+
+c: arraydumpmore out/errorcheck timespace ERRORS ""
+

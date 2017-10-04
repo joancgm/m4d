@@ -1,0 +1,35 @@
+
+c: edit cltp c 3 i 1 j 1 k 1
+      set o 2 2 2 2 2 2 end
+c: alias idim4dp 4 idimp jdimp kdimp tdimp
+c: edit pp d 3 i 1 j 1 k 1
+      set 0 1 idimp 1 jdimp 1 kdimp end
+
+-------------  set up for pressure solution, update momentum  ----------
+c: copy U1 U1save
+c: viscmarvheat
+c: coefviscstep vmarvheat 3
+c: coefadd 0 2 2 1. 3 1.          	sum lam and 'turb' and put in 0
+c: momcamddt  			        calc cama
+c: copy cama cam
+c: momrhsr new 2 bij dpdx zrotation ""  rhs momentum only lam coef
+c: eqnupdatem 1 2 i w          update U1 U2 U3 saving dU1 dU2 dU3
+
+------------- update velocity and pressure from continuity -----
+c: set_volmom
+c: set_cpsleep
+c: set_cpda  .0 .05 .5 .15 0  1 i
+c: set_cpflop
+c: contcpcdu                            continuity coef, part 1
+c: contcpcfixed   1. 1. .5 -1 0 -20     continuity coef, part 2
+c: contcpcexit                          continuity coef, exit bndry
+c: contrhsu                    	        rhs based on rho and U
+c: eqnsolvep j 1 end 0
+c: contdu                         	Update U based on dp
+c: algebra pp "" pp dp 1. 0. 1.   	Update pp
+c: rmsminmax U2 dp ""
+c: arraydumpmore out/converge rmsmm
+
+c: copy U1save U1
+c: algebra U2 "" U2 "" 0. 0. 1.
+

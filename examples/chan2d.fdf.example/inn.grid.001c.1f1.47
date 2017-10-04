@@ -1,0 +1,31 @@
+c: comment  2-D CHANNEL FULLY DEVELOPED FLOW,  D=2
+-------------- set up grid and boundary conditions ---------
+c: constant D d 1 2.           channel width
+c: gridfrommefp geom.cartesian 
+   2 45 2 1  
+ 0 1 
+ -1  -.999  -.99785 -.99684 -.99536  -.99319 -.99 -.9853 -.9785 -.9684 
+-.9536 -.9319 -.9  -.853 -.785 -.7 -.6 -.5 -.4 -.3 
+-.2 -.1 0 .1 .2 
+.3 .4 .5 .6 .7 .785 .853 .9 .9319 .9536 
+.9684 .9785 .9853 .99 .99319 .99536 .99684 .99785  .999 1.
+ 0 .2
+0.  / input master name grid_dims  a,b,c,d
+
+c: alias idim4d 4 idim jdim kdim tdim
+c: edit clt c 3 i 0 j 0 k 0
+   set w 1 idim 1 1 1 kdim
+   set w 1 idim jdim jdim 1 kdim 
+   end    		             set walls to w
+
+c: constant csym c 12 n n n n z z R R s s R R   symmetry and repeat
+
+------------------generic grid initializations --------------
+c: gridmatch
+c: set_wherefw -1 s
+c: set_wherep
+c: cvdcinit .5 0   initialize as centered control volumes
+c: set_xyzdouble
+
+c: wallnorm             for marv and marvs models
+c: walldist		for viscosity used for relaxation
