@@ -1,0 +1,36 @@
+-------- update marvs model properties, steady procedure ----------
+
+c: viscmarv                             vmarv - non-iso viscosity
+c: coefviscstep vmarv  0            	step-wise coef to set 0
+c: coeffix  0 3 0 .6 -1.1   2 i w       fix viscous and put in set 3
+c: set_pkdk bij                         set P/k
+c: set_gbij                             set anisotropy parm g
+
+------------ solve om equation --------------------
+c: coefadd 0 3 1 1. 2 1. 3 1.36054      coefs: conv,lam,vmarv
+c: omrhsmarv	                        rhs based on coef 0 and source
+c: eqnsolves rhsomturb caomturb dom new  2 i w
+       ijk 1  end 0
+c: varupdate omturb dom l	      update using log dom for neg changes
+c: copy updatew updateom
+c: function omturb max omturb ommin   make minimum value ommin   
+
+---------- solve bij equations -------------------------
+c: coefadd 0 3 1 1. 2 1. 3 1            coefs: conv,lam,vmarv
+c: bijrhsmarvs	                        rhs based on coef 0 and source
+c: eqnsolvebij ""  new  2 i w		
+      ijkc 1 end 0
+c: varupdate bij dbij b			update with realazibility check
+c: copy updatew updatebij
+c: bijwallsplat                      	bij wall values using splat model
+
+----------- solve q equation -----------------------
+c: coefadd 0 3 1 1. 2 1. 3 1            coefs: conv,lam,vmarv
+c: qturbrhs			        rhs based on coef 0 and source
+c: eqnsolves rhsqturb caqturb dq new  2 i w 
+       ijk 1  end 0
+c: varupdate qturb dq l                 update using log dq for neg changes
+c: copy updatew updateq
+c: function qturb max qturb qmin        make minimum value qmin
+c: algebra qturb wallzero qturb "" 1. 0. 1.    set wall values to zero
+c: omwallmarvs                          omturb wall values depend on qturb

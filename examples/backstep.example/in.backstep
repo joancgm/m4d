@@ -1,0 +1,34 @@
+c: comment Kasagi backstep Rd 9550 area 2 to 3 expanasion
+
+ ----------------- set up grid and initialize properties --------------
+c: infile inn.grid108x36 1        set grid
+c: infile inn.init.from.out0 1     initialize variables from dir out0
+
+---------------- set up for output---------------
+c: constant p.defaultdir s 1 ../../jgm   dir for color.map for plots
+c: constant ITERDUMP i 1 100           iterations between dumps
+c: constant ITERPLOT i 1 100           iterations between plots
+c: constant acheck d 1 3              flow rate check at a=3
+
+----------------- set up calculation parameters ----------
+c: cvdcparm .01  2 f i .99 w f .5  control vol. movement limits
+c: coefinit 4  		           total coef sets needed 
+c: constant ITCONT i 1 5           5 extra continuity per iteration
+c: constant ITERAVE i 1 2          do pair average
+
+c: arraydump out/converge Rd vlamc  ""     start convergence file
+
+----------------- start calculation -------------------------
+c: infile inn.iter.uvwpmarvs 2  
+c: printcontrol off                   turn print off for most of run      
+c: infile inn.iter.uvwpmarvs 496    
+c: printcontrol on                    turn normal print back on 
+c: infile inn.iter.uvwpmarvs 2        total 500 iterations 
+   
+----------------save results so can be interp to another grid
+c: interp_ptog 1 pp pg               interp to grid to save
+c: arraydump out/varinit idim4d abcd U1 U2 pg qturb omturb bij ""
+
+c: arraydumpmore out/converge timespace ""
+c: end
+

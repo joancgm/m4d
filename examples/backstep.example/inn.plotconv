@@ -1,0 +1,60 @@
+--------------- collect line files from out/converge ----------
+c: keyword out/converge out/convline
+   4
+   ITER 1 ITER
+   rmsmmchange 14 dU1rms dU1max dU2rms dU2max dU3rms dU3max dprmsd dpmax
+   dqrms dqmax domrms dommax dbijrms dbijmax 
+   updatebij 3 facmin pts.5 pts0
+   flowmdif 1 flowmdif
+
+c: keyword out/converge out/convline10
+   2
+   ITer10 1 ITER
+   Rmsmmd10 14 dU1rms dU1max dU2rms dU2max dU3rms dU3max  dprmsd dpmax
+   dqrms dqmax domrms dommax dbijrms dbijmax 
+
+c: keyword out/converge out/convline50
+   2
+   ITer50 1 ITER
+   Rmsmmd50 14 dU1rms dU1max dU2rms dU2max dU3rms dU3max  dprmsd dpmax
+   dqrms dqmax domrms dommax dbijrms dbijmax 
+
+-------------- U2 and q change plot conv.gif -------------------
+c: constant itmax d 1 200
+c: if ITER > 200 continue find OK200
+c: constant itmax d 1 500
+c: if ITER > 500 continue find OK500
+c: constant itmax d 1 2000
+OK200 OK500
+c: algebra itmaxh "" itmax "" .5 0. 1.
+c: lineplot imageconv out/convline "red=dU2rms blue=dqrms         dITER: .-1, o-10,  X-50"
+    120 520 140 540 1 7
+    iter 0 itmax itmaxh " " 1e-5 10 0
+    ITER 1 0 dU2rms 1 0 2 2 '.'
+    ITER 1 0 dqrms 1 0 5 2 '.'
+    end
+c: lineplot imageconv10 out/convline10 " "
+    120 520 140 540 1 7
+    iter 0 itmax itmaxh " " 1e-5 10 0
+    ITER 1 0 dU2rms 1 0 2 0 'o'
+    ITER 1 0 dqrms 1 0 5 0 'o'
+    end
+c: lineplot imageconv50 out/convline50 " "
+    120 520 140 540 1 7
+    iter 0 itmax itmaxh " " 1e-5 10 0
+    ITER 1 0 dU2rms 1 0 2 0 'X'
+    ITER 1 0 dqrms 1 0 5 0 'X'
+    end
+c: image combine imageconv imageconv10 0 0
+         combine imageconv imageconv50 0 0
+    outgif imageconv out/conv  end
+
+------------------------- mid flow err plot convm.gif ----------
+c: lineplot imageconv out/convline  "err mid.flow/flowrate         *1 blk, *10 blue, *100 red"    120 520 140 540 1 7
+    iter 0 itmax itmaxh " " -.15 .15 .05
+    ITER 1 0 flowmdif 1 0 1 2 '.'
+    ITER 1 0 flowmdif 10 0 5 2 '.'
+    ITER 1 0 flowmdif 100 0 2 2 '.'
+    end
+c: image  outgif imageconv out/convm  end    
+

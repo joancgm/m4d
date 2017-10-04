@@ -1,0 +1,83 @@
+---------------iteration of steady procedure ----------
+
+--------- save starting values -----------
+c: copy U1 U1up
+c: copy U2 U2up
+c: copy U3 U3up
+c: copy qturb qturbup
+c: copy omturb omturbup
+c: copy bij bijup
+c: copy pp ppup
+c: copy xyzp xyzpold
+
+------------  control volumes and property updates ---------------
+c: infile inn.newcv 1          reset the control volumes
+c: infile inn.iter.marvs 1   Reynolds stress model update
+c: coefadd 0 2 1 1. 2 1.       coef for momentum  conv+lam
+c: momrhsr new 0 bij pp ""      mom. eq rhs with bij and pp terms
+c: momcam 0.                   abrev. mom coefs. & separation relaxation
+c: eqnupdatem 1 2 i w          update U1 U2 U3 saving dU1 dU2 dU3
+
+------------- update velocity and pressure from continuity -----
+c: contcpcdu                            continuity coef, part 1
+c: contcpcfixed   1. 1. .5 -1 0 -20     continuity coef, part 2
+c: contcpcexit                          continuity coef, exit bndry
+c: contrhsu                    	        rhs based on rho and U
+c: contrhsp                          	add permanent p-mod for stability
+c: contrhsexit                          add rhs exit equations
+c: eqnsolvep Ibjkib 1 pqbijkb 5 ibjkb 10 end 0
+c: contdu                         	Update U based on dp
+c: algebra pp "" pp dp 1. 0. 1.   	Update pp
+
+---------  fixed pp at inlet ------------------
+c: if ppinlet = ppinlet continue find NOPPINLET  
+c: copypart pp 1 a 1 1 1 ppnew 1 a 1 1 1
+c: algebra dpin "" ppnew ppinlet -1   0. 1.
+c: algebra pp "" pp "" 1. dpin 1.
+NOPPINLET
+
+---------   extra continuities, no pp change ------
+c: if ITCONT > 0 continue find NOCONT
+c: copy pp ppsav
+c: infile inn.cont ITCONT      
+c: copy ppsav pp
+NOCONT
+
+c: edit ITER i 1 n 1  add 1  1 1  end
+
+---------  change over iteration  ------------------
+c: algebra dU1 "" U1up U1 -1. 0. 1.
+c: algebra dU2 "" U2up U2 -1. 0. 1.
+c: algebra dU3 "" U3up U3 -1. 0. 1.
+c: algebra dp "" ppup pp -1. 0. 1.
+c: algebra dq "" qturbup qturb -1. 0. 1.
+c: algebra dom "" omturbup omturb -1. 0. 1.
+c: algebra dbij "" bijup bij  -1. 0. 1.
+
+-----------  average with start values  -----------------
+c: if ITER % ITERAVE continue find NOAVERAGE
+c: algebra U1 "" dU1 U1up .5 0. 1.
+c: algebra U2 "" dU2 U2up .5 0. 1.
+c: algebra U3 "" dU3 U3up .5 0. 1.
+c: algebra qturb "" dq qturbup .5 0. 1.
+c: algebra omturb omturbup omturb "" 1. 0. 1.   average log om (product)
+c: algebra omturb "" omturb "" 1. 0. .5
+c: algebra bij "" dbij bijup .5 0. 1.
+c: algebra pp "" dp ppup .5 0. 1.
+c: algebra xyzp "" xyzp xyzpold 1. 0. 1.
+c: algebra xyzp "" xyzp "" .5 0. 1.
+NOAVERAGE
+
+---------------- general iter convergence ---------------
+c: rmsminmax U1 U2 U3 pp qturb omturb bij ""
+c: copy rmsmm rmsmmprop
+c: rmsminmax dU1 dU2 dU3 dp dq dom dbij ""
+c: copy rmsmm rmsmmchange
+c: arraydumpmore out/converge ITER rmsmmprop rmsmmchange updateq updateom updatebij ""
+c: infile inn.analysis10.50 1     change analysis each 10,50 iterations
+
+------------------ user defined output --------------------
+c: infile inn.iter.output 1
+
+
+

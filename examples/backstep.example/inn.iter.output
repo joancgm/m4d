@@ -1,0 +1,17 @@
+------------------ flow rate convergence --------------
+c: areaflowint a acheck -100 100 -100 100 "" 
+c: copypart averages 1 x 7 7 7  flowm 1 x 1 1 1
+c: algebra flowmdif flowm flowrate "" 1. 0. -1.
+c: algebra flowmdif "" flowmdif "" 1. -1. 1.
+c: arraydumpmore out/converge flowmdif ""
+
+------------------ each ITERDUMP iterations ------------
+c: if ITER % ITERDUMP continue find NODUMP
+c: arraydump out/u#ITER ITER U1 U2 U3 qturb omturb bij pp xyzp ""
+NODUMP
+-------------------each ITERPLOT iterations ---------------
+c: if ITER % ITERPLOT continue find NOPLOT
+c: infile inn.plotconv 1
+c: infile inn.plotq 1
+NOPLOT
+

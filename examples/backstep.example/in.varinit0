@@ -1,0 +1,54 @@
+-------- use fdf results to set up start file for backstep calc ----
+----- set up a coarse x grid (5 points) from the calc grid -----
+c: gridfrommefp geom.108.36
+ 5 0 0 1
+-5 0 1 10 15
+0.  / input master name grid_dims a,b,c,d
+c: alias idim4d 4 idim jdim kdim tdim
+
+--------- interp chan2d.fdf results to this grid ------------------
+c: varinit ../chan2d.fdf.example/out.Rd9550/varinit 3
+
+----------- qturb >= qmin at flow points and omturb >= ommin -----
+c: varinit wallzero 0 1 0 0
+c: constant qmin d 1 .01e-5
+c: constant ommin d 1 .00001
+c: function omturb max omturb ommin            make minimum value ommin 
+c: function qturb max qturb qmin               make minimum value qmin
+c: algebra qturb wallzero qturb "" 1. 0. 1.    set wall values to zero
+
+------------- uniform velocity a=10 to 15 (i=4,5)  --------------
+---------(don't want to start with zero flow near the exit) --------
+c: edit U1 d 3 i 0 j 0 k 0 set .666 4 5 1 jdim 1 kdim end
+c: algebra U1 wallzero U1 "" 1. 0. 1.          set wall values to zero
+
+------------- save results --------------------
+c: arraydump out/varinit idim4d abcd U1 pg qturb omturb bij ""
+c: arrayread 1 ../chan2d.fdf.example/out.Rd9550/dpdx
+c: arraydump out/dpdx Rd dpdx vlamc ""
+
+---------- plot U1 to check setup  -------
+c: constant p.defaultdir s 1 ../../jgm
+c: constant imw i 1 1000    / plot width in pixels
+c: constant imh i 1 250     / plot height in pixels
+c: constant impp d 1 50    / magnification, pixels per unit grid length
+
+c: constant p.gxx d 6 1 0 0 0 1 0  / across vector, up vector
+c: constant p.grange d 11 -5 15 0 3 0 0   -5 1.5 0  .01  .5  
+			/ as ae bs be cs ce apt bpt cpt facross fup 
+
+c: constant p.gnames s 4 idim4d xyz abcd clt  / grid names
+c: constant p.gparms i 13  1 2 1 0 0 14 5 0 14 44 0 0 0
+			/ lwpixel if iw is io jf jw js jo kf kw ks ko
+
+c: constant p.fnames s 3 U1 fiw noout  / prop name, clt-types, nyout
+c: constant p.fparms d 6  0 0 2 11 -1 50 
+			/ props propf prope colors colorf colore
+
+c: picture  imageg imw imh impp  f          fill contours
+c: bar imageb 200 50 b                      color bar
+c: image combine imageg imageb 10 1
+     outgif imageg out/U1init end
+c: end
+
+

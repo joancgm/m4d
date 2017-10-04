@@ -1,0 +1,36 @@
+c: rmsminmax U1 ""
+c: copypart rmsmm 1 a 2 2 2 U1max 1 a 1 1 1
+c: algebra dU1max "" U1max "" 1. 0. -1.
+c: algebra qdUmax "" qturb "" dU1max 0. 1.
+
+c: constant imw i 1 1000    / plot width in pixels
+c: constant imh i 1 300     / plot height in pixels
+c: constant impp d 1 95    / magnification, pixels per unit grid length
+
+c: constant p.gxx d 6 1 0 0 0 1 0  / across vector, up vector
+c: constant p.grange d 11 -1 9 0 3 0 0   4 1.5 0  .5  .5  
+			/ as ae bs be cs ce apt bpt cpt facross fup 
+
+c: constant p.gnames s 4 idim4d xyz abcd clt  / grid names
+c: constant p.gparms i 13  1 2 1 0 0 14 5 0 14 44 0 0 0
+			/ lwpixel if iw is io jf jw js jo kf kw ks ko
+
+c: constant p.fnames s 3 qdUmax fiw noout  / prop name, clt-types, nyout
+c: constant p.fparms d 6  0 0 .2 11 -1 50 
+			/ props propf prope colors colorf colore
+
+c: varinit maska 0 0. 0. 0. 
+c: abcmask maska 1. a -1 0 1 2 3 4 5 6 7 8 0
+c: algebra U1d U1 maska "" 1. 0. 1.
+c: algebra U2d U2 maska "" 1. 0. 1.
+c: constant p.vnames s 3 U1d U2d U3   / velocity components
+
+c: constant p.vparms d 11 dU1max .07 .3 0 1  1 1 1 .2 .2 6
+	/ dt head headf nybet lwpixel colotz colors colore dUz Uns Une
+
+c: picture  imageg imw imh impp  fv
+c: image outgif imageg out/qdUmax#ITER end
+
+c: bar imagebarq 200 50 b
+c: image outgif imagebarq out/qbar end
+

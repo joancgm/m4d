@@ -1,0 +1,64 @@
+-----------  convergence analysis each 10, 50 iterations ---------
+c: if FIFTY > TEN   find endinit   continue
+c: constant TEN i 1 10
+c: constant FIFTY i 1 50
+c: copy U1 dU1TEN
+c: copy U2 dU2TEN
+c: copy U3 dU3TEN
+c: copy pp dpTEN
+c: copy qturb dqturbTEN
+c: copy omturb domturbTEN
+c: copy bij dbijTEN
+c: copy U1 dU1FIFTY
+c: copy U2 dU2FIFTY
+c: copy U3 dU3FIFTY
+c: copy pp dpFIFTY
+c: copy qturb dqturbFIFTY
+c: copy omturb domturbFIFTY
+c: copy bij dbijFIFTY
+c: if FIFTY > 10 find endanalysis continue   (always true)
+endinit
+
+c: if ITER % TEN  continue find endten
+c: algebra dU1TEN "" U1 dU1TEN -1. 0. 1.
+c: algebra dU2TEN "" U2 dU2TEN -1. 0. 1.
+c: algebra dU3TEN "" U3 dU3TEN -1. 0. 1.
+c: algebra dpTEN "" pp dpTEN -1. 0. 1.
+c: algebra dqturbTEN "" qturb dqturbTEN -1. 0. 1.
+c: algebra domturbTEN "" omturb domturbTEN -1. 0. 1.
+c: algebra dbijTEN "" bij dbijTEN -1. 0. 1.
+c: rmsminmax dU1TEN dU2TEN dU3TEN dpTEN dqturbTEN domturbTEN dbijTEN ""
+c: copy rmsmm Rmsmmd10
+c: copy ITER ITer10
+c: arraydumpmore out/converge ITer10 Rmsmmd10 ""
+c: copy U1 dU1TEN
+c: copy U2 dU2TEN
+c: copy U3 dU3TEN
+c: copy pp dpTEN
+c: copy qturb dqturbTEN
+c: copy omturb domturbTEN
+c: copy bij dbijTEN
+endten
+
+c: if ITER % FIFTY  continue find endfifty
+c: algebra dU1FIFTY "" U1 dU1FIFTY -1. 0. 1.
+c: algebra dU2FIFTY "" U2 dU2FIFTY -1. 0. 1.
+c: algebra dU3FIFTY "" U3 dU3FIFTY -1. 0. 1.
+c: algebra dpFIFTY "" pp dpFIFTY -1. 0. 1.
+c: algebra dqturbFIFTY "" qturb dqturbFIFTY -1. 0. 1.
+c: algebra domturbFIFTY "" omturb domturbFIFTY -1. 0. 1.
+c: algebra dbijFIFTY "" bij dbijFIFTY -1. 0. 1.
+c: rmsminmax dU1FIFTY dU2FIFTY dU3FIFTY dpFIFTY dqturbFIFTY domturbFIFTY dbijFIFTY ""
+c: copy rmsmm Rmsmmd50
+c: copy ITER ITer50
+c: arraydumpmore out/converge ITer50 Rmsmmd50 ""
+c: copy U1 dU1FIFTY
+c: copy U2 dU2FIFTY
+c: copy U3 dU3FIFTY
+c: copy pp dpFIFTY
+c: copy qturb dqturbFIFTY
+c: copy omturb domturbFIFTY
+c: copy bij dbijFIFTY
+endfifty
+
+endanalysis
