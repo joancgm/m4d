@@ -1,0 +1,1143 @@
+
+M4D - a research CFD code by Joan G. Moore
+  for steady or time accurate calculations
+  for inviscid, laminar or turbulent flow
+              Features: 
+    Convection adapted control volumes
+The transitional MARVS Reynolds stress model
+            Version 2015.2
+
+
+----- c: comment -----     time 0   change 0  maxsize 376832
+******** box cavity: convection around 180 degrees (half vortex)
+
+----- c: constant -----     time 0   change 0  maxsize 389120
+alim, type: d, length 1, values 0.1
+
+----- c: constant -----     time 0   change 0  maxsize 405504
+dt, type: d, length 1, values 0.1
+
+----- c: infile -----     time 0   change 0  maxsize 405504
+
+--------------input from file inn.grid11x6, loops remaining 1
+
+
+----- c: comment -----     time 0   change 0  maxsize 409600
+----- box cavity 11x6   grid ----------
+
+----- c: gridfrommefp -----     time 0   change 0  maxsize 409600
+ master geometry: MEFP style gridfile= geom.cartesian
+ 3-d cartesian a=x b=y c=z, no walls extent -100 100 in x, y and z
+2 2 2 1
+a= -100 to 100, b= -100 to 100, c= -100 to 100
+
+calculation grid 11 by 6 by 2 by 1
+dim 11 parm=  -1 -0.8 -0.6 -0.4 -0.2 0 0.2 0.4 0.6 0.8
+           1
+dim 6 parm=  0 0.2 0.4 0.6 0.8 1
+dim 2 parm=  0 1
+dim 1 parm=  0
+
+----- c: alias -----     time 0   change 0  maxsize 438272
+alias for idim4d 4 parts idim jdim kdim tdim
+
+----- c: editabcd -----     time 0   change 0  maxsize 438272
+array clt found,  type=c, jrep=1, size 132
+ s  i      a -1 -0.1 (i 0 4)   b 0 0 (j 0 0)   c 0 1 (k 0 1)   d 0 0 (n 0 0)
+ s  I      a 0 0 (i 5 5)   b 0 0 (j 0 0)   c 0 1 (k 0 1)   d 0 0 (n 0 0)
+ e  end edit
+
+----- c: constant -----     time 0   change 0  maxsize 446464
+csym, type: c, length 12, values x x n y z z s s s s R R
+
+----- c: gridmatch -----     time 0   change 0  maxsize 450560
+ match consolidation for 0 points
+0 sleeping internal continuity volumes
+matchpc simplifcation at 0 points
+
+----- c: set_wherefw -----     time 0   change 0  maxsize 479232
+form wherefw excluding point types  s
+ 66 independent points, each t 0 66
+
+----- c: set_wherep -----     time 0   change 0  maxsize 487424
+nop 50
+set wherep,  whoisp, noindppts =   50  0  50
+
+----- c: cvdcinit -----     time 0   change 0  maxsize 487424
+cvdc>= 0.5 and cvdc<= 0.5 
+
+----- c: set_xyzdouble -----     time 0   change 0  maxsize 544768
+
+--------------input from file stdin, loops remaining 1
+
+
+----- c: infile -----     time 0   change 0  maxsize 581632
+
+--------------input from file inn.init, loops remaining 1
+
+
+----- c: comment -----     time 0   change 0  maxsize 581632
+********* initialize variables **************
+
+----- c: alias -----     time 0   change 0  maxsize 581632
+alias for xyz 3 parts x y z
+
+----- c: varinit -----     time 0   change 0  maxsize 581632
+set U1: format 1 fac=2
+ a  -1 1
+ factors: 2 0
+ b  0 1
+ factors: 0 1
+ c  0 1
+ factors: 1 1
+ d factor: 1
+
+----- c: varinit -----     time 0   change 0  maxsize 589824
+set U2: format 1 fac=-2
+ a  -1 1
+ factors: -1 1
+ b  0 1
+ factors: 1 0
+ c  0 1
+ factors: 1 1
+ d factor: 1
+
+----- c: algebra -----     time 0   change 0  maxsize 589824
+U1 = U1 *(1 * x + 1)^1 + 
+
+----- c: algebra -----     time 0   change 0  maxsize 598016
+U2 = U2 *(1 * y + 1)^1 + 
+
+----- c: varinit -----     time 0   change 0  maxsize 598016
+set U3: format 0  flow 0, wall 0, solid 0
+
+----- c: varinit -----     time 0   change 0  maxsize 602112
+set rho: format 0  flow 1, wall 1, solid 1
+
+----- c: varinit -----     time 0   change 0  maxsize 602112
+set cc: format 0  flow 1.05, wall 1.05, solid 1.05
+
+----- c: editabcd -----     time 0   change 0  maxsize 602112
+array cc found,  type=d, jrep=1, size 132
+ s 0       a -1 -0.5 (i 0 2)   b 0 0 (j 0 0)   c 0 1 (k 0 1)   d 0 0 (n 0 0)
+ s 2       a -0.4 0 (i 3 5)   b 0 0 (j 0 0)   c 0 1 (k 0 1)   d 0 0 (n 0 0)
+ e end edit
+
+----- c: constant -----     time 0   change 0  maxsize 602112
+ITER, type: i, length 1, values 0
+
+----- c: constant -----     time 0   change 0  maxsize 602112
+TIME, type: d, length 1, values 0
+
+--------------input from file stdin, loops remaining 1
+
+
+----- c: infile -----     time 0   change 0  maxsize 602112
+
+--------------input from file inn.init.coefLL, loops remaining 1
+
+
+----- c: cvdcinit -----     time 0   change 0  maxsize 602112
+cvdc>= 0.5 and cvdc<= 0.5 
+
+----- c: cvdcparm -----     time 0   change 0  maxsize 602112
+cvdc>= 0.1 and cvdc<= 0.9 
+
+----- c: cvdcreset -----     time 0   change 0  maxsize 602112
+viscosity dum, timestep dum2, t2cvlim 10
+cvd_change 50 pts, rms: 0.346413 0.346413 2.41246e-15 max 0.4 dir 1 at 1 1 1 0 ITER 0   TIME 0 
+sleep done
+face done
+
+----- c: set_xyzdouble -----     time 0   change 0  maxsize 610304
+
+----- c: coefinit -----     time 0   change 0  maxsize 610304
+coef arrays created, number of coefs = 3
+
+----- c: coefconv -----     time 0   change 0  maxsize 614400
+ convection=coef 1, set for its=0 to ite=0
+
+----- c: coefdt -----     time 0   change 0  maxsize 667648
+ dt: dt = 0.1, at coef 2, nymidbias n
+--------------input from file stdin, loops remaining 1
+
+
+----- c: constant -----     time 0   change 0  maxsize 671744
+p.defaultdir, type: s, length 1, values ../../jgm
+
+----- c: gridinfo -----     time 0   change 0  maxsize 671744
+some cltdouble values not setich 50, iunset 0
+
+----- c: constant -----     time 0   change 0  maxsize 675840
+out/cc#ITER, type: s, length 1, values out/cc/cc#ITER
+
+----- c: arraydump -----     time 0   change 0  maxsize 675840
+dumping to file out/converge:   alim dt
+
+----- c: infile -----     time 0   change 0  maxsize 679936
+
+--------------input from file inn.plotcv, loops remaining 1
+
+
+----- c: constant -----     time 0   change 0  maxsize 679936
+imw, type: i, length 1, values 500
+
+----- c: constant -----     time 0   change 0  maxsize 679936
+imh, type: i, length 1, values 300
+
+----- c: constant -----     time 0   change 0  maxsize 679936
+impp, type: d, length 1, values 240
+
+----- c: constant -----     time 0   change 0  maxsize 679936
+p.gxx, type: d, length 6, values 1 0 0 0 1 0
+
+----- c: constant -----     time 0   change 0  maxsize 679936
+p.grange, type: d, length 11, values -1 1 0 1 0 0 0 1 0 0.5 0.98
+
+----- c: constant -----     time 0   change 0  maxsize 679936
+p.gnames, type: s, length 4, values idim4ddouble xyzdouble abcddouble cltdouble
+
+----- c: constant -----     time 0   change 0  maxsize 679936
+p.gparms, type: i, length 13, values 2 5 0 0 0 5 0 0 0 5 0 0 0
+
+----- c: picture -----     time 0   change 0  maxsize 679936
+image: imaged size 500 300 scale 240 action g
+L=1 abc= -1 1 ijk=0 20 gat 0 iat=10
+L=2 abc= 0 1 ijk=0 10 gat 1 iat=10
+L=3 abc= 0 0 ijk=0 0 gat 0 iat=0
+ draw grid lines g g
+
+----- c: constant -----     time 0   change 0  maxsize 1298432
+p.gnames, type: s, length 4, values idim4d xyz abcd clt
+
+----- c: constant -----     time 0   change 0  maxsize 1298432
+p.gparms, type: i, length 13, values 1 2 2 2 2 2 2 2 2 0 0 0 0
+
+----- c: constant -----     time 0   change 0  maxsize 1298432
+p.vnames, type: s, length 3, values U1 U2 U3
+
+----- c: constant -----     time 0   change 0  maxsize 1298432
+p.vparms, type: d, length 11, values 0.1 0.03 0.5 0 1 1 1 1 0.2 0.2 6
+
+----- c: picture -----     time 0   change 0  maxsize 1298432
+image: imagev size 500 300 scale 240 action v
+L=1 abc= -1 1 ijk=0 10 gat 0 iat=5
+L=2 abc= 0 1 ijk=0 5 gat 1 iat=5
+L=3 abc= 0 0 ijk=0 0 gat 0 iat=0
+ draw velocity vectors v v
+
+----- c: picture -----     time 0   change 0  maxsize 1904640
+image: imageg size 500 300 scale 240 action g
+L=1 abc= -1 1 ijk=0 10 gat 0 iat=5
+L=2 abc= 0 1 ijk=0 5 gat 1 iat=5
+L=3 abc= 0 0 ijk=0 0 gat 0 iat=0
+ draw grid lines g g
+
+----- c: image -----     time 0   change 0  maxsize 2506752
+creating image imaget, 500 by 300
+add to image imaget, image imageg, lower-left at 0 0
+add to image imaget, image imaged, lower-left at 0 0
+add to image imaget, image imagev, lower-left at 0 0
+ writing image imaget to file out/cv0.gif, format gif
+looking for file color.map
+file color.map not found, try default directory
+using file ../../jgm/color.map
+
+--------------input from file stdin, loops remaining 1
+
+
+----- c: infile -----     time 0.03   change 0.03  maxsize 3780608
+
+--------------input from file inn.plotcc, loops remaining 1
+
+
+----- c: constant -----     time 0.03   change 0  maxsize 3780608
+imw, type: i, length 1, values 500
+
+----- c: constant -----     time 0.03   change 0  maxsize 3780608
+imh, type: i, length 1, values 300
+
+----- c: constant -----     time 0.03   change 0  maxsize 3780608
+impp, type: d, length 1, values 240
+
+----- c: constant -----     time 0.03   change 0  maxsize 3780608
+p.gnames, type: s, length 4, values idim4d xyz abcd clt
+
+----- c: constant -----     time 0.03   change 0  maxsize 3780608
+p.gxx, type: d, length 6, values 1 0 0 0 1 0
+
+----- c: constant -----     time 0.03   change 0  maxsize 3780608
+p.grange, type: d, length 11, values -1 1 0 1 0 0 0 1 0 0.5 0.98
+
+----- c: constant -----     time 0.03   change 0  maxsize 3780608
+p.gparms, type: i, length 13, values 1 2 2 2 2 2 2 2 2 0 0 0 0
+
+----- c: constant -----     time 0.03   change 0  maxsize 3780608
+p.vnames, type: s, length 3, values U1 U2 U3
+
+----- c: constant -----     time 0.03   change 0  maxsize 3780608
+p.vparms, type: d, length 11, values 0.1 0.03 0.5 0 1 1 1 1 0.2 0.2 6
+
+----- c: constant -----     time 0.03   change 0  maxsize 3780608
+p.fnames, type: s, length 3, values cc fiI noout
+
+----- c: constant -----     time 0.04   change 0.01  maxsize 3780608
+p.fparms, type: d, length 6, values -1 0 3 11 -1 50
+
+----- c: picture -----     time 0.04   change 0  maxsize 3780608
+image: imagef size 500 300 scale 240 action fgv
+L=1 abc= -1 1 ijk=0 10 gat 0 iat=5
+L=2 abc= 0 1 ijk=0 5 gat 1 iat=5
+L=3 abc= 0 0 ijk=0 0 gat 0 iat=0
+ fill contour fgv f
+ fill with prop cc, size g+0 method 0 (0=linear, 1=stepwise)
+i4dc 11 6 2 1
+-1 11  -0.9 12  -0.8 13  -0.7 14  -0.6 15  -0.5 16  -0.4 17  -0.3 18  -0.2 19  -0.1 20  0 21  0.1 22  0.2 23  0.3 24  0.4 25  0.5 26  0.6 27  0.7 28  0.8 29  0.9 30  1 31  1.1 32  1.2 33  1.3 34  1.4 35  1.5 36  1.6 37  1.7 38  1.8 39  1.9 40  2 41  2.1 42  2.2 43  2.3 44  2.4 45  2.5 46  2.6 47  2.7 48  2.8 49  2.9 50  3
+ draw grid lines fgv g
+ draw velocity vectors fgv v
+
+----- c: image -----     time 0.04   change 0  maxsize 3801088
+ out/cc#ITER is alias for real file out/cc/cc#ITER
+ writing image imagef to file out/cc/cc0.gif, format gif
+
+--------------input from file stdin, loops remaining 1
+
+
+----- c: infile -----     time 0.06   change 0.02  maxsize 4464640
+
+--------------input from file inn.plotbarcc, loops remaining 1
+
+
+----- c: bar -----     time 0.06   change 0  maxsize 4464640
+looking for file font.list
+file font.list not found, try directories in p.defaultdir
+using file ../../jgm/font.list
+font 1: letters18x30.fmap
+file letters18x30.fmap not found, try directories in p.defaultdir
+using file ../../jgm/letters18x30.fmap
+font 2: symbol23x23.fmap
+file symbol23x23.fmap not found, try directories in p.defaultdir
+using file ../../jgm/symbol23x23.fmap
+read 2 fonts
+bar image: imagebar size 200 50 label b for cc using p.fparms
+final image size: 200 by 66, -1 cc 3
+
+----- c: image -----     time 0.06   change 0  maxsize 4554752
+ writing image imagebar to file out/barcc.gif, format gif
+
+--------------input from file stdin, loops remaining 1
+
+
+----- c: constant -----     time 0.06   change 0  maxsize 4632576
+ITERPLOT, type: i, length 1, values 1
+
+----- c: infile -----     time 0.06   change 0  maxsize 4632576
+
+--------------input from file inn.step.o2c, loops remaining 5
+
+
+----- c: coefrhs -----     time 0.06   change 0  maxsize 4632576
+rhs for cc, rhscc, updated(-=) with 1*coefs 1, oldnew=n
+ rhscc created
+
+----- c: coefadd -----     time 0.06   change 0  maxsize 4636672
+coef_c.0= +0.5 *coef_c.1 +1 *coef_c.2
+
+----- c: eqnsolves -----     time 0.06   change 0  maxsize 4636672
+on the grid equations with rhs=rhscc, center_add=, change=dcc
+oldnewdcc n omit 2 pt types: i I,  eq range 0, 66
+ 6 of 66 active eqs, type deactivated
+no center pt additions
+ init:  err-rms 0.166493    err-min -0.837629 at 0 1 0 0    err-max 0.225377 at 4 1 0 0
+Procedure: ij ,  20 iterations
+ L=0, 6 strings for 60 equations
+ L=1, 11 strings for 60 equations
+ iter 0  err-rms 0.0134415    err-min -0.0364352 at 2 1 0 0    err-max 0.0708156 at 3 1 0 0
+ iter 19  err-rms 5.74416e-09    err-min -2.58888e-08 at 7 0 0 0    err-max 2.06573e-08 at 6 0 0 0
+Procedure: end
+end solve
+
+----- c: algebra -----     time 0.06   change 0  maxsize 4665344
+cc =  *(1 * dcc + 0)^1 + cc
+
+----- c: algebra -----     time 0.06   change 0  maxsize 4665344
+TIME =  *(1 * dt + 0)^1 + TIME
+
+----- c: edit -----     time 0.06   change 0  maxsize 4665344
+ name ITER,   type i,  1 dims  n 1
+ a 1         1 1
+ e  end edit
+
+----- c: coefrhs -----     time 0.06   change 0  maxsize 4673536
+rhs for dcc, rhscc, updated(-=) with 1*coefs 0, oldnew=o
+
+----- c: eqnsolves -----     time 0.06   change 0  maxsize 4673536
+on the grid equations with rhs=rhscc, center_add=, change=dce
+oldnewdce n omit 2 pt types: i I,  eq range 0, 66
+ 6 of 66 active eqs, type deactivated
+no center pt additions
+ init:  err-rms 5.74416e-09    err-min -2.58888e-08 at 7 0 0 0    err-max 2.06573e-08 at 6 0 0 0
+Procedure: c ,  1 iterations
+ iter 0  err-rms 4.20687e-09    err-min -1.92741e-08 at 7 0 0 0    err-max 1.46702e-08 at 6 0 0 0
+Procedure: end
+end solve
+
+----- c: algebra -----     time 0.06   change 0  maxsize 4673536
+ddt =  *(1 * dt + 0)^-1 + 
+
+----- c: algebra -----     time 0.06   change 0  maxsize 4673536
+dccdt =  *(10 * dcc + 0)^1 + 
+
+----- c: algebra -----     time 0.06   change 0  maxsize 4673536
+dcedt =  *(10 * dce + 0)^1 + 
+
+----- c: algebra -----     time 0.06   change 0  maxsize 4673536
+ccm =  *(-1 * cc + 100)^1 + 
+
+----- c: rmsminmax -----     time 0.06   change 0  maxsize 4673536
+RMSMM ccm rms 98.9815, min 98 at 3 0 0 0,  max 100 at 0 0 0 0,  ITER 1  TIME 0.1
+
+----- c: algebra -----     time 0.06   change 0  maxsize 4681728
+rmsccm =  *(-1 * rmsmm + 100)^1 + 
+
+----- c: rmsminmax -----     time 0.06   change 0  maxsize 4681728
+RMSMM cc rms 1.07897, min 0 at 0 0 0 0,  max 2 at 3 0 0 0,  ITER 1  TIME 0.1
+RMSMM dccdt rms 1.8781, min -9.01239 at 0 1 0 0,  max 4.14368 at 3 1 0 0,  ITER 1  TIME 0.1
+RMSMM dcedt rms 5.47684e-08, min -2.58888e-07 at 7 0 0 0,  max 2.06573e-07 at 6 0 0 0,  ITER 1  TIME 0.1
+
+----- c: arraydumpmore -----     time 0.06   change 0  maxsize 4681728
+appending dump to file out/converge:   TIME ITER rmsccm rmsmm
+
+----- c: if -----     time 0.06   change 0  maxsize 4681728
+ if ITER % ITERPLOT, then continue, otherwise find NOPLOT 1 % 1 ?  True, continue
+
+----- c: infile -----     time 0.06   change 0  maxsize 4689920
+
+--------------input from file inn.plotcc, loops remaining 1
+
+
+----- c: constant -----     time 0.06   change 0  maxsize 4689920
+imw, type: i, length 1, values 500
+
+----- c: constant -----     time 0.06   change 0  maxsize 4689920
+imh, type: i, length 1, values 300
+
+----- c: constant -----     time 0.06   change 0  maxsize 4689920
+impp, type: d, length 1, values 240
+
+----- c: constant -----     time 0.06   change 0  maxsize 4689920
+p.gnames, type: s, length 4, values idim4d xyz abcd clt
+
+----- c: constant -----     time 0.06   change 0  maxsize 4689920
+p.gxx, type: d, length 6, values 1 0 0 0 1 0
+
+----- c: constant -----     time 0.06   change 0  maxsize 4689920
+p.grange, type: d, length 11, values -1 1 0 1 0 0 0 1 0 0.5 0.98
+
+----- c: constant -----     time 0.06   change 0  maxsize 4689920
+p.gparms, type: i, length 13, values 1 2 2 2 2 2 2 2 2 0 0 0 0
+
+----- c: constant -----     time 0.06   change 0  maxsize 4689920
+p.vnames, type: s, length 3, values U1 U2 U3
+
+----- c: constant -----     time 0.06   change 0  maxsize 4689920
+p.vparms, type: d, length 11, values 0.1 0.03 0.5 0 1 1 1 1 0.2 0.2 6
+
+----- c: constant -----     time 0.06   change 0  maxsize 4689920
+p.fnames, type: s, length 3, values cc fiI noout
+
+----- c: constant -----     time 0.06   change 0  maxsize 4689920
+p.fparms, type: d, length 6, values -1 0 3 11 -1 50
+
+----- c: picture -----     time 0.06   change 0  maxsize 4689920
+image: imagef size 500 300 scale 240 action fgv
+L=1 abc= -1 1 ijk=0 10 gat 0 iat=5
+L=2 abc= 0 1 ijk=0 5 gat 1 iat=5
+L=3 abc= 0 0 ijk=0 0 gat 0 iat=0
+ fill contour fgv f
+ fill with prop cc, size g+0 method 0 (0=linear, 1=stepwise)
+i4dc 11 6 2 1
+-1 11  -0.9 12  -0.8 13  -0.7 14  -0.6 15  -0.5 16  -0.4 17  -0.3 18  -0.2 19  -0.1 20  0 21  0.1 22  0.2 23  0.3 24  0.4 25  0.5 26  0.6 27  0.7 28  0.8 29  0.9 30  1 31  1.1 32  1.2 33  1.3 34  1.4 35  1.5 36  1.6 37  1.7 38  1.8 39  1.9 40  2 41  2.1 42  2.2 43  2.3 44  2.4 45  2.5 46  2.6 47  2.7 48  2.8 49  2.9 50  3
+ draw grid lines fgv g
+ draw velocity vectors fgv v
+
+----- c: image -----     time 0.06   change 0  maxsize 4689920
+ out/cc#ITER is alias for real file out/cc/cc#ITER
+ writing image imagef to file out/cc/cc1.gif, format gif
+
+--------------input from file inn.step.o2c, loops remaining 5
+
+
+--------------input from file inn.step.o2c, loops remaining 4
+
+
+----- c: coefrhs -----     time 0.09   change 0.03  maxsize 4730880
+rhs for cc, rhscc, updated(-=) with 1*coefs 1, oldnew=n
+
+----- c: coefadd -----     time 0.09   change 0  maxsize 4730880
+coef_c.0= +0.5 *coef_c.1 +1 *coef_c.2
+
+----- c: eqnsolves -----     time 0.09   change 0  maxsize 4730880
+on the grid equations with rhs=rhscc, center_add=, change=dcc
+oldnewdcc n omit 2 pt types: i I,  eq range 0, 66
+ 6 of 66 active eqs, type deactivated
+no center pt additions
+ init:  err-rms 0.146222    err-min -0.679941 at 0 2 0 0    err-max 0.171722 at 4 1 0 0
+Procedure: ij ,  20 iterations
+ L=0, 6 strings for 60 equations
+ L=1, 11 strings for 60 equations
+ iter 0  err-rms 0.0106262    err-min -0.018428 at 2 1 0 0    err-max 0.0393669 at 4 1 0 0
+ iter 19  err-rms 1.25834e-09    err-min -4.61169e-09 at 6 0 0 0    err-max 6.43822e-09 at 7 0 0 0
+Procedure: end
+end solve
+
+----- c: algebra -----     time 0.09   change 0  maxsize 4730880
+cc =  *(1 * dcc + 0)^1 + cc
+
+----- c: algebra -----     time 0.09   change 0  maxsize 4730880
+TIME =  *(1 * dt + 0)^1 + TIME
+
+----- c: edit -----     time 0.09   change 0  maxsize 4730880
+ name ITER,   type i,  1 dims  n 1
+ a 1         1 1
+ e  end edit
+
+----- c: coefrhs -----     time 0.09   change 0  maxsize 4730880
+rhs for dcc, rhscc, updated(-=) with 1*coefs 0, oldnew=o
+
+----- c: eqnsolves -----     time 0.09   change 0  maxsize 4730880
+on the grid equations with rhs=rhscc, center_add=, change=dce
+oldnewdce n omit 2 pt types: i I,  eq range 0, 66
+ 6 of 66 active eqs, type deactivated
+no center pt additions
+ init:  err-rms 1.25834e-09    err-min -4.61169e-09 at 6 0 0 0    err-max 6.43822e-09 at 7 0 0 0
+Procedure: c ,  1 iterations
+ iter 0  err-rms 8.87115e-10    err-min -3.10803e-09 at 6 0 0 0    err-max 4.55196e-09 at 7 0 0 0
+Procedure: end
+end solve
+
+----- c: algebra -----     time 0.09   change 0  maxsize 4730880
+ddt =  *(1 * dt + 0)^-1 + 
+
+----- c: algebra -----     time 0.09   change 0  maxsize 4730880
+dccdt =  *(10 * dcc + 0)^1 + 
+
+----- c: algebra -----     time 0.09   change 0  maxsize 4730880
+dcedt =  *(10 * dce + 0)^1 + 
+
+----- c: algebra -----     time 0.09   change 0  maxsize 4730880
+ccm =  *(-1 * cc + 100)^1 + 
+
+----- c: rmsminmax -----     time 0.09   change 0  maxsize 4730880
+RMSMM ccm rms 99.0084, min 98 at 3 0 0 0,  max 100.024 at 0 1 0 0,  ITER 2  TIME 0.2
+
+----- c: algebra -----     time 0.09   change 0  maxsize 4730880
+rmsccm =  *(-1 * rmsmm + 100)^1 + 
+
+----- c: rmsminmax -----     time 0.09   change 0  maxsize 4730880
+RMSMM cc rms 1.07189, min -0.0240869 at 0 1 0 0,  max 2 at 3 0 0 0,  ITER 2  TIME 0.2
+RMSMM dccdt rms 1.57362, min -7.50391 at 0 2 0 0,  max 3.04599 at 4 1 0 0,  ITER 2  TIME 0.2
+RMSMM dcedt rms 1.19978e-08, min -4.61169e-08 at 6 0 0 0,  max 6.43822e-08 at 7 0 0 0,  ITER 2  TIME 0.2
+
+----- c: arraydumpmore -----     time 0.09   change 0  maxsize 4730880
+appending dump to file out/converge:   TIME ITER rmsccm rmsmm
+
+----- c: if -----     time 0.09   change 0  maxsize 4730880
+ if ITER % ITERPLOT, then continue, otherwise find NOPLOT 2 % 1 ?  True, continue
+
+----- c: infile -----     time 0.09   change 0  maxsize 4730880
+
+--------------input from file inn.plotcc, loops remaining 1
+
+
+----- c: constant -----     time 0.09   change 0  maxsize 4730880
+imw, type: i, length 1, values 500
+
+----- c: constant -----     time 0.09   change 0  maxsize 4730880
+imh, type: i, length 1, values 300
+
+----- c: constant -----     time 0.09   change 0  maxsize 4730880
+impp, type: d, length 1, values 240
+
+----- c: constant -----     time 0.09   change 0  maxsize 4730880
+p.gnames, type: s, length 4, values idim4d xyz abcd clt
+
+----- c: constant -----     time 0.09   change 0  maxsize 4730880
+p.gxx, type: d, length 6, values 1 0 0 0 1 0
+
+----- c: constant -----     time 0.09   change 0  maxsize 4730880
+p.grange, type: d, length 11, values -1 1 0 1 0 0 0 1 0 0.5 0.98
+
+----- c: constant -----     time 0.09   change 0  maxsize 4730880
+p.gparms, type: i, length 13, values 1 2 2 2 2 2 2 2 2 0 0 0 0
+
+----- c: constant -----     time 0.09   change 0  maxsize 4730880
+p.vnames, type: s, length 3, values U1 U2 U3
+
+----- c: constant -----     time 0.09   change 0  maxsize 4730880
+p.vparms, type: d, length 11, values 0.1 0.03 0.5 0 1 1 1 1 0.2 0.2 6
+
+----- c: constant -----     time 0.09   change 0  maxsize 4730880
+p.fnames, type: s, length 3, values cc fiI noout
+
+----- c: constant -----     time 0.09   change 0  maxsize 4730880
+p.fparms, type: d, length 6, values -1 0 3 11 -1 50
+
+----- c: picture -----     time 0.09   change 0  maxsize 4730880
+image: imagef size 500 300 scale 240 action fgv
+L=1 abc= -1 1 ijk=0 10 gat 0 iat=5
+L=2 abc= 0 1 ijk=0 5 gat 1 iat=5
+L=3 abc= 0 0 ijk=0 0 gat 0 iat=0
+ fill contour fgv f
+ fill with prop cc, size g+0 method 0 (0=linear, 1=stepwise)
+i4dc 11 6 2 1
+-1 11  -0.9 12  -0.8 13  -0.7 14  -0.6 15  -0.5 16  -0.4 17  -0.3 18  -0.2 19  -0.1 20  0 21  0.1 22  0.2 23  0.3 24  0.4 25  0.5 26  0.6 27  0.7 28  0.8 29  0.9 30  1 31  1.1 32  1.2 33  1.3 34  1.4 35  1.5 36  1.6 37  1.7 38  1.8 39  1.9 40  2 41  2.1 42  2.2 43  2.3 44  2.4 45  2.5 46  2.6 47  2.7 48  2.8 49  2.9 50  3
+ draw grid lines fgv g
+ draw velocity vectors fgv v
+
+----- c: image -----     time 0.09   change 0  maxsize 4730880
+ out/cc#ITER is alias for real file out/cc/cc#ITER
+ writing image imagef to file out/cc/cc2.gif, format gif
+
+--------------input from file inn.step.o2c, loops remaining 4
+
+
+--------------input from file inn.step.o2c, loops remaining 3
+
+
+----- c: coefrhs -----     time 0.11   change 0.02  maxsize 4792320
+rhs for cc, rhscc, updated(-=) with 1*coefs 1, oldnew=n
+
+----- c: coefadd -----     time 0.11   change 0  maxsize 4792320
+coef_c.0= +0.5 *coef_c.1 +1 *coef_c.2
+
+----- c: eqnsolves -----     time 0.11   change 0  maxsize 4792320
+on the grid equations with rhs=rhscc, center_add=, change=dcc
+oldnewdcc n omit 2 pt types: i I,  eq range 0, 66
+ 6 of 66 active eqs, type deactivated
+no center pt additions
+ init:  err-rms 0.129112    err-min -0.497847 at 0 3 0 0    err-max 0.133374 at 4 2 0 0
+Procedure: ij ,  20 iterations
+ L=0, 6 strings for 60 equations
+ L=1, 11 strings for 60 equations
+ iter 0  err-rms 0.0116595    err-min -0.0299707 at 0 5 0 0    err-max 0.0332182 at 0 4 0 0
+ iter 19  err-rms 1.41511e-09    err-min -5.14453e-09 at 6 0 0 0    err-max 6.6691e-09 at 7 0 0 0
+Procedure: end
+end solve
+
+----- c: algebra -----     time 0.11   change 0  maxsize 4792320
+cc =  *(1 * dcc + 0)^1 + cc
+
+----- c: algebra -----     time 0.11   change 0  maxsize 4792320
+TIME =  *(1 * dt + 0)^1 + TIME
+
+----- c: edit -----     time 0.11   change 0  maxsize 4792320
+ name ITER,   type i,  1 dims  n 1
+ a 1         1 1
+ e  end edit
+
+----- c: coefrhs -----     time 0.11   change 0  maxsize 4792320
+rhs for dcc, rhscc, updated(-=) with 1*coefs 0, oldnew=o
+
+----- c: eqnsolves -----     time 0.11   change 0  maxsize 4792320
+on the grid equations with rhs=rhscc, center_add=, change=dce
+oldnewdce n omit 2 pt types: i I,  eq range 0, 66
+ 6 of 66 active eqs, type deactivated
+no center pt additions
+ init:  err-rms 1.41511e-09    err-min -5.14453e-09 at 6 0 0 0    err-max 6.6691e-09 at 7 0 0 0
+Procedure: c ,  1 iterations
+ iter 0  err-rms 1.02547e-09    err-min -3.59662e-09 at 6 0 0 0    err-max 4.88332e-09 at 7 0 0 0
+Procedure: end
+end solve
+
+----- c: algebra -----     time 0.11   change 0  maxsize 4792320
+ddt =  *(1 * dt + 0)^-1 + 
+
+----- c: algebra -----     time 0.11   change 0  maxsize 4792320
+dccdt =  *(10 * dcc + 0)^1 + 
+
+----- c: algebra -----     time 0.11   change 0  maxsize 4792320
+dcedt =  *(10 * dce + 0)^1 + 
+
+----- c: algebra -----     time 0.11   change 0  maxsize 4792320
+ccm =  *(-1 * cc + 100)^1 + 
+
+----- c: rmsminmax -----     time 0.11   change 0  maxsize 4792320
+RMSMM ccm rms 99.0377, min 98 at 3 0 0 0,  max 100.076 at 2 1 0 0,  ITER 3  TIME 0.3
+
+----- c: algebra -----     time 0.11   change 0  maxsize 4792320
+rmsccm =  *(-1 * rmsmm + 100)^1 + 
+
+----- c: rmsminmax -----     time 0.11   change 0  maxsize 4792320
+RMSMM cc rms 1.0624, min -0.0755616 at 2 1 0 0,  max 2 at 3 0 0 0,  ITER 3  TIME 0.3
+RMSMM dccdt rms 1.40332, min -5.57986 at 0 3 0 0,  max 2.28932 at 0 4 0 0,  ITER 3  TIME 0.3
+RMSMM dcedt rms 1.34926e-08, min -5.14453e-08 at 6 0 0 0,  max 6.6691e-08 at 7 0 0 0,  ITER 3  TIME 0.3
+
+----- c: arraydumpmore -----     time 0.11   change 0  maxsize 4792320
+appending dump to file out/converge:   TIME ITER rmsccm rmsmm
+
+----- c: if -----     time 0.11   change 0  maxsize 4792320
+ if ITER % ITERPLOT, then continue, otherwise find NOPLOT 3 % 1 ?  True, continue
+
+----- c: infile -----     time 0.11   change 0  maxsize 4792320
+
+--------------input from file inn.plotcc, loops remaining 1
+
+
+----- c: constant -----     time 0.11   change 0  maxsize 4792320
+imw, type: i, length 1, values 500
+
+----- c: constant -----     time 0.11   change 0  maxsize 4792320
+imh, type: i, length 1, values 300
+
+----- c: constant -----     time 0.11   change 0  maxsize 4792320
+impp, type: d, length 1, values 240
+
+----- c: constant -----     time 0.11   change 0  maxsize 4792320
+p.gnames, type: s, length 4, values idim4d xyz abcd clt
+
+----- c: constant -----     time 0.11   change 0  maxsize 4792320
+p.gxx, type: d, length 6, values 1 0 0 0 1 0
+
+----- c: constant -----     time 0.11   change 0  maxsize 4792320
+p.grange, type: d, length 11, values -1 1 0 1 0 0 0 1 0 0.5 0.98
+
+----- c: constant -----     time 0.11   change 0  maxsize 4792320
+p.gparms, type: i, length 13, values 1 2 2 2 2 2 2 2 2 0 0 0 0
+
+----- c: constant -----     time 0.11   change 0  maxsize 4792320
+p.vnames, type: s, length 3, values U1 U2 U3
+
+----- c: constant -----     time 0.11   change 0  maxsize 4792320
+p.vparms, type: d, length 11, values 0.1 0.03 0.5 0 1 1 1 1 0.2 0.2 6
+
+----- c: constant -----     time 0.11   change 0  maxsize 4792320
+p.fnames, type: s, length 3, values cc fiI noout
+
+----- c: constant -----     time 0.11   change 0  maxsize 4792320
+p.fparms, type: d, length 6, values -1 0 3 11 -1 50
+
+----- c: picture -----     time 0.11   change 0  maxsize 4792320
+image: imagef size 500 300 scale 240 action fgv
+L=1 abc= -1 1 ijk=0 10 gat 0 iat=5
+L=2 abc= 0 1 ijk=0 5 gat 1 iat=5
+L=3 abc= 0 0 ijk=0 0 gat 0 iat=0
+ fill contour fgv f
+ fill with prop cc, size g+0 method 0 (0=linear, 1=stepwise)
+i4dc 11 6 2 1
+-1 11  -0.9 12  -0.8 13  -0.7 14  -0.6 15  -0.5 16  -0.4 17  -0.3 18  -0.2 19  -0.1 20  0 21  0.1 22  0.2 23  0.3 24  0.4 25  0.5 26  0.6 27  0.7 28  0.8 29  0.9 30  1 31  1.1 32  1.2 33  1.3 34  1.4 35  1.5 36  1.6 37  1.7 38  1.8 39  1.9 40  2 41  2.1 42  2.2 43  2.3 44  2.4 45  2.5 46  2.6 47  2.7 48  2.8 49  2.9 50  3
+ draw grid lines fgv g
+ draw velocity vectors fgv v
+
+----- c: image -----     time 0.11   change 0  maxsize 4792320
+ out/cc#ITER is alias for real file out/cc/cc#ITER
+ writing image imagef to file out/cc/cc3.gif, format gif
+
+--------------input from file inn.step.o2c, loops remaining 3
+
+
+--------------input from file inn.step.o2c, loops remaining 2
+
+
+----- c: coefrhs -----     time 0.14   change 0.03  maxsize 4853760
+rhs for cc, rhscc, updated(-=) with 1*coefs 1, oldnew=n
+
+----- c: coefadd -----     time 0.14   change 0  maxsize 4853760
+coef_c.0= +0.5 *coef_c.1 +1 *coef_c.2
+
+----- c: eqnsolves -----     time 0.14   change 0  maxsize 4853760
+on the grid equations with rhs=rhscc, center_add=, change=dcc
+oldnewdcc n omit 2 pt types: i I,  eq range 0, 66
+ 6 of 66 active eqs, type deactivated
+no center pt additions
+ init:  err-rms 0.113356    err-min -0.408003 at 1 3 0 0    err-max 0.120911 at 5 1 0 0
+Procedure: ij ,  20 iterations
+ L=0, 6 strings for 60 equations
+ L=1, 11 strings for 60 equations
+ iter 0  err-rms 0.0104627    err-min -0.024701 at 2 3 0 0    err-max 0.0402086 at 0 5 0 0
+ iter 19  err-rms 9.38189e-10    err-min -3.47346e-09 at 1 5 0 0    err-max 3.37971e-09 at 7 0 0 0
+Procedure: end
+end solve
+
+----- c: algebra -----     time 0.14   change 0  maxsize 4853760
+cc =  *(1 * dcc + 0)^1 + cc
+
+----- c: algebra -----     time 0.14   change 0  maxsize 4853760
+TIME =  *(1 * dt + 0)^1 + TIME
+
+----- c: edit -----     time 0.14   change 0  maxsize 4853760
+ name ITER,   type i,  1 dims  n 1
+ a 1         1 1
+ e  end edit
+
+----- c: coefrhs -----     time 0.14   change 0  maxsize 4853760
+rhs for dcc, rhscc, updated(-=) with 1*coefs 0, oldnew=o
+
+----- c: eqnsolves -----     time 0.14   change 0  maxsize 4853760
+on the grid equations with rhs=rhscc, center_add=, change=dce
+oldnewdce n omit 2 pt types: i I,  eq range 0, 66
+ 6 of 66 active eqs, type deactivated
+no center pt additions
+ init:  err-rms 9.38189e-10    err-min -3.47346e-09 at 1 5 0 0    err-max 3.37971e-09 at 7 0 0 0
+Procedure: c ,  1 iterations
+ iter 0  err-rms 6.67557e-10    err-min -2.36735e-09 at 1 5 0 0    err-max 2.45633e-09 at 7 0 0 0
+Procedure: end
+end solve
+
+----- c: algebra -----     time 0.14   change 0  maxsize 4853760
+ddt =  *(1 * dt + 0)^-1 + 
+
+----- c: algebra -----     time 0.14   change 0  maxsize 4853760
+dccdt =  *(10 * dcc + 0)^1 + 
+
+----- c: algebra -----     time 0.14   change 0  maxsize 4853760
+dcedt =  *(10 * dce + 0)^1 + 
+
+----- c: algebra -----     time 0.14   change 0  maxsize 4853760
+ccm =  *(-1 * cc + 100)^1 + 
+
+----- c: rmsminmax -----     time 0.14   change 0  maxsize 4853760
+RMSMM ccm rms 99.0614, min 97.9968 at 4 1 0 0,  max 100.093 at 2 1 0 0,  ITER 4  TIME 0.4
+
+----- c: algebra -----     time 0.14   change 0  maxsize 4853760
+rmsccm =  *(-1 * rmsmm + 100)^1 + 
+
+----- c: rmsminmax -----     time 0.14   change 0  maxsize 4853760
+RMSMM cc rms 1.05765, min -0.0926638 at 2 1 0 0,  max 2.00317 at 4 1 0 0,  ITER 4  TIME 0.4
+RMSMM dccdt rms 1.231, min -4.62247 at 2 3 0 0,  max 2.20694 at 0 5 0 0,  ITER 4  TIME 0.4
+RMSMM dcedt rms 8.94528e-09, min -3.47346e-08 at 1 5 0 0,  max 3.37971e-08 at 7 0 0 0,  ITER 4  TIME 0.4
+
+----- c: arraydumpmore -----     time 0.14   change 0  maxsize 4853760
+appending dump to file out/converge:   TIME ITER rmsccm rmsmm
+
+----- c: if -----     time 0.14   change 0  maxsize 4853760
+ if ITER % ITERPLOT, then continue, otherwise find NOPLOT 4 % 1 ?  True, continue
+
+----- c: infile -----     time 0.14   change 0  maxsize 4853760
+
+--------------input from file inn.plotcc, loops remaining 1
+
+
+----- c: constant -----     time 0.14   change 0  maxsize 4853760
+imw, type: i, length 1, values 500
+
+----- c: constant -----     time 0.14   change 0  maxsize 4853760
+imh, type: i, length 1, values 300
+
+----- c: constant -----     time 0.14   change 0  maxsize 4853760
+impp, type: d, length 1, values 240
+
+----- c: constant -----     time 0.14   change 0  maxsize 4853760
+p.gnames, type: s, length 4, values idim4d xyz abcd clt
+
+----- c: constant -----     time 0.14   change 0  maxsize 4853760
+p.gxx, type: d, length 6, values 1 0 0 0 1 0
+
+----- c: constant -----     time 0.14   change 0  maxsize 4853760
+p.grange, type: d, length 11, values -1 1 0 1 0 0 0 1 0 0.5 0.98
+
+----- c: constant -----     time 0.14   change 0  maxsize 4853760
+p.gparms, type: i, length 13, values 1 2 2 2 2 2 2 2 2 0 0 0 0
+
+----- c: constant -----     time 0.14   change 0  maxsize 4853760
+p.vnames, type: s, length 3, values U1 U2 U3
+
+----- c: constant -----     time 0.14   change 0  maxsize 4853760
+p.vparms, type: d, length 11, values 0.1 0.03 0.5 0 1 1 1 1 0.2 0.2 6
+
+----- c: constant -----     time 0.14   change 0  maxsize 4853760
+p.fnames, type: s, length 3, values cc fiI noout
+
+----- c: constant -----     time 0.14   change 0  maxsize 4853760
+p.fparms, type: d, length 6, values -1 0 3 11 -1 50
+
+----- c: picture -----     time 0.14   change 0  maxsize 4853760
+image: imagef size 500 300 scale 240 action fgv
+L=1 abc= -1 1 ijk=0 10 gat 0 iat=5
+L=2 abc= 0 1 ijk=0 5 gat 1 iat=5
+L=3 abc= 0 0 ijk=0 0 gat 0 iat=0
+ fill contour fgv f
+ fill with prop cc, size g+0 method 0 (0=linear, 1=stepwise)
+i4dc 11 6 2 1
+-1 11  -0.9 12  -0.8 13  -0.7 14  -0.6 15  -0.5 16  -0.4 17  -0.3 18  -0.2 19  -0.1 20  0 21  0.1 22  0.2 23  0.3 24  0.4 25  0.5 26  0.6 27  0.7 28  0.8 29  0.9 30  1 31  1.1 32  1.2 33  1.3 34  1.4 35  1.5 36  1.6 37  1.7 38  1.8 39  1.9 40  2 41  2.1 42  2.2 43  2.3 44  2.4 45  2.5 46  2.6 47  2.7 48  2.8 49  2.9 50  3
+ draw grid lines fgv g
+ draw velocity vectors fgv v
+
+----- c: image -----     time 0.14   change 0  maxsize 4853760
+ out/cc#ITER is alias for real file out/cc/cc#ITER
+ writing image imagef to file out/cc/cc4.gif, format gif
+
+--------------input from file inn.step.o2c, loops remaining 2
+
+
+--------------input from file inn.step.o2c, loops remaining 1
+
+
+----- c: coefrhs -----     time 0.17   change 0.03  maxsize 4915200
+rhs for cc, rhscc, updated(-=) with 1*coefs 1, oldnew=n
+
+----- c: coefadd -----     time 0.17   change 0  maxsize 4915200
+coef_c.0= +0.5 *coef_c.1 +1 *coef_c.2
+
+----- c: eqnsolves -----     time 0.17   change 0  maxsize 4915200
+on the grid equations with rhs=rhscc, center_add=, change=dcc
+oldnewdcc n omit 2 pt types: i I,  eq range 0, 66
+ 6 of 66 active eqs, type deactivated
+no center pt additions
+ init:  err-rms 0.100394    err-min -0.369161 at 0 4 0 0    err-max 0.138573 at 5 2 0 0
+Procedure: ij ,  20 iterations
+ L=0, 6 strings for 60 equations
+ L=1, 11 strings for 60 equations
+ iter 0  err-rms 0.0126113    err-min -0.0312769 at 2 3 0 0    err-max 0.0566215 at 0 5 0 0
+ iter 19  err-rms 1.41732e-10    err-min -6.55577e-10 at 7 0 0 0    err-max 4.16778e-10 at 1 5 0 0
+Procedure: end
+end solve
+
+----- c: algebra -----     time 0.17   change 0  maxsize 4915200
+cc =  *(1 * dcc + 0)^1 + cc
+
+----- c: algebra -----     time 0.17   change 0  maxsize 4915200
+TIME =  *(1 * dt + 0)^1 + TIME
+
+----- c: edit -----     time 0.17   change 0  maxsize 4915200
+ name ITER,   type i,  1 dims  n 1
+ a 1         1 1
+ e  end edit
+
+----- c: coefrhs -----     time 0.17   change 0  maxsize 4915200
+rhs for dcc, rhscc, updated(-=) with 1*coefs 0, oldnew=o
+
+----- c: eqnsolves -----     time 0.17   change 0  maxsize 4915200
+on the grid equations with rhs=rhscc, center_add=, change=dce
+oldnewdce n omit 2 pt types: i I,  eq range 0, 66
+ 6 of 66 active eqs, type deactivated
+no center pt additions
+ init:  err-rms 1.41732e-10    err-min -6.55577e-10 at 7 0 0 0    err-max 4.16778e-10 at 1 5 0 0
+Procedure: c ,  1 iterations
+ iter 0  err-rms 9.5142e-11    err-min -4.28893e-10 at 7 0 0 0    err-max 2.84735e-10 at 1 5 0 0
+Procedure: end
+end solve
+
+----- c: algebra -----     time 0.17   change 0  maxsize 4915200
+ddt =  *(1 * dt + 0)^-1 + 
+
+----- c: algebra -----     time 0.17   change 0  maxsize 4915200
+dccdt =  *(10 * dcc + 0)^1 + 
+
+----- c: algebra -----     time 0.17   change 0  maxsize 4915200
+dcedt =  *(10 * dce + 0)^1 + 
+
+----- c: algebra -----     time 0.17   change 0  maxsize 4915200
+ccm =  *(-1 * cc + 100)^1 + 
+
+----- c: rmsminmax -----     time 0.17   change 0  maxsize 4915200
+RMSMM ccm rms 99.0822, min 97.9196 at 4 1 0 0,  max 100.135 at 2 2 0 0,  ITER 5  TIME 0.5
+
+----- c: algebra -----     time 0.17   change 0  maxsize 4915200
+rmsccm =  *(-1 * rmsmm + 100)^1 + 
+
+----- c: rmsminmax -----     time 0.17   change 0  maxsize 4915200
+RMSMM cc rms 1.05581, min -0.135496 at 2 2 0 0,  max 2.08042 at 4 1 0 0,  ITER 5  TIME 0.5
+RMSMM dccdt rms 1.17729, min -4.37773 at 0 4 0 0,  max 2.23116 at 0 5 0 0,  ITER 5  TIME 0.5
+RMSMM dcedt rms 1.35136e-09, min -6.55577e-09 at 7 0 0 0,  max 4.16778e-09 at 1 5 0 0,  ITER 5  TIME 0.5
+
+----- c: arraydumpmore -----     time 0.17   change 0  maxsize 4915200
+appending dump to file out/converge:   TIME ITER rmsccm rmsmm
+
+----- c: if -----     time 0.17   change 0  maxsize 4915200
+ if ITER % ITERPLOT, then continue, otherwise find NOPLOT 5 % 1 ?  True, continue
+
+----- c: infile -----     time 0.17   change 0  maxsize 4915200
+
+--------------input from file inn.plotcc, loops remaining 1
+
+
+----- c: constant -----     time 0.17   change 0  maxsize 4915200
+imw, type: i, length 1, values 500
+
+----- c: constant -----     time 0.17   change 0  maxsize 4915200
+imh, type: i, length 1, values 300
+
+----- c: constant -----     time 0.17   change 0  maxsize 4915200
+impp, type: d, length 1, values 240
+
+----- c: constant -----     time 0.17   change 0  maxsize 4915200
+p.gnames, type: s, length 4, values idim4d xyz abcd clt
+
+----- c: constant -----     time 0.17   change 0  maxsize 4915200
+p.gxx, type: d, length 6, values 1 0 0 0 1 0
+
+----- c: constant -----     time 0.17   change 0  maxsize 4915200
+p.grange, type: d, length 11, values -1 1 0 1 0 0 0 1 0 0.5 0.98
+
+----- c: constant -----     time 0.17   change 0  maxsize 4915200
+p.gparms, type: i, length 13, values 1 2 2 2 2 2 2 2 2 0 0 0 0
+
+----- c: constant -----     time 0.17   change 0  maxsize 4915200
+p.vnames, type: s, length 3, values U1 U2 U3
+
+----- c: constant -----     time 0.17   change 0  maxsize 4915200
+p.vparms, type: d, length 11, values 0.1 0.03 0.5 0 1 1 1 1 0.2 0.2 6
+
+----- c: constant -----     time 0.17   change 0  maxsize 4915200
+p.fnames, type: s, length 3, values cc fiI noout
+
+----- c: constant -----     time 0.17   change 0  maxsize 4915200
+p.fparms, type: d, length 6, values -1 0 3 11 -1 50
+
+----- c: picture -----     time 0.17   change 0  maxsize 4915200
+image: imagef size 500 300 scale 240 action fgv
+L=1 abc= -1 1 ijk=0 10 gat 0 iat=5
+L=2 abc= 0 1 ijk=0 5 gat 1 iat=5
+L=3 abc= 0 0 ijk=0 0 gat 0 iat=0
+ fill contour fgv f
+ fill with prop cc, size g+0 method 0 (0=linear, 1=stepwise)
+i4dc 11 6 2 1
+-1 11  -0.9 12  -0.8 13  -0.7 14  -0.6 15  -0.5 16  -0.4 17  -0.3 18  -0.2 19  -0.1 20  0 21  0.1 22  0.2 23  0.3 24  0.4 25  0.5 26  0.6 27  0.7 28  0.8 29  0.9 30  1 31  1.1 32  1.2 33  1.3 34  1.4 35  1.5 36  1.6 37  1.7 38  1.8 39  1.9 40  2 41  2.1 42  2.2 43  2.3 44  2.4 45  2.5 46  2.6 47  2.7 48  2.8 49  2.9 50  3
+ draw grid lines fgv g
+ draw velocity vectors fgv v
+
+----- c: image -----     time 0.17   change 0  maxsize 4915200
+ out/cc#ITER is alias for real file out/cc/cc#ITER
+ writing image imagef to file out/cc/cc5.gif, format gif
+
+--------------input from file inn.step.o2c, loops remaining 1
+
+
+--------------input from file stdin, loops remaining 1
+
+
+----- c: printcontrol -----     time 0.2   change 0.03  maxsize 4976640
+
+ printcontrol: stopping normal print on stdout
+
+ printcontrol: resuming print on stdout
+
+----- c: arraydump -----     time 1.8   change 0  maxsize 7766016
+dumping to file out/cc50:   cc
+
+----- c: infile -----     time 1.8   change 0  maxsize 7766016
+
+--------------input from file inn.plotconv, loops remaining 1
+
+
+----- c: keyword -----     time 1.8   change 0  maxsize 7766016
+keyword from out/converge to out/convline
+
+TIME: t
+rmsccm: dum ccmin
+rmsmm: ccrms ccmax dccdtrms dccdtmax dcedtrms
+ dcedtmax
+ total 50 lines to file out/convline
+
+----- c: lineplot -----     time 1.8   change 0  maxsize 7770112
+imagename imageconv datafile out/convline
+ input file Header:  keyword from out/converge
+     Variables: t dum ccmin ccrms ccmax dccdtrms dccdtmax dcedtrms dcedtmax    50 values
+comment for bottom of box:  dcc/dt: red=rms blue=error
+x, then y extend of box: 120 520 140 540 boxcolor, gridcolor 1 7
+axis 1:  time 0.01 1000 0
+axis 2:   1e-17 100 0
+          X-axis, time, from 0.01 to 1000 by 0;   Y-axis, , from 1e-17 to 100 by 0;
+1 of 1 lines: dcc/dt: red=rms blue=error
+        t 0 1 dccdtrms 0 1 2 2 .
+          (t*1 +0) goes from 0.1 to 5
+          (dccdtrms*1 +0) goes from 0.00456113 to 1.8781
+        t 0 1 dcedtmax 0 1 5 2 .
+          (t*1 +0) goes from 0.1 to 5
+          (dcedtmax*1 +0) goes from 2.5573e-11 to 2.58888e-07
+
+----- c: image -----     time 1.8   change 0  maxsize 8994816
+ writing image imageconv to file out/dccdt.gif, format gif
+
+----- c: lineplot -----     time 1.85   change 0.05  maxsize 10268672
+imagename imageconv datafile out/convline
+ input file Header:  keyword from out/converge
+     Variables: t dum ccmin ccrms ccmax dccdtrms dccdtmax dcedtrms dcedtmax    50 values
+comment for bottom of box:  cc min and max
+x, then y extend of box: 120 520 140 540 boxcolor, gridcolor 1 7
+axis 1:  time 0.01 1000 0
+axis 2:   -3 3 1
+          X-axis, time, from 0.01 to 1000 by 0;   Y-axis, , from -3 to 3 by 1;
+        t 0 1 ccmin 0 1 2 2 .
+          (t*1 +0) goes from 0.1 to 5
+          (ccmin*1 +0) goes from -0.155095 to 0
+        t 0 1 ccmax 0 1 5 2 .
+          (t*1 +0) goes from 0.1 to 5
+          (ccmax*1 +0) goes from 2 to 2.20592
+
+----- c: image -----     time 1.85   change 0  maxsize 10268672
+ writing image imageconv to file out/ccrange.gif, format gif
+
+--------------input from file stdin, loops remaining 1
+
+
+----- c: constant -----     time 1.88   change 0.03  maxsize 10334208
+ITERPLOT, type: i, length 1, values 1000
+
+----- c: printcontrol -----     time 1.88   change 0  maxsize 10334208
+
+ printcontrol: stopping normal print on stdout
+
+ printcontrol: resuming print on stdout
+
+----- c: arraydump -----     time 2.28   change 0  maxsize 10412032
+dumping to file out/cc1000:   cc
+
+----- c: infile -----     time 2.28   change 0  maxsize 10412032
+
+--------------input from file inn.plotconv, loops remaining 1
+
+
+----- c: keyword -----     time 2.28   change 0  maxsize 10412032
+keyword from out/converge to out/convline
+
+TIME: t
+rmsccm: dum ccmin
+rmsmm: ccrms ccmax dccdtrms dccdtmax dcedtrms
+ dcedtmax
+ total 1000 lines to file out/convline
+
+----- c: lineplot -----     time 2.29   change 0.01  maxsize 10506240
+imagename imageconv datafile out/convline
+ input file Header:  keyword from out/converge
+     Variables: t dum ccmin ccrms ccmax dccdtrms dccdtmax dcedtrms dcedtmax    1000 values
+comment for bottom of box:  dcc/dt: red=rms blue=error
+x, then y extend of box: 120 520 140 540 boxcolor, gridcolor 1 7
+axis 1:  time 0.01 1000 0
+axis 2:   1e-17 100 0
+          X-axis, time, from 0.01 to 1000 by 0;   Y-axis, , from 1e-17 to 100 by 0;
+1 of 1 lines: dcc/dt: red=rms blue=error
+        t 0 1 dccdtrms 0 1 2 2 .
+          (t*1 +0) goes from 0.1 to 100
+          (dccdtrms*1 +0) goes from 3.93539e-16 to 1.8781
+        t 0 1 dcedtmax 0 1 5 2 .
+          (t*1 +0) goes from 0.1 to 100
+          (dcedtmax*1 +0) goes from 1.23177e-22 to 2.58888e-07
+
+----- c: image -----     time 2.3   change 0.01  maxsize 10784768
+ writing image imageconv to file out/dccdt.gif, format gif
+
+----- c: lineplot -----     time 2.35   change 0.05  maxsize 10784768
+imagename imageconv datafile out/convline
+ input file Header:  keyword from out/converge
+     Variables: t dum ccmin ccrms ccmax dccdtrms dccdtmax dcedtrms dcedtmax    1000 values
+comment for bottom of box:  cc min and max
+x, then y extend of box: 120 520 140 540 boxcolor, gridcolor 1 7
+axis 1:  time 0.01 1000 0
+axis 2:   -3 3 1
+          X-axis, time, from 0.01 to 1000 by 0;   Y-axis, , from -3 to 3 by 1;
+        t 0 1 ccmin 0 1 2 2 .
+          (t*1 +0) goes from 0.1 to 100
+          (ccmin*1 +0) goes from -0.155095 to 0
+        t 0 1 ccmax 0 1 5 2 .
+          (t*1 +0) goes from 0.1 to 100
+          (ccmax*1 +0) goes from 2 to 2.20592
+
+----- c: image -----     time 2.36   change 0.01  maxsize 10924032
+ writing image imageconv to file out/ccrange.gif, format gif
+
+--------------input from file stdin, loops remaining 1
+
+
+----- c: end -----     time 2.39   change 0.03  maxsize 10924032
