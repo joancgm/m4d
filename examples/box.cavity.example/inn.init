@@ -1,0 +1,23 @@
+c: comment ********* initialize variables **************
+c: alias xyz 3 x y z
+c: varinit U1 1 2.
+      2 2 2 1
+     -1. 1. 0. 1. 0. 1. 0.
+      2.  0. 0. 1. 1. 1. 1.
+c: varinit U2 1 -2.
+      2 2 2 1
+     -1. 1. 0. 1. 0. 1. 0.
+     -1. 1. 1. 0. 1. 1. 1.
+c: algebra U1 U1 x "" 1. 1. 1.
+c: algebra U2 U2 y "" 1. 1. 1.
+c: varinit U3 0 0. 0. 0.
+c: varinit rho 0 1. 1. 1.
+c: varinit cc 0 1.05 1.05 1.05
+c: editabcd cc d 1
+         set 0. -1. -.5 0. 0. 0. 1. 0. 0.
+         set 2. -.4 0 0. 0. 0. 1. 0. 0.
+         end
+c: constant ITER i 1 0
+c: constant TIME d 1 0
+
+

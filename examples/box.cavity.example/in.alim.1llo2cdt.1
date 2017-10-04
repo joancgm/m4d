@@ -1,0 +1,40 @@
+c: comment ******** box cavity: convection around 180 degrees (half vortex)
+
+c: constant alim d 1 .1        control volume limit parameter
+c: constant dt d 1 .1          time step
+
+c: infile inn.grid11x6 1       set up grid
+c: infile inn.init 1           initialize variables
+c: infile inn.init.coefLL 1    set up control volumes and coefs
+
+-------- setups and initial plots ----------
+c: constant p.defaultdir s 1 ../../jgm   default dir for color.map etc
+c: gridinfo                                  needed for control volume plot 
+c: constant out/cc#ITER s 1 out/cc/cc#ITER   relocate cc plots
+c: arraydump out/converge alim dt ""         start convergence file
+c: infile inn.plotcv 1         plot control volumes   out/cv0.gif
+c: infile inn.plotcc 1         plot initial concentration
+c: infile inn.plotbarcc 1      plot color bar (do immediately after cc plot)
+
+c: constant ITERPLOT i 1 1    time steps between cc plots
+
+-------------------  start calculation -----------------
+c: infile inn.step.o2c 5     take 5  2nd-order (mid-step-centered) time steps
+
+c: printcontrol off          turn normal print off
+c: infile inn.step.o2c 45    take 45 more time steps
+  
+c: printcontrol on              turn normal print on
+c: arraydump out/cc50 cc ""     save concentration on file
+c: infile inn.plotconv 1        convergence plot   out/dccdt.gif
+
+c: constant ITERPLOT i 1 1000   change time steps between plots to 1000
+c: printcontrol off
+c: infile inn.step.o2c 950      950 more time steps for long time solution
+
+c: printcontrol on  
+c: arraydump out/cc1000 cc ""
+c: infile inn.plotconv 1        redo the convergence plot
+c: end
+
+

@@ -1,0 +1,4 @@
+------- do immediately after inn.plotcc -----------
+c: bar imagebar 200 50 b
+c: image outgif imagebar out/barcc end
+

@@ -1,0 +1,25 @@
+c: comment ----- box cavity 11x6   grid ----------
+c: gridfrommefp geom.cartesian
+  11 6 2 1  
+ -1. -.8 -.6 -.4 -.2 0 .2 .4 .6 .8 1.
+ 0. .2 .4 .6 .8 1.
+ 0. 1.
+ 0.  / input -  master_grid_name, grid_dims, a,b,c,d for calc grid
+
+c: alias idim4d 4 idim jdim kdim tdim
+c: editabcd clt c 1
+        set i -1. -.1 0. 0. 0. 1. 0. 0.
+        set I 0. 0. 0. 0. 0. 1. 0. 0.
+        end                       set inlet to i, vortex center to I 
+
+c: constant csym c 12 x x n y z z s s s s R R  
+   csym sets symmetry and repeat - but only the "R R" will affect the 
+   calcs since neither momentum or pressure will be solved for.
+
+------------------generic grid initializations --------------
+c: gridmatch
+c: set_wherefw -1 s
+c: set_wherep
+c: cvdcinit .5 0   initialize as centered control volumes
+c: set_xyzdouble
+

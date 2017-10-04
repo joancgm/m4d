@@ -1,0 +1,10 @@
+ ----- set control volumes and coefficients using linear profiles -------
+
+c: cvdcinit .5 0           initialize control volumes as centered
+c: cvdcparm alim  0        specify control volume limitations
+c: cvdcreset dum dum2 10.  reset control volumes based on convection
+c: set_xyzdouble
+
+c: coefinit 3         set up for total, convection, time coefficients
+c: coefconv 1         convection to coef 1 using linear profiles
+c: coefdt dt 2 n      time to coef 2 using linear space profiles

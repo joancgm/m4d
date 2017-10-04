@@ -1,0 +1,54 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf320
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue255;\red128\green0\blue128;\red0\green128\blue0;
+}
+\margl1440\margr1440\vieww11120\viewh15640\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\b\fs28 \cf0 Box Cavity Example
+\b0 \
+Unsteady inviscid transient of a conserved species convected around 180 degrees (a half vortex). Demonstrates the adaptive control volume method. Example from paper AIAA-2014-2780, "Using Multi-Dimensional Linear Discretization Over Unsteady Convection Adapted Control Volumes", by Joan G. Moore and John Moore.\
+\
+
+\b \cf2 Unix instructions
+\b0 \cf0  to run the example\
+Bring up a terminal window and cd to box.cavity.example, then \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf2 mkdir out\
+mkdir out/cc\
+../../a.m4d < in.alim.1llo2cdt.1 > out/print\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b \cf3 Input\cf0 /\cf4 Output
+\b0 \cf2 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf0 The primary input file - \cf3 in.alim.1llo2cdt.1\cf0 , uses several other input files for specific tasks.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf3 inn.grid11x6 \cf0 - set up an 11x6 grid using the master geometry, \cf3 geom.cartesian\cf0 , then calculate other geometric arrays.\
+\cf3 inn.init \cf0 - set the fixed velocity and density. Initialize the concentration and parameters ITER and TIME.\
+\cf3 inn.init.coefLL\cf0  - determine the convection adapted control volumes. Set the convection and time term coefficients using linear profiles in space.\
+\cf3 inn.plotcv\cf0  - plot the grid (red) velocity vectors (black) and control volumes (blue). Gives \cf4 out/cv0.gif.\cf0 \
+\cf3 inn.plotcc\cf0  - plot the current concentration as color fill. (Results in dir. \cf4 out/cc\cf0 )\
+\cf3 inn.plotbarcc\cf0  - plot the color bar for the concentration. Gives \cf4 out/ccbar.gif\cf0 .\
+\cf3 inn.step.o2c\cf0  - take 1 time step, with analysis added to file \cf4 out/converge\cf0 .\
+\cf3 inn.plotconv\cf0  - gives lineplot file \cf4 out/convline\cf0 . Then plots  \cf4 out/dccdt.gif  \cf0 and \cf4 out/ccrange.gif\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf0 The concentration after 50 timesteps and 1000 timesteps is dumped to files \cf4 out/cc50\cf0  and \cf4 out/cc1000\cf0  by the primary input file, \cf3 in.alim.1llo2cdt.1.\
+\
+\cf0 Compare results with those obtained by jgm.\cf3 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b \cf0 Post-processing of output by jgm
+\b0 \
+mv out out.jgm.  Delete all concentration plots except ITERs 0,10,50,1000.\
+\
+
+\b Suggestions for variations to try\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b0 \cf0 Copy the primary input file and change the control volume parameter, alim, keeping 0<alim<=0.5. \
+Change the time step.\
+Copy file inn.grid11x6, then set up a finer grid (uniform or nonuniform) by modifying the input to command gridfrommefp.\
+}

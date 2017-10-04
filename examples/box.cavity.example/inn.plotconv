@@ -1,0 +1,25 @@
+c: keyword out/converge out/convline
+   3
+   TIME 1 t
+   rmsccm 2 dum ccmin 
+   rmsmm 6 ccrms ccmax dccdtrms dccdtmax dcedtrms dcedtmax
+
+c: lineplot imageconv out/convline "dcc/dt: red=rms blue=error"
+    120 520 140 540 1 7
+    time .01 1000  0 " " 1e-17 100 0
+    t 1 0 dccdtrms 1 0 2 2 '.'
+    t 1 0 dcedtmax 1 0 5 2 '.'
+    end
+c: image outgif imageconv out/dccdt  end
+
+c: lineplot imageconv out/convline "cc min and max"
+    120 520 140 540 1 7
+    time .01 1000 0 " " -3 3 1
+    t 1 0 ccmin 1 0 2 2 '.'
+    t 1 0 ccmax 1 0 5 2 '.'
+    end
+c: image outgif imageconv out/ccrange  end
+
+
+
+    

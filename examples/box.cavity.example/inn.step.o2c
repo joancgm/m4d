@@ -1,0 +1,29 @@
+----  order 2 time step using ave up and down for convection
+------- eq. for dcc,   (.5coefconv + coeftime)dcc = -(coefconv)cc
+
+c: coefrhs cc rhscc new 1 1.     rhs of eq. 
+c: coefadd 0 2 1 .5 2 1.         coef for dcc    
+
+c: eqnsolves rhscc "" dcc new 2 i I ij 20 end 0    solve eqs (omit i,I pts)
+c: algebra cc "" dcc cc 1. 0. 1.                   update cc  
+       
+c: algebra TIME "" dt TIME 1. 0. 1.        update TIME
+c: edit ITER i 1 n 1 add 1 1 1 end         add 1 to ITER
+
+--------   analysis for convergence plot -------
+c: coefrhs dcc rhscc old 0 1.
+c: eqnsolves rhscc "" dce new 2 i I c 1 end 0
+c: algebra ddt "" dt "" 1. 0. -1.
+c: algebra dccdt "" dcc "" ddt 0. 1.      dcc/dt
+c: algebra dcedt "" dce "" ddt 0. 1.      solve error in dcc/dt
+c: algebra ccm "" cc "" -1 100 1.
+c: rmsminmax ccm ""
+c: algebra rmsccm "" rmsmm "" -1 100 1.   2nd value of rmsccm is min cc
+c: rmsminmax cc dccdt dcedt "" 
+c: arraydumpmore out/converge TIME ITER rmsccm rmsmm ""
+
+-------- plot cc each ITERPLOT time steps -------
+c: if ITER % ITERPLOT continue find NOPLOT
+c: infile inn.plotcc 1
+NOPLOT
+
