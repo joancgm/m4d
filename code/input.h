@@ -1,0 +1,15 @@
+char findstring(FILE *fpin, const char *st);  
+char findword(FILE *fpin, const char *st); 
+double readdouble(FILE *fpin);  
+char *readfilename(FILE *fpin); 
+char *readfilenamep(FILE *fpin);
+float readfloat(FILE *fpin);  
+int  readint(FILE *fpin);    
+char *readline(FILE *fpin);      
+char *readname(FILE *fpin);
+char *readnamep(FILE *fpin);
+char read1charname(FILE *fpin);
+FILE *safefopen(const char *name, const char *how);
+char * setname(char*from);
+char * setname2(char*from,char*from2);
+char * setname3(char*from,char*from2,char*from3);
