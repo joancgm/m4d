@@ -1,0 +1,41 @@
+c: keyword out/converge out/convline
+   5
+   TIME 1 t
+   Rdc 1 Rdc
+   rmsmmstep 16 dU1rms dU1max dU2rms dU2max dU3rms dU3max dpmax dprms
+                U1rms U1max U2rms U2max U3rms U3max ppmax pprms
+   rmsmmsubd 8 ddU1rms ddU1max ddU2rms ddU2max ddU3rms ddU3max 
+                ddprms ddpmax
+   rmsmmdrhodt 2 drhorms drhomax
+c: algebra TIMEd2 "" TIME "" .5 0. 1.
+
+c: lineplot imageU2 out/convline "red=U2max blue=dU2max         green=err dU2max"
+    120 520 140 540 1 7
+     time 0 TIME TIMEd2 " " 1.e-7 1 0
+    t 1 0 U2max 1 0 2 2 '.'
+    t 1 0 dU2max 1 0 5 2 '.'
+    t 1 0 ddU2max 1 0 26 2 '.'
+    end
+
+c: algebra Rdmin "" Rdc "" .7 0. 1.
+c: algebra Rdmax "" Rdc "" 1.3 0. 1.
+c: lineplot imageRd out/convline "                                 calc. Rd"
+    120 520 140 540 1 7
+    time 0 TIME TIMEd2 " " Rdmin Rdmax 1000
+    t 1 0 Rdc 1 0 2 2 '.'
+    end
+
+c: lineplot imagedrho out/convline "continuity errors as drho/dt   red-rms blue-max"
+    120 520 140 540 1 7
+    time 0 TIME TIMEd2 " " 1.e-4 100. 0.
+    t 1 0 drhorms 1 0 2 2 '.'
+    t 1 0 drhomax 1 0 5 2 '.'
+    end
+
+c: image new imageconv 1620 560
+   combine imageconv imageU2 0 0
+   combine imageconv imageRd 540 0
+   combine imageconv imagedrho 1080 0
+   outgif imageconv out/conv  
+   end
+   

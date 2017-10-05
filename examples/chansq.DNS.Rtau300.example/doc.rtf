@@ -1,0 +1,132 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf320
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue255;\red255\green0\blue0;\red0\green0\blue0;
+\red128\green0\blue128;\red0\green128\blue0;\red0\green128\blue64;\red25\green25\blue25;}
+\margl1440\margr1440\vieww16900\viewh17160\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\b\fs28 \cf0 Square Channel "DNS" Rtau=300
+\b0 \
+Unsteady laminar flow in a square channel with a grid too coarse to be DNS. The example is similar (same Rtau) but not identical, to the square channel example in paper AIAA-2014-2780, "Using Multi-Dimensional Linear Discretization Over Unsteady Convection Adapted Control Volumes", by Joan G. Moore and John Moore.\
+\
+The calculations are set up in 6 runs using 3 grids, a coarse grid (grid a, 14x27x27), a grid with refined near wall grid spacings (grid b, 14x35x35), then a grid with refined dx spacing (grid c, 26x35x35). The first run starts from uniform flow; fewer iterations per timestep and a weaker tolerance on continuity errors allows for 'turbulence' to develop from numerical errors. The following runs, 2-6, give more time-accurate results. Each run is started from the results of the previous run.\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b \cf2 Unix instructions
+\b0 \cf0  to run the example\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf0 Bring up a terminal window and cd to chansq.DNS.Rtau300.example then\cf3 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf2 mkdir out\
+../../a.m4d < in.grida0.run1.2steptest > out/print         \cf4 2 timestep test of input\cf2 \
+../../a.m4d < in.grida0.run1 > out/print                        \cf4  the\cf2  \cf4 complete run1 calculation\
+\cf2 mv out out.grida0.run1\
+\
+mkdir out\
+../../a.m4d < in.grida250.run2 > out/print\
+mv out out.grida250.run2\
+\
+mkdir out\
+../../a.m4d < in.gridb300.run3 > out/print\
+mv out out.gridb300.run3\
+\
+mkdir out\
+../../a.m4d < in.gridc350.run4 > out/print\
+mv out out.gridc350.run4\
+\
+mkdir out\
+../../a.m4d < in.gridc375.run5 > out/print\
+mv out out.gridc375.run5 \
+\
+mkdir out\
+../../a.m4d < in.gridc400.run6 > out/print\
+mv out out.gridc400.run6 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b \cf5 Input\cf0 /\cf6 Output\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b0 \cf0 The primary input files, \cf5 in.g\'85..run1-6\cf0 , use other input files for specific tasks. \cf2 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf5 inn.grida.01c.1dx.46x6cyz\
+inn.gridb.006c.1dx.46x6\
+inn.gridc.006c.1dx.24x6\cf3   \cf0 - grid setup files for grids a, b, and c. Set up the grid from the master geometry, \cf5 geom.cartesian\cf0 , set up for block pressure solution, then calculate other geometric arrays.\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b \cf5 Input\cf0 /\cf6 Output \cf0 files common to all runs
+\b0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf5 inn.init\cf0  - initial the velocity (uniform), density, pressure, ITER (timestep count),  and TIME. Set dpdx and the laminar viscosity from parameters D, Rd, Rtau. Note: runs 2-6 override the initial velocity by reading the results from the previous run. \
+\cf5 inn.step.dns \cf0  - take 1 time step. Uses:\
+	\cf5 inn.subiter.dns\cf0  - one iteration over the timestep for velocity and pressure. Uses:		\cf5 inn.cont\cf0  for extra continuity sub-iterations to improve the velocity. \
+Note: inn.step.dns, inn.subiter.dns and inn.cont all add convergence info to \cf6 out/converge.\cf0 \
+	\cf5 inn.unsteadytime\cf0  - add to accumulated sums for determining time averages.\cf5 \
+	inn.dump \cf0 - dump current results to file \cf6 out/u#ITER,\cf0  unsteady sums to \cf7 out/unsteady\cf0 . Uses:\
+		\cf5 inn.unsteadytimeave.sq  \cf0 to calculate time averages,\
+then dumps time average results  to \cf6 out/unsteadyave \cf0 and \cf6 out/unsteadyaveocta.\cf5 \
+	inn.plot \cf0 - Make plots using:\
+		\cf5 inn.plotU \cf0  - U1 contours U2 U3 vectors  at x=0 and x~xmid, \cf6 out/U0x#ITER.gif\cf0 , \cf6 out/Umidx#ITER.gif.\cf5 \
+		inn.plotUxa \cf0 - x/oct ave at current time. Gives \cf6 out/Uxoct#ITER.gif.\cf5 \
+		inn.plotUave \cf0 - time/x ave then oct ave of that. Gives \cf6 out/Uave#ITER.gif, out/Uaveoct#ITER.gif.\cf5 \
+		inn.plotconv \cf0 - convergence plot U2 Rd drho/dt versus time.  Gives \cf6 out/conv.gif.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf0 The primary input file dumps to \cf6 out/varinit\cf0  the results in a form which can be interp. to a different grid.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf5 \
+
+\b \cf5 Restart Files\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b0 \cf5  in.grida250.run2\cf2  \cf0 uses\cf2  \cf5 out.grida0.run1/u500\cf2  \cf0 read with command arrayread (same grid)
+\b \cf5 \
+
+\b0  in.gridb300.run3\cf2  \cf0 uses\cf2  \cf5 out.grida250.run2/varinit\cf2  \cf0 read with command varinit (different grid)
+\b \cf5 \
+
+\b0  in.gridc350.run4\cf2  \cf0 uses\cf2  \cf5 out.gridb300.run3/varinit\cf2  \cf0 read with command varinit (different grid)
+\b \cf5 \
+
+\b0  in.gridc375.run5\cf2  \cf0 uses\cf2  \cf5 out.gridc350.run4/u200\cf2  \cf0 read with command arrayread (same grid)
+\b \cf5 \
+
+\b0  in.gridc400.run6\cf2  \cf0 uses\cf2  \cf5 out.gridc375.run5/u200\cf2  \cf0 read with command arrayread (same grid)\
+\cf5 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b \cf0 Summary of runs and their differences\
+                                                         
+\b0  parameters                                   At end of run                  C.P.U (jgm)  overall Rd\cf5 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf8 run   start_from   grid dy_n.w.  dx     dt  SUBITERS  ITCONT drhodtlim  timesteps   t start-end                       min    max\
+ 1     uniform        a     0.01    0.46   0.5         5             5           0.3           500           0-250             37 min      4121 4777\
+ 2     run1             a     0.01    0.46   0.25       7            10          0.03         200           250-300         24 min     4690  4956\
+ 3     run2             b     0.006  0.46   0.25       7            10          0.03         200           300-350         51 min     4949  5112\
+ 4     run3             c     0.006  0.24   0.125     7            10          0.03         200           350-375         94 min     5112  5207\
+ 5     run4             c     0.006  0.24   0.125     7            10          0.03         200           375-400         96 min     5207  5254\
+ 6     run5             c     0.006  0.24   0.125     7            10          0.03         200           400-425         90 min     5232  5251\cf3 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf3 												                               \cf0 Total      6.5 hrs \cf3   \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf0 \
+Compare results with those obtained by jgm. Note turbulence is chaos. Very small changes in starting conditions, or roundoff simply from a different compilation of the code, can result in different instantaneous results. However, the average results should be similar over long periods of time.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf5 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b \cf0 Post-processing of output by jgm\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b0 \cf0 Reduce out/print files to cover only up to the start of the calculation, then the final c: end. \
+Delete restart files of form out/u200 but keep the ones of form out/varinit which can be used to restart on the same or a different grid.\
+Delete unsteady results files out/unsteady, out/unsteadyave and out/unsteadyaveoct.\
+Also delete some plot files.\
+Move all results directories into out.jgm.
+\b \
+
+\b0 \cf3 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf3 \
+}

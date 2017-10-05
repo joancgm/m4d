@@ -1,0 +1,21 @@
+--------------   dump output ---------------
+c: copy_ptom pp pm
+c: arraydump out/u#ITER U1 U2 U3 pm ""
+
+c: if nosteps > 0 continue find NOUNSTEADY
+
+-------------- dump unsteady sums ---------------------
+c: arraydump out/unsteady nosteps timetot U1sum U2sum U3sum ""
+c: arraydumpmore out/unsteady U1U1sum U1U2sum U1U3sum U2U2sum U2U3sum U3U3sum ""
+
+------------ time ave results and stats -----------------
+c: infile inn.unsteadytimeave.sq 1
+
+c: arraydump out/unsteadyave U1ave U2ave U3ave ""
+c: arraydumpmore out/unsteadyave u1u1ave u1u2ave u1u3ave u2u2ave u2u3ave u3u3ave ""
+
+c: arraydump out/unsteadyaveocta U1aveoct U2aveoct U3aveoct ""
+c: arraydumpmore out/unsteadyaveocta u1u1aveoct  u3u3aveoct ""
+
+NOUNSTEADY
+

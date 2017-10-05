@@ -1,0 +1,34 @@
+o: comment ****** unsteady analysis ****
+c: if nosteps > 0 find ADDSTEP continue
+c: constant nosteps d 1 0.
+c: constant timetot d 1 0.
+c: varinit U1sum 0 0 0 0
+c: varinit U2sum 0 0 0 0
+c: varinit U3sum 0 0 0 0
+c: varinit U1U1sum 0 0 0 0
+c: varinit U1U2sum 0 0 0 0
+c: varinit U1U3sum 0 0 0 0
+c: varinit U2U2sum 0 0 0 0
+c: varinit U2U3sum 0 0 0 0
+c: varinit U3U3sum 0 0 0 0
+
+ADDSTEP
+c: algebra nosteps "" nosteps "" 1. 1. 1.
+c: algebra timetot "" dt timetot 1. 0. 1.
+c: algebra U1sum "" U1 U1sum  dt 0. 1.
+c: algebra U2sum "" U2 U2sum  dt 0. 1.
+c: algebra U3sum "" U3 U3sum  dt 0. 1.
+c: algebra temp U1 U1 "" 1. 0. 1.
+c: algebra U1U1sum "" temp U1U1sum  dt 0. 1.
+c: algebra temp U1 U2 "" 1. 0. 1.
+c: algebra U1U2sum "" temp U1U2sum  dt 0. 1.
+c: algebra temp U1 U3 "" 1. 0. 1.
+c: algebra U1U3sum "" temp U1U3sum  dt 0. 1.
+c: algebra temp U2 U2 "" 1. 0. 1.
+c: algebra U2U2sum "" temp U2U2sum  dt 0. 1.
+c: algebra temp U2 U3 "" 1. 0. 1.
+c: algebra U2U3sum "" temp U2U3sum  dt 0. 1.
+c: algebra temp U3 U3 "" 1. 0. 1.
+c: algebra U3U3sum "" temp U3U3sum  dt 0. 1.
+
+

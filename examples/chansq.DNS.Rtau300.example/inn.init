@@ -1,0 +1,22 @@
+c: comment ----- init uniform flow, viscosity from specified Rd
+c: varinit U1 0 1. 0. 0.
+c: varinit U2 0 0.  0. 0.
+c: varinit U3 0 0. 0. 0.
+c: varinit rho 0 1. 1. 1.
+c: edit pp d 3 i 1 j 1 k 1
+        set 0 1 idimp 1 jdimp 1 kdimp  end
+c: constant ITER i 1 0   
+c: constant TIME d 1 0
+c: algebra Utau Rtau Rd "" 1. 0. -1.       Utau/Uave = Utau (Uave=1)
+c: algebra dpdx Utau D "" 1. 0. -1.        dpdx=Utau/D  (part 1)
+c: algebra dpdx dpdx Utau "" -4. 0. 1.     dpdx=-4Utau^2/D  (final)
+
+------------------- laminar viscosity = D/Rd (U=1 rho=1) ----------
+c: algebra vlamc D Rd "" 1. 0. -1.  
+c: edit vlam d 3 i -1 j -1 k -1
+            set vlamc 1 idim 1 jdim 1 kdim  end
+
+
+
+
+

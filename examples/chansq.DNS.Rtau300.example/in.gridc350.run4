@@ -1,0 +1,46 @@
+c: comment square channel:  Gavrilakis1992 or Piomelli2010 conditions
+
+c: constant Rd d 1  4410	estimated Reynolds number
+c: constant Rtau d 1 300        for fixed pressure gradient           
+
+ ----------------- set up grid and initialize properties --------------
+c: infile inn.gridc.006c.1dx.24x6 1      set grid
+c: infile inn.init 1	                initialize variables
+  ----------------- input properties from different grid ------
+c: varinit out.gridb300.run3/varinit 3  
+
+---------------- set up for plot output---------------
+c: constant p.defaultdir s 1 ../../jgm    default dir for color.map etc
+c: infile inn.plotU 1              plot initial velocity
+
+----------------- set up calculation parameters ----------
+c: cvdcparm .1   1  w f .5         control vol. movement limits
+c: coefinit 4  		           total coef sets needed
+c: constant PSREP2 i 1 5           p-solve repeats
+c: constant dt d 1 .125            time step
+c: constant SUBITERS i 1 7	   iterations per time step
+c: constant ITCONT i 1 10          max continuity sub iterations
+c: constant drhodtlim d 1 .03      continuity check limit
+
+-------- start convergence file --------
+c: arraydump out/converge Rd Rtau vlamc dpdx dt SUBITERS drhodtlim idim4d ""
+
+--------------- set up output parameters ------------------
+c: constant ITERDUMP i 1 2           time steps between dumps
+c: constant ITERPLOT i 1 2           time steps between plots
+
+---------------- start calculation ---------------------
+c: infile inn.step.dns 2
+comit: end        change comit to c to stop here (input check)
+
+c: constant ITERDUMP i 1 50           time steps between dumps
+c: constant ITERPLOT i 1 50           time steps between plots
+c: printcontrol off                   no print for bulk of calc
+c: infile inn.step.dns 196
+c: printcontrol on         turn print on again for last 2 steps
+c: infile inn.step.dns 2
+------------ save results so can be interp to a different grid ------
+c: arraydump out/varinit idim4d abcd U1 U2 U3 ""
+
+c: end
+

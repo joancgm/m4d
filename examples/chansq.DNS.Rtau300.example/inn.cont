@@ -1,0 +1,33 @@
+----- repeat continuity,  if needed
+c: if ITERSC > ITCONT find NOMORE0 continue
+------- check if needed ----------
+-------- turn continuity error into a drho/dt----------
+c: contrhsu                    	rhs based on rho and U
+c: eqppts2ppts rhsc rhscp 0
+c: copy_ptom rhscp rhscm
+c: algebra drhodt rhscm volcont "" 1. 0. -1.
+c: rmsminmax drhodt ""
+c: copy rmsmm rmsmmdrhodt
+c: edit ITERSC i 1 n 1 add 1 1 1 end
+c: arraydumpmore out/converge ITERSC rmsmmdrhodt ""
+c: if rmsmmdrhodt < drhodtlim continue find NEEDMORE
+c: edit ITERSC i 1 n 1 add ITCONT 1 1 end
+c: if rmsmmdrhodt < drhodtlim find NOMORE1 continue
+
+---------- yes needed ---------
+NEEDMORE
+c: copy U1 U1bcont
+c: copy U2 U2bcont
+c: copy U3 U3bcont
+o: contrhsp                   		add  permanent p-mod for stability
+c: eqnsolvep pqpijkikj PSREP2 end 0
+c: contdu                         	Update U based on dp
+c: algebra dU1cont "" U1bcont U1 -1. 0. 1.
+c: algebra dU2cont "" U2bcont U2 -1. 0. 1.
+c: algebra dU3cont "" U3bcont U3 -1. 0. 1.
+c: rmsminmax dU1cont dU2cont dU3cont dp ""
+c: copy rmsmm rmsmmcont
+c: arraydumpmore out/converge rmsmmcont ""
+NOMORE1
+NOMORE0
+

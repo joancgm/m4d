@@ -1,0 +1,4 @@
+c: infile inn.grida.01c.1dx.46x6cyz 1      set grid
+c: arrayread 1 out.grida0/u500
+c: arraydump out/varinit idim4d abcd U1 U2 U3 ""
+c: end

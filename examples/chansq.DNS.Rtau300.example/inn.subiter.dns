@@ -1,0 +1,93 @@
+--------  time step sub-iteration ---------------------
+c: if ITERS > SUBITERS find NOITERS continue
+c: copy U1 U1a
+c: copy U2 U2a
+c: copy U3 U3a
+c: copy pp ppa
+
+-------- set control volumes and related arrays  ---------
+c: cvdcreset vlam dumdt 10.
+c: set_xyzdouble
+c: set_volmom
+c: set_cpsleep
+c: set_cpda  .0 .05 .5 .15 0  1 i
+c: set_cpflop
+c: coefvisc vlam 2               laminar coef to set 2
+c: coefdt dt 3 n                 time coefficient to set 3
+
+--------- uptime source, dpdx .5 conv, .5 laminar -----------
+c: copy U1up U1
+c: copy U2up U2
+c: copy U3up U3
+c: coefconv 1                    convection coef to set 1
+c: coefadd 0 3 1 .5 2 .5 3 -1
+c: momrhsr new 0 dpdx ""
+c: copy rhsU1 rhsU1up
+c: copy rhsU2 rhsU2up
+c: copy rhsU3 rhsU3up
+
+-------------------- downtime -----------------------
+c: copy U1a U1
+c: copy U2a U2
+c: copy U3a U3
+c: coefconv 1
+c: coefadd 0 3 1 .5 2 .5 3 1.           downtime coefs
+c: momcam 0.
+
+o: comment update velocity from momentum
+c: momrhsr new 0 pp ""
+c: algebra rhsU1 "" rhsU1 rhsU1up 1. 0. 1.
+c: algebra rhsU2 "" rhsU2 rhsU2up 1. 0. 1.
+c: algebra rhsU3 "" rhsU3 rhsU3up 1. 0. 1.
+c: eqnupdatem 1 2 i w           	update U1 U2 U3 saving dU1 dU2 dU3
+
+--------- equations for pressure, i.e. continuity -----------
+c: contcpcdu
+c: contcpcfixed   1. 1. .5 -1 0 -20
+c: contrhsu                    		rhs based on rho and U
+c: contrhsp                   		add  permanent p-mod for stability
+
+---------- solve for pressure change dp -------------------
+c: if PSLEVEL = 3 find GOTOPSLEVEL3 continue
+c: eqnsolvep  cijk 1 c 1 pqpijkikj PSREP2 c 1 end 0                     solve for dp level 2
+GOTOPSLEVEL3
+
+c: if PSLEVEL = 3 continue find ENDPSL3
+c: eqnsolvep  cijk 1 pqpijk PSREP2 pqrqpijk PSREP3 ijk 1 c 1 end 0   solve for dp level 3
+ENDPSL3
+------------- copy p convergence analysis ----------
+c: copy eqnerrp eqnerrpe
+c: if ITERS = 1 continue find ITERSNOT1
+c: copy eqnerrp eqnerrp1
+ITERSNOT1
+
+------------------- update velocity and pressure -------------------
+c: contdu                         	Update U based on dp
+c: algebra pp "" pp dp 1. 0. 1.   	Update pp
+---------- continuity subiters for velocity only ---------
+c: constant ITERSC i 1 0
+c: infile inn.cont ITCONT
+
+--------------  convergence analysis  ----------
+--------------  change last subiter   -------
+c: algebra dU1 "" U1a U1 -1. 0. 1.
+c: algebra dU2 "" U2a U2 -1. 0. 1.
+c: algebra dU3 "" U3a U3 -1. 0. 1.
+c: algebra dp "" ppa pp -1. 0. 1.
+c: rmsminmax dU1 dU2 dU3 dp ""
+c: copy rmsmm rmsmmsubd
+-----------   change over step  ------------------
+c: algebra dU1 "" U1up U1 -1. 0. 1.
+c: algebra dU2 "" U2up U2 -1. 0. 1.
+c: algebra dU3 "" U3up U3 -1. 0. 1.
+c: rmsminmax dU1 dU2 dU3 pp ""
+c: copy rmsmm rmsmmd
+
+------------ ratio and dumpmore subiter convergence ----------
+c: algebra rmsmmr rmsmmsubd rmsmmd "" 1. 0. -1.
+c: arraydumpmore out/converge ITERS rmsmmr eqnerrp cvdcrms ""
+
+c: edit ITERS i 1 n 1  add 1  1 1  end
+NOITERS
+
+

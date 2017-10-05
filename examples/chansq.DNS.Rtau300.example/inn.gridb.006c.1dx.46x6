@@ -1,0 +1,45 @@
+c: comment  SQUARE CHANNEL grid D=2
+-------------- set up grid and boundary conditions ---------
+c: constant D d 1 2.
+c: gridfrommefp geom.cartesian 
+   14 35 35 1 
+0 0.46 .92 1.38 1.85 2.31 2.77 3.23 3.69 4.15
+4.62 5.08 5.54 6
+ -1  -.994 -.9853  -.9785 -.9684 -.9536 -.9319 -.9  -.853 -.785 
+-.7 -.6 -.5 -.4 -.3 -.2 -.1 0 .1 .2 
+.3 .4 .5 .6 .7  .785 .853 .9 .9319 .9536 
+.9684 .9785  .9853 .994 1.
+ -1  -.994 -.9853  -.9785 -.9684 -.9536 -.9319 -.9  -.853 -.785 
+-.7 -.6 -.5 -.4 -.3 -.2 -.1 0 .1 .2 
+.3 .4 .5 .6 .7  .785 .853 .9 .9319 .9536 
+.9684 .9785  .9853 .994 1.
+0./ input - master_grid_name, grid_dims, a,b,c,d for calc grid
+
+c: alias idim4d 4 idim jdim kdim tdim
+c: edit clt c 3 i 0 j 0 k 0
+   set w 1 idim 1 jdim 1 1
+   set w 1 idim 1 jdim kdim kdim
+   set w 1 idim 1 1 1 kdim
+   set w 1 idim jdim jdim 1 kdim 
+   end    		             set walls to w
+
+c: constant csym c 12 n n n n n n r r s s s s   symmetry and repeat
+c: constant axmplot d 1 3.23     for velocity plot, see inn.plotU
+
+------------- info for block pressure solution for THIS grid ----
+c: constant ipfix i 4 2 18 18 0
+c: blocksetabc p 14 15 15
+-1 -.9536  -.9  -.785 -.6  -.4  -.2  0  .2 .4 .6 .785 .9 .9536 1.
+-1 -.9536  -.9  -.785 -.6  -.4  -.2  0  .2 .4 .6 .785 .9 .9536 1.
+c: blocksetabc q 14 9 9
+-1 -.9536   -.785  -.4   0  .4  .785  .9536 1.
+-1 -.9536   -.785  -.4   0  .4  .785  .9536 1.
+------------------generic grid initializations --------------
+c: gridmatch
+c: set_wherefw -1 s
+c: set_wherep
+c: cvdcinit .5 0   
+c: set_xyzdouble
+c: alias idim4dp 4 idimp jdimp kdimp tdimp
+c: set_volcont
+

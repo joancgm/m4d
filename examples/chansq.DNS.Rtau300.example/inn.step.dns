@@ -1,0 +1,42 @@
+------- laminar unsteady time step  -------
+------- copy arrays at up-time of timestep -------------------
+c: copy U1 U1up
+c: copy U2 U2up
+c: copy U3 U3up
+c: copy pp ppup
+
+--------- do SUBITER iterations per time step for U and pp -----
+c: algebra pp "" pp "" 0. 0. 1.       clear pp
+c: constant ITERS i 1 1
+c: infile inn.subiter.dns SUBITERS
+
+c: edit ITER i 1 n 1  add 1  1 1  end   
+c: algebra TIME "" TIME dt 1. 0. 1.
+
+---------------- dump convergence info for step ---------------
+----- ( some items were set by inn.subiter.dns ) -------
+c: areaflowint a 1 -100 100 -100 100 U1  ""   calc Rd
+c: copypart averages 1 x 8 8 8
+            u1ave 1 x 1 1 1
+c: algebra Rdc u1ave D "" 1. 0. 1.
+c: algebra Rdc Rdc vlamc "" 1. 0. -1.
+
+c: algebra dp "" ppup pp -1. 0. 1.           change in pressure
+c: rmsminmax dU1 dU2 dU3 dp U1 U2 U3 pp ""
+c: copy rmsmm rmsmmstep 
+c: arraydumpmore out/converge TIME ITER Rdc rmsmmstep rmsmmsubd 
+                 eqnerrp1 eqnerrpe cvdcrms rmsmmdrhodt ""
+
+---------------- update time sums for time ave analysis --------
+c: infile inn.unsteadytime 1
+
+------------------ dump each ITERDUMP time steps ------------
+c: if ITER % ITERDUMP continue find NODUMP
+c: infile inn.dump 1
+NODUMP
+-------------------plot each ITERPLOT time steps ---------------
+c: if ITER % ITERPLOT continue find NOPLOT
+c: infile inn.plot 1
+NOPLOT
+
+

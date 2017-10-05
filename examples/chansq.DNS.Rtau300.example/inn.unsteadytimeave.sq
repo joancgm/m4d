@@ -1,0 +1,50 @@
+----------take averages from inn.unsteady accumulations ----
+c: algebra div "" timetot "" 1. 0. -1.
+c: algebra U1ave "" U1sum "" div 0. 1.
+c: algebra U2ave "" U2sum "" div 0. 1.
+c: algebra U3ave "" U3sum "" div 0. 1.
+c: algebra u1u1ave "" U1U1sum "" div 0. 1.
+c: algebra temp U1ave U1ave "" 1. 0. 1.
+c: algebra u1u1ave "" temp u1u1ave -1. 0. 1.
+c: algebra u1u2ave "" U1U2sum "" div 0. 1.
+c: algebra temp U1ave U2ave "" 1. 0. 1.
+c: algebra u1u2ave "" temp u1u2ave -1. 0. 1.
+c: algebra u1u3ave "" U1U3sum "" div 0. 1.
+c: algebra temp U1ave U3ave "" 1. 0. 1.
+c: algebra u1u3ave "" temp u1u3ave -1. 0. 1.
+c: algebra u2u2ave "" U2U2sum "" div 0. 1.
+c: algebra temp U2ave U2ave "" 1. 0. 1.
+c: algebra u2u2ave "" temp u2u2ave -1. 0. 1.
+c: algebra u2u3ave "" U2U3sum "" div 0. 1.
+c: algebra temp U2ave U3ave "" 1. 0. 1.
+c: algebra u2u3ave "" temp u2u3ave -1. 0. 1.
+c: algebra u3u3ave "" U3U3sum "" div 0. 1.
+c: algebra temp U3ave U3ave "" 1. 0. 1.
+c: algebra u3u3ave "" temp u3u3ave -1. 0. 1.
+
+---------------  take octant average from these ------------
+c: aveijk U1ave temp n I n ""
+c: algebra temp "" U1ave temp 1. 0. 1.
+c: algebra temp "" temp "" .5 0. 1.
+c: aveijk temp U1aveoct s m m ""
+
+c: aveijk U3ave temp n I n U2ave temp2 n I n ""
+c: algebra temp "" U2ave temp 1. 0. 1.
+c: algebra temp "" temp "" .5 0. 1.
+c: aveijk temp U2aveoct s M m ""
+c: algebra temp "" U3ave temp2 1. 0. 1.
+c: algebra temp "" temp "" .5 0. 1.
+c: aveijk temp U3aveoct s m M ""
+
+c: aveijk u1u1ave temp n I n ""
+c: algebra temp "" u1u1ave temp 1. 0. 1.
+c: algebra temp "" temp "" .5 0. 1.
+c: aveijk temp u1u1aveoct s m m ""
+
+c: aveijk u2u2ave  temp n I n ""
+c: algebra temp  "" u3u3ave  temp 1. 0. 1.
+c: algebra temp  "" temp  "" .5 0. 1.
+c: aveijk temp u3u3aveoct s m m ""
+
+
+
