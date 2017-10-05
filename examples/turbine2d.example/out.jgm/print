@@ -1,0 +1,3425 @@
+
+M4D - a research CFD code by Joan G. Moore
+  for steady or time accurate calculations
+  for inviscid, laminar or turbulent flow
+              Features: 
+    Convection adapted control volumes
+The transitional MARVS Reynolds stress model
+            Version 2015.2
+
+
+----- c: comment -----     time 0   change 0  maxsize 376832
+Langston cascade, Butler high turbulence conditions
+
+----- c: constant -----     time 0   change 0  maxsize 389120
+xchord, type: d, length 1, values 0.171
+
+----- c: constant -----     time 0   change 0  maxsize 405504
+Re, type: d, length 1, values 66000
+
+----- c: infile -----     time 0   change 0  maxsize 405504
+
+--------------input from file inn.grid164x86, loops remaining 1
+
+
+----- c: comment -----     time 0   change 0  maxsize 409600
+langston cascade 2d scaled
+
+----- c: gridfrommefp -----     time 0   change 0  maxsize 409600
+ master geometry: MEFP style gridfile= grid.vpic.015.164.86.2
+grid at it=0
+164 86 2 1
+a= -0.8 to 1.6, b= -0.5 to 1.5, c= 0 to 1
+
+calculation grid 164 by 86 by 2 by 1
+dim 164 parm=  -0.8 -0.75 -0.7 -0.65 -0.6 -0.55 -0.5 -0.45 -0.4 -0.35
+           -0.3 -0.25 -0.2 -0.15 -0.11719 -0.07818 -0.05237 -0.03518 -0.02364 -0.015
+           -0.01 -0.00681 -0.00464 -0.00316 -0.00215 -0.00147 -0.001 -0.000681 -0.000464 -0.000316
+           -0.000215 -0.000147 -6.81e-05 0 0.00625 0.0125 0.02225 0.032 0.041 0.05
+           0.0565 0.063 0.0695 0.076 0.0845 0.093 0.1015 0.11 0.127 0.144
+           0.16095 0.1779 0.1948 0.2117 0.2286 0.2455 0.26245 0.2794 0.29635 0.3133
+           0.3302 0.3471 0.36405 0.381 0.3979 0.4148 0.43185 0.4489 0.4659 0.4829
+           0.49995 0.517 0.534 0.551 0.56785 0.5847 0.6015 0.6183 0.635 0.652
+           0.6688 0.6856 0.7025 0.7195 0.7364 0.7533 0.77 0.7872 0.804 0.821
+           0.838 0.855 0.872 0.889 0.902 0.915 0.9215 0.928 0.9345 0.941
+           0.944 0.947 0.95 0.953 0.9545 0.956 0.9575 0.959 0.9605 0.962
+           0.9635 0.965 0.9695 0.974 0.9785 0.983 0.98725 0.9915 0.99575 1
+           1.00007 1.00015 1.00022 1.00032 1.00046 1.00068 1.001 1.00147 1.00215 1.00316
+           1.00464 1.00681 1.01 1.015 1.021 1.025 1.03 1.035 1.0425 1.05
+           1.0625 1.075 1.0875 1.1 1.125 1.15 1.175 1.2 1.225 1.25
+           1.275 1.3 1.325 1.35 1.375 1.4 1.425 1.45 1.475 1.5
+           1.525 1.55 1.575 1.6
+dim 86 parm=  -0.5 -0.45 -0.4 -0.35 -0.3 -0.25 -0.2 -0.15 -0.1 -0.067
+           -0.05 -0.033 -0.023 -0.015 -0.01 -0.00681 -0.00464 -0.00316 -0.00215 -0.00147
+           -0.001 -0.000681 -0.000464 -0.000316 -0.000215 -0.000147 -6.81e-05 0 0.0085 0.017
+           0.0335 0.05 0.075 0.1 0.175 0.25 0.3125 0.375 0.4375 0.5
+           0.5625 0.625 0.6875 0.75 0.8 0.85 0.9 0.95 0.975 1
+           1.00007 1.00015 1.00022 1.00032 1.00046 1.00068 1.001 1.00147 1.00215 1.00316
+           1.00464 1.00681 1.01 1.015 1.024 1.0386 1.0534 1.0659 1.0844 1.112
+           1.131 1.15 1.175 1.2 1.225 1.25 1.275 1.3 1.325 1.35
+           1.375 1.4 1.425 1.45 1.475 1.5
+dim 2 parm=  0 1
+dim 1 parm=  0
+
+----- c: algebra -----     time 0.03   change 0.03  maxsize 1945600
+xyz =  *(0.171 * xyz + 0)^1 + 
+
+----- c: constant -----     time 0.03   change 0  maxsize 1953792
+csym, type: c, length 12, values n n n n z z s n r r R R
+
+----- c: blocksetabc -----     time 0.03   change 0  maxsize 1957888
+ creating blockijkp for 25 by 12 by 1 blocks
+ read a b or c 26
+ -0.8 -0.7 -0.6 -0.5 -0.4 -0.3 -0.2 -0.1 -0.05 0.05 0.15 0.25 0.35 0.45 0.55 0.65 0.75 0.85 0.95 1.05 1.1 1.2 1.3 1.4 1.5 1.6
+bl0 1 3 5 7 9 11 13 16 18 40 51 57 63 69 74 80 86 92 103 140 144 148 152 156 160 164
+ipinb0 -1 0 0 1 1 2 2 3 3 4 4 5 5 6 6 6 7 7 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 9 9 9 9 9 9 9 9 9 9 9 10 10 10 10 10 10 11 11 11 11 11 11 12 12 12 12 12 12 13 13 13 13 13 14 14 14 14 14 14 15 15 15 15 15 15 16 16 16 16 16 16 17 17 17 17 17 17 17 17 17 17 17 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 19 19 19 19 20 20 20 20 21 21 21 21 22 22 22 22 23 23 23 23 24 24 24 24 -1
+ read a b or c 13
+ -0.5 -0.4 -0.3 -0.2 -0.1 -0.05 0.5 1.05 1.1 1.2 1.3 1.4 1.5
+bl1 1 3 5 7 9 11 40 67 70 74 78 82 86
+ipinb1 -1 0 0 1 1 2 2 3 3 4 4 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 7 7 7 8 8 8 8 9 9 9 9 10 10 10 10 11 11 11 11 -1
+ individual lines for  2 
+bl2 1 2
+ipinb2 -1 0 -1
+
+----- c: blocksetabc -----     time 0.03   change 0  maxsize 1966080
+ creating blockijkq for 25 by 12 by 1 blocks
+ read a b or c 26
+ -0.8 -0.7 -0.6 -0.5 -0.4 -0.3 -0.2 -0.1 -0.05 0.05 0.15 0.25 0.35 0.45 0.55 0.65 0.75 0.85 0.95 1.05 1.1 1.2 1.3 1.4 1.5 1.6
+bl0 1 3 5 7 9 11 13 16 18 40 51 57 63 69 74 80 86 92 103 140 144 148 152 156 160 164
+ipinb0 -1 0 0 1 1 2 2 3 3 4 4 5 5 6 6 6 7 7 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 9 9 9 9 9 9 9 9 9 9 9 10 10 10 10 10 10 11 11 11 11 11 11 12 12 12 12 12 12 13 13 13 13 13 14 14 14 14 14 14 15 15 15 15 15 15 16 16 16 16 16 16 17 17 17 17 17 17 17 17 17 17 17 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 19 19 19 19 20 20 20 20 21 21 21 21 22 22 22 22 23 23 23 23 24 24 24 24 -1
+ read a b or c 13
+ -0.5 -0.4 -0.3 -0.2 -0.1 -0.05 0.5 1.05 1.1 1.2 1.3 1.4 1.5
+bl1 1 3 5 7 9 11 40 67 70 74 78 82 86
+ipinb1 -1 0 0 1 1 2 2 3 3 4 4 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 7 7 7 8 8 8 8 9 9 9 9 10 10 10 10 11 11 11 11 -1
+ individual lines for  2 
+bl2 1 2
+ipinb2 -1 0 -1
+
+----- c: gridmatch -----     time 0.03   change 0  maxsize 1966080
+ match consolidation for 210 points
+ match consolidation for 0 points
+10611 sleeping internal continuity volumes
+matchpc simplifcation at 392 points
+matchpc simplifcation at 0 points
+match repeating boundary set for L= 1
+
+----- c: set_wherefw -----     time 0.04   change 0.01  maxsize 2670592
+form wherefw excluding point types  s
+ 8669 independent points, each t 0 8669
+
+----- c: set_wherep -----     time 0.04   change 0  maxsize 2826240
+nop 10461
+set wherep,  whoisp, noindppts =   10461  0  10461
+
+----- c: cvdcinit -----     time 0.05   change 0.01  maxsize 3088384
+cvdc>= 0.5 and cvdc<= 0.5 
+ set 7012 missed sleeping faces
+
+----- c: set_xyzdouble -----     time 0.11   change 0.06  maxsize 6701056
+
+----- c: alias -----     time 0.12   change 0.01  maxsize 11780096
+alias for idim4d 4 parts idim jdim kdim tdim
+
+----- c: alias -----     time 0.12   change 0  maxsize 11780096
+alias for idim4dp 4 parts idimp jdimp kdimp tdimp
+
+----- c: edit -----     time 0.12   change 0  maxsize 11780096
+ name clt,   type c,  3 dims  i 164 j 86 k 2
+ r  f to  i         1 1      1 86      1 2
+ e  end edit
+
+----- c: cvdcparm -----     time 0.12   change 0  maxsize 11792384
+cvdc>= 0.01 and cvdc<= 0.99 
+  from f to i cvdc>= 0.99
+  from w to f cvdc>= 0.5
+
+----- c: wallnorm -----     time 0.12   change 0  maxsize 11792384
+nunber of independent wall point = 216
+
+--------------input from file stdin, loops remaining 1
+
+
+----- c: infile -----     time 0.12   change 0  maxsize 11808768
+
+--------------input from file inn.init.ButlerTu, loops remaining 1
+
+
+----- c: comment -----     time 0.12   change 0  maxsize 11808768
+----- init Butler, high turbulence, specified Re
+
+----- c: varinit -----     time 0.12   change 0  maxsize 11808768
+set U1: format 0  flow 0.71934, wall 0, solid 0
+
+----- c: varinit -----     time 0.12   change 0  maxsize 12042240
+set U2: format 1 fac=0.69466
+ a  -1 0.2 1 2
+ factors: 1 1 -1 -1
+ b factor: 1
+ c factor: 1
+ d factor: 1
+
+----- c: varinit -----     time 0.12   change 0  maxsize 12279808
+set wallzero: format 0  flow 1, wall 0, solid 0
+
+----- c: algebra -----     time 0.12   change 0  maxsize 12509184
+U2 = wallzero *(1 * U2 + 0)^1 + 
+
+----- c: varinit -----     time 0.12   change 0  maxsize 12509184
+set U3: format 0  flow 0, wall 0, solid 0
+
+----- c: varinit -----     time 0.12   change 0  maxsize 12738560
+set rho: format 0  flow 1, wall 1, solid 1
+
+----- c: edit -----     time 0.12   change 0  maxsize 12967936
+ name pp,   type d,  3 dims  i 165 j 87 k 3
+ Array pp created and cleared
+ s -0.5          1 165      1 87      1 3
+ e  end edit
+
+----- c: constant -----     time 0.12   change 0  maxsize 13316096
+ppinlet, type: d, length 1, values -0.5
+
+----- c: varinit -----     time 0.12   change 0  maxsize 13316096
+set qturb: format 0  flow 0.1356, wall 0, solid 0
+
+----- c: varinit -----     time 0.12   change 0  maxsize 13545472
+set omturb: format 0  flow 1.164, wall 1.164, solid 1.164
+
+----- c: edit -----     time 0.12   change 0  maxsize 13774848
+ name bij,   type d,  4 dims  i 164 j 86 k 2 L 6
+ Array bij created and cleared
+ s 0          1 164      1 86      1 2      1 6
+ e  end edit
+
+----- c: constant -----     time 0.13   change 0.01  maxsize 15130624
+qmin, type: d, length 1, values 0.0001
+
+----- c: constant -----     time 0.13   change 0  maxsize 15130624
+ommin, type: d, length 1, values 0.1
+
+----- c: algebra -----     time 0.13   change 0  maxsize 15130624
+vlamc = xchord *(1 * Re + 0)^-1 + 
+
+----- c: edit -----     time 0.13   change 0  maxsize 15130624
+ name vlam,   type d,  3 dims  i 163 j 85 k 1
+ Array vlam created and cleared
+ s 2.59091e-06          1 163      1 85      1 1
+ e  end edit
+
+----- c: areaflowint -----     time 0.13   change 0  maxsize 15241216
+integration for a=-0.8, b=-0.5 to 1.5, c=0 to 1
+properties:
+   a,b,or c  area  flow+ flow- flow  (property averages)
+AFINT a-0.8 0.0139165  0.0100107 0  0.0100107
+
+----- c: copypart -----     time 0.13   change 0  maxsize 15249408
+from averages  1
+ a 7 7 7
+to flowrate 1
+ a 1 1 1
+ flowrate not found so it is  being created d 1
+
+----- c: exitinit -----     time 0.13   change 0  maxsize 15261696
+ 1 outflow regions regions
+region 1, type 3, dL -1,  is[] 164 0 0 0, ie[] 165 87 3 1, ifix[] 164 1 1 0, value 0.0100107
+
+----- c: constant -----     time 0.13   change 0  maxsize 15265792
+ITER, type: i, length 1, values 0
+
+--------------input from file stdin, loops remaining 1
+
+
+----- c: constant -----     time 0.13   change 0  maxsize 15265792
+p.defaultdir, type: s, length 1, values ../../jgm
+
+----- c: constant -----     time 0.13   change 0  maxsize 15265792
+ITERDUMP, type: i, length 1, values 100
+
+----- c: constant -----     time 0.13   change 0  maxsize 15265792
+ITERPLOT, type: i, length 1, values 100
+
+----- c: cvdcparm -----     time 0.13   change 0  maxsize 15265792
+cvdc>= 0.01 and cvdc<= 0.99 
+  from f to i cvdc>= 0.99
+  from w to f cvdc>= 0.5
+
+----- c: coefinit -----     time 0.13   change 0  maxsize 15265792
+coef arrays created, number of coefs = 4
+
+----- c: constant -----     time 0.13   change 0  maxsize 15441920
+ITCONT, type: i, length 1, values 5
+
+----- c: constant -----     time 0.13   change 0  maxsize 15441920
+ITERAVE, type: i, length 1, values 2
+
+----- c: arraydump -----     time 0.13   change 0  maxsize 15441920
+dumping to file out/converge:   Re vlamc
+
+----- c: infile -----     time 0.13   change 0  maxsize 15441920
+
+--------------input from file inn.iter.uvwpmarvs, loops remaining 2
+
+
+----- c: copy -----     time 0.13   change 0  maxsize 15441920
+copy U1 to U1up  size=28208, type=d
+
+----- c: copy -----     time 0.13   change 0  maxsize 15671296
+copy U2 to U2up  size=28208, type=d
+
+----- c: copy -----     time 0.13   change 0  maxsize 15900672
+copy U3 to U3up  size=28208, type=d
+
+----- c: copy -----     time 0.13   change 0  maxsize 16130048
+copy qturb to qturbup  size=28208, type=d
+
+----- c: copy -----     time 0.13   change 0  maxsize 16359424
+copy omturb to omturbup  size=28208, type=d
+
+----- c: copy -----     time 0.13   change 0  maxsize 16588800
+copy bij to bijup  size=169248, type=d
+
+----- c: copy -----     time 0.13   change 0  maxsize 17944576
+copy pp to ppup  size=43065, type=d
+
+----- c: copy -----     time 0.13   change 0  maxsize 18292736
+copy xyzp to xyzpold  size=129195, type=d
+
+----- c: infile -----     time 0.13   change 0  maxsize 19329024
+
+--------------input from file inn.newcv, loops remaining 1
+
+
+----- c: cvdcreset -----     time 0.13   change 0  maxsize 19329024
+viscosity vlam, timestep dumdt, t2cvlim 10  using viscosity
+cvd_change 8515 pts, rms: 0.407299 0.427565 0 max 0.49 dir 0 at 1 1 1 0 ITER 0  
+ set 7012 missed sleeping faces
+sleep done
+face done
+
+----- c: set_xyzdouble -----     time 0.19   change 0.06  maxsize 19349504
+
+----- c: set_volmom -----     time 0.21   change 0.02  maxsize 19349504
+
+----- c: set_cpsleep -----     time 0.22   change 0.01  maxsize 19423232
+
+----- c: ppreset -----     time 0.23   change 0.01  maxsize 20123648
+
+----- c: set_cpda -----     time 0.33   change 0.1  maxsize 20488192
+ar=0 cenfac=0, linear: ar=0.05 cenfac=0.5 to ar=0.15 cenfac=0
+ omit 1 pt types: i
+set contar
+ cpda cleared at 4174 points based on type
+   components cleared at 24034 points based on csym
+
+----- c: set_cpflop -----     time 0.42   change 0.09  maxsize 25919488
+clear new cpflop
+iw range 0 8668
+checking cpflop consistency
+    maximum sum/cmax = 3.98227e-13
+
+----- c: coefconv -----     time 0.48   change 0.06  maxsize 31703040
+ convection=coef 1, set for its=0 to ite=0
+
+----- c: coefviscstep -----     time 0.58   change 0.1  maxsize 34619392
+ viscosity: vlam, at coef 0
+
+----- c: coeffix -----     time 0.61   change 0.03  maxsize 34631680
+ nyperm 1, coef 0 to 2.  Limits: limsumnz 0  poselim 0.4 displim -1.1
+omit 2 pt types: i w ,  its 0 ite 0
+abs(sum)max 3.53863e-09, fixed+ at 0 points, fixed- at 1 points
+for 8400 points, pose min 0.671559 disp min -0.829567
+pose groups  0 <0,  0 <0.1,  0 <0.2,  0 <0.3,  0 <0.4,  0 <0.5,  0 <0.6,  10 <0.7,  592 <0.8,  2360 <0.9,  5306 <1,
+
+--------------input from file inn.iter.uvwpmarvs, loops remaining 2
+
+
+----- c: infile -----     time 0.62   change 0.01  maxsize 35328000
+
+--------------input from file inn.iter.marvs, loops remaining 1
+
+
+----- c: viscmarv -----     time 0.62   change 0  maxsize 35328000
+
+----- c: coefviscstep -----     time 0.63   change 0.01  maxsize 36007936
+ viscosity: vmarv, at coef 0
+
+----- c: coeffix -----     time 0.67   change 0.04  maxsize 36007936
+ nyperm 1, coef 0 to 3.  Limits: limsumnz 0  poselim 0.6 displim -1.1
+omit 2 pt types: i w ,  its 0 ite 0
+abs(sum)max 3.53863e-09, fixed+ at 0 points, fixed- at 1 points
+for 8400 points, pose min 0.671559 disp min -0.829567
+pose groups  0 <0,  0 <0.1,  0 <0.2,  0 <0.3,  0 <0.4,  0 <0.5,  0 <0.6,  10 <0.7,  592 <0.8,  2360 <0.9,  5306 <1,
+
+----- c: set_pkdk -----     time 0.67   change 0  maxsize 36007936
+set pkdk using bij for bij
+
+----- c: set_gbij -----     time 0.71   change 0.04  maxsize 36016128
+
+----- c: coefadd -----     time 0.71   change 0  maxsize 36016128
+coef_c.0= +1 *coef_c.1 +1 *coef_c.2 +1.36054 *coef_c.3
+
+----- c: omrhsmarv -----     time 0.71   change 0  maxsize 36016128
+coefficient set 0 used for convection, viscous, and/or time
+ rhsomturb created
+
+----- c: eqnsolves -----     time 0.73   change 0.02  maxsize 36024320
+on the grid equations with rhs=rhsomturb, center_add=caomturb, change=dom
+oldnewdom n omit 2 pt types: i w,  eq range 0, 8669
+ 269 of 8669 active eqs, type deactivated
+ init:  err-rms 0.00108873    err-min -0.00681863 at 13 7 0 0    err-max -5.12423e-08 at 120 48 0 0
+Procedure: ijk ,  1 iterations
+ L=0, 84 strings for 8400 equations
+ L=1, 162 strings for 8400 equations
+ L=2, 8400 strings for 8400 equations
+ iter 0  err-rms 0.000977346    err-min -0.00655308 at 15 6 0 0    err-max -5.80816e-09 at 96 50 0 0
+Procedure: end
+end solve
+
+----- c: varupdate -----     time 0.75   change 0.02  maxsize 36278272
+update omturb with dom method l
+update omturb: facmin 0.989752, fac<.5 for 0 pts, <.001 for 0 pts
+
+----- c: copy -----     time 0.75   change 0  maxsize 36282368
+copy updatew to updateom  size=3, type=d
+
+----- c: function -----     time 0.75   change 0  maxsize 36282368
+omturb=max(omturb,ommin)
+
+----- c: coefadd -----     time 0.75   change 0  maxsize 36290560
+coef_c.0= +1 *coef_c.1 +1 *coef_c.2 +1 *coef_c.3
+
+----- c: bijrhsmarvs -----     time 0.75   change 0  maxsize 36290560
+ saving  pde~,rt~,geff,fw,fb,c1,c3,c4,c6,fr,capg,c1homo in beqex
+
+----- c: eqnsolvebij -----     time 0.83   change 0.08  maxsize 40558592
+using cambij, oldnewch=n, omit 2 pt types: i w,  eq range 0, 8669
+nybijeq set
+cplus set 
+ rhs6 set 
+ bij 0:  err-rms 6.66527e-05    err-min -0.000660577 at 102 50 0 0   err-max 0.000722877 at 45 50 0 0
+ bij 1:  err-rms 6.66527e-05    err-min -0.000722877 at 45 50 0 0   err-max 0.000660577 at 102 50 0 0
+ bij 2:  err-rms 0    err-min 0 at 1 0 0 0   err-max 0 at 1 0 0 0
+ bij 3:  err-rms 0.000632125    err-min -0.000566729 at 64 50 0 0   err-max 0.00275994 at 56 1 0 0
+ bij 4:  err-rms 0    err-min 0 at 0 0 0 0   err-max 0 at 0 0 0 0
+ bij 5:  err-rms 0    err-min 0 at 0 0 0 0   err-max 0 at 0 0 0 0
+ init:  err-rms 0.000260917    |err-max| 0.00275994
+Procedure: ijkc ,  1 iterations
+ L=0, 85 strings for 8669 equations
+ L=1, 164 strings for 8669 equations
+ L=2, 8669 strings for 8669 equations
+  iter 0  ddb-rms 0.00139175  ddb-max 0.0161784  for 8400 of 8669 eqs realfix 0 pts fmin 1
+  iter 0  err-rms 0.000221179    err-max 0.0023429
+Procedure: end
+end solve
+
+----- c: varupdate -----     time 0.89   change 0.06  maxsize 42774528
+update bij with dbij method b
+update bij: facmin 1, fac<.5 for 0 pts, <.001 for 0 pts
+
+----- c: copy -----     time 0.89   change 0  maxsize 42774528
+copy updatew to updatebij  size=3, type=d
+
+----- c: bijwallsplat -----     time 0.89   change 0  maxsize 42774528
+
+----- c: coefadd -----     time 0.89   change 0  maxsize 42774528
+coef_c.0= +1 *coef_c.1 +1 *coef_c.2 +1 *coef_c.3
+
+----- c: qturbrhs -----     time 0.89   change 0  maxsize 42774528
+coefficient set 0 used for convection, viscous, and/or time
+ rhsqturb created
+
+----- c: eqnsolves -----     time 0.91   change 0.02  maxsize 42778624
+on the grid equations with rhs=rhsqturb, center_add=caqturb, change=dq
+oldnewdq n omit 2 pt types: i w,  eq range 0, 8669
+ 269 of 8669 active eqs, type deactivated
+ init:  err-rms 0.00489434    err-min -0.0323787 at 120 48 0 0    err-max -5.59919e-09 at 122 49 0 0
+Procedure: ijk ,  1 iterations
+ L=0, 84 strings for 8400 equations
+ L=1, 162 strings for 8400 equations
+ L=2, 8400 strings for 8400 equations
+ iter 0  err-rms 0.000998893    err-min -0.0095382 at 31 25 0 0    err-max 6.69664e-06 at 101 11 0 0
+Procedure: end
+end solve
+
+----- c: varupdate -----     time 0.93   change 0.02  maxsize 42778624
+update qturb with dq method l
+update qturb: facmin 0.64114, fac<.5 for 0 pts, <.001 for 0 pts
+
+----- c: copy -----     time 0.93   change 0  maxsize 42778624
+copy updatew to updateq  size=3, type=d
+
+----- c: function -----     time 0.93   change 0  maxsize 42778624
+qturb=max(qturb,qmin)
+
+----- c: algebra -----     time 0.93   change 0  maxsize 42778624
+qturb = wallzero *(1 * qturb + 0)^1 + 
+
+----- c: omwallmarvs -----     time 0.93   change 0  maxsize 42778624
+
+--------------input from file inn.iter.uvwpmarvs, loops remaining 2
+
+
+----- c: coefadd -----     time 0.93   change 0  maxsize 42778624
+coef_c.0= +1 *coef_c.1 +1 *coef_c.2
+
+----- c: momrhsr -----     time 0.93   change 0  maxsize 42778624
+oldnew n, jcoef 0 included, bij  included, pp  at ppts included,
+ rhsU1 created
+ rhsU2 created
+ rhsU3 created
+
+----- c: momcam -----     time 0.96   change 0.03  maxsize 42786816
+cami=max of caminew and  1 caminew +0 camiold
+
+----- c: eqnupdatem -----     time 1.03   change 0.07  maxsize 42795008
+ny save dUn 1 omit 2 pt types: i w
+ update U1, 269 of 8669 eqs, type and sym-plane deactivated
+ init:  err-rms 0.032709    err-min -0.315751 at 66 50 0 0    err-max 0.0057838 at 44 59 0 0
+ center update  err-rms 0.0221693    err-min -0.246264 at 121 39 0 0    err-max 0.00565553 at 45 59 0 0
+ update U2, 269 of 8669 eqs, type and sym-plane deactivated
+ init:  err-rms 0.0275932    err-min -0.207532 at 53 50 0 0    err-max 0.281997 at 120 38 0 0
+ center update  err-rms 0.0203743    err-min -0.149195 at 59 51 0 0    err-max 0.237793 at 121 39 0 0
+2-d symmetry plane, omit update for U3
+
+----- c: contcpcdu -----     time 1.04   change 0.01  maxsize 43024384
+
+----- c: contcpcfixed -----     time 1.08   change 0.04  maxsize 43331584
+ fix cpc: facrc 1, facrcperm 1, poselim 0.5, displim -1, poselimperm 0, displimperm -20
+perm. fix 0 p-eqs, pose min= 0.413569, disp min=-1.0076
+pose groups  0 <0,  0 <0.1,  0 <0.2,  0 <0.3,  0 <0.4,  11 <0.5,  309 <0.6,  1226 <0.7,  870 <0.8,  1302 <0.9,  4797 <1,
+iter 0 poselim 0 displim -20
+iter 0 poselim 0 displim -20 maximum facmix= 0
+iter 1 poselim 0.5 displim -1
+ieq 2812, 43 27 1 0 facmix 0.00282707 cen 9.33607e-05 sump 9.59476e-05 cmin -9.3368e-05 pose 0.973038 disp -1.00008
+ieq 2816, 47 27 1 0 facmix 0.00667854 cen 0.00013766 sump 0.000149439 cmin -0.000137739 pose 0.921184 disp -1.00057
+ieq 3613, 120 32 1 0 facmix 0.00720518 cen 3.66936e-05 sump 3.81811e-05 cmin -3.67043e-05 pose 0.961041 disp -1.00029
+ieq 6073, 120 47 1 0 facmix 0.0073311 cen 3.85383e-05 sump 3.95759e-05 cmin -3.85459e-05 pose 0.97378 disp -1.0002
+ieq 6297, 33 49 1 0 facmix 0.0115115 cen 5.8497e-05 sump 6.4973e-05 cmin -5.85716e-05 pose 0.900329 disp -1.00127
+ieq 6412, 46 50 1 0 facmix 0.0335327 cen 8.43539e-05 sump 0.000174772 cmin -8.39626e-05 pose 0.482652 disp -0.995361
+ieq 6498, 46 51 1 0 facmix 0.0386239 cen 0.000264976 sump 0.000552135 cmin -0.000181904 pose 0.479912 disp -0.686491
+ieq 6584, 46 52 1 0 facmix 0.0466029 cen 0.000370079 sump 0.000778197 cmin -0.000185669 pose 0.47556 disp -0.501702
+ieq 6585, 47 52 1 0 facmix 0.0516012 cen 0.000361013 sump 0.000763571 cmin -0.000184293 pose 0.472796 disp -0.510488
+ieq 6670, 46 53 1 0 facmix 0.0689241 cen 0.000451424 sump 0.000975025 cmin -0.000262487 pose 0.462987 disp -0.581465
+ieq 6671, 47 53 1 0 facmix 0.0994385 cen 0.000423144 sump 0.000951333 cmin -0.000242074 pose 0.444791 disp -0.572084
+ieq 6757, 47 54 1 0 facmix 0.130637 cen 0.000561383 sump 0.00132132 cmin -0.000319561 pose 0.424867 disp -0.569239
+ieq 6843, 47 55 1 0 facmix 0.147385 cen 0.00073343 sump 0.00177342 cmin -0.000415014 pose 0.413569 disp -0.565853
+iter 1 poselim 0.5 displim -1 maximum facmix= 0.147385
+
+----- c: contcpcexit -----     time 1.08   change 0  maxsize 43339776
+ 1 outflow regions:
+ exit 0 flowout 3 -1 164 0 0 0 165 87 3 1 164 1 1 0
+
+----- c: contrhsu -----     time 1.08   change 0  maxsize 43343872
+
+----- c: contrhsp -----     time 1.09   change 0.01  maxsize 43343872
+
+----- c: contrhsexit -----     time 1.09   change 0  maxsize 43343872
+ 1 outflow regions:
+ exit 0 flowout 3 -1 164 0 0 0 165 87 3 1 164 1 1 0
+rhsc at ifix 1.55325e-07 flow rate 0.0100107
+
+----- c: eqnsolvep -----     time 1.09   change 0  maxsize 43347968
+ init:  perr-rms 0.0734946    perr-min -0.708907 at 120 41 1 0    perr-max 1.1914 at 33 33 1 0
+enter solvep
+Procedure: Ibjkib ,  1 iterations
+ L=1, 163 strings for 8515 equations
+ L=2, 8515 strings for 8515 equations
+ L=0, 85 strings for 8515 equations
+ iter 0  perr-rms 0.0118061    perr-min -0.0840736    perr-max 0.0980742
+Procedure: pqbijkb ,  5 iterations
+blockcoef p
+ ipb 25 12 1 1
+  300 equations
+blockcoef q
+ ipb 25 12 1 1
+  300 equations
+ rhsb  rhs 0.000264734 min -0.00168333 max 0.0011827
+ rhsb  rhs 8.71183e-05 min -0.000212784 max 0.000272428
+ iter 0  perr-rms 0.00958883    perr-min -0.0583563    perr-max 0.0673255
+ rhsb  rhs 0.000204233 min -0.00132511 max 0.000958738
+ rhsb  rhs 7.38353e-05 min -0.000180189 max 0.00022702
+ rhsb  rhs 0.000165083 min -0.00106011 max 0.000741307
+ rhsb  rhs 6.27435e-05 min -0.000162827 max 0.000187432
+ rhsb  rhs 0.00014097 min -0.000894218 max 0.000660857
+ rhsb  rhs 5.53265e-05 min -0.000150033 max 0.000161405
+ rhsb  rhs 0.000123427 min -0.000774499 max 0.00059444
+ rhsb  rhs 4.97861e-05 min -0.000139346 max 0.000141242
+ iter 4  perr-rms 0.00615515    perr-min -0.0281784    perr-max 0.0436923
+Procedure: ibjkb ,  10 iterations
+ iter 0  perr-rms 0.00518861    perr-min -0.0239097    perr-max 0.0388524
+ iter 9  perr-rms 0.00285426    perr-min -0.0137445    perr-max 0.0142789
+Procedure: end
+end solve
+
+----- c: contdu -----     time 1.17   change 0.08  maxsize 43708416
+
+----- c: algebra -----     time 1.17   change 0  maxsize 43708416
+pp =  *(1 * pp + 0)^1 + dp
+
+----- c: if -----     time 1.17   change 0  maxsize 43708416
+ if ppinlet = ppinlet, then continue, otherwise find NOPPINLET-0.5 = -0.5 ?  True, continue
+
+----- c: copypart -----     time 1.17   change 0  maxsize 43716608
+from pp  1
+ a 1 1 1
+to ppnew 1
+ a 1 1 1
+ ppnew not found so it is  being created d 1
+
+----- c: algebra -----     time 1.17   change 0  maxsize 43716608
+dpin =  *(-1 * ppnew + 0)^1 + ppinlet
+
+----- c: algebra -----     time 1.17   change 0  maxsize 43716608
+pp =  *(1 * pp + -0.121101)^1 + 
+
+----- c: if -----     time 1.17   change 0  maxsize 43716608
+ if ITCONT > 0, then continue, otherwise find NOCONT 5 > 0 ?  True, continue
+
+----- c: copy -----     time 1.17   change 0  maxsize 43716608
+copy pp to ppsav  size=43065, type=d
+
+----- c: infile -----     time 1.17   change 0  maxsize 44068864
+
+--------------input from file inn.cont, loops remaining 5
+
+
+----- c: copy -----     time 1.17   change 0  maxsize 44068864
+copy U1 to U1bcont  size=28208, type=d
+
+----- c: copy -----     time 1.17   change 0  maxsize 44298240
+copy U2 to U2bcont  size=28208, type=d
+
+----- c: copy -----     time 1.17   change 0  maxsize 44527616
+copy U3 to U3bcont  size=28208, type=d
+
+----- c: contrhsu -----     time 1.17   change 0  maxsize 44756992
+
+----- c: contrhsexit -----     time 1.18   change 0.01  maxsize 44756992
+ 1 outflow regions:
+ exit 0 flowout 3 -1 164 0 0 0 165 87 3 1 164 1 1 0
+rhsc at ifix 4.77049e-18 flow rate 0.0100107
+
+----- c: eqnsolvep -----     time 1.18   change 0  maxsize 44756992
+ init:  perr-rms 0.00340626    perr-min -0.0352457 at 18 29 1 0    perr-max 0.0475061 at 18 30 1 0
+enter solvep
+Procedure: Iibjkb ,  10 iterations
+ L=0, 85 strings for 8515 equations
+ L=1, 163 strings for 8515 equations
+ L=2, 8515 strings for 8515 equations
+ iter 0  perr-rms 0.00329271    perr-min -0.0148977    perr-max 0.0174843
+ iter 9  perr-rms 0.00305788    perr-min -0.0121868    perr-max 0.0187381
+Procedure: end
+end solve
+
+----- c: contdu -----     time 1.27   change 0.09  maxsize 44756992
+
+----- c: algebra -----     time 1.27   change 0  maxsize 44756992
+dU1cont =  *(-1 * U1bcont + 0)^1 + U1
+
+----- c: algebra -----     time 1.27   change 0  maxsize 44986368
+dU2cont =  *(-1 * U2bcont + 0)^1 + U2
+
+----- c: algebra -----     time 1.27   change 0  maxsize 45215744
+dU3cont =  *(-1 * U3bcont + 0)^1 + U3
+
+----- c: rmsminmax -----     time 1.27   change 0  maxsize 45445120
+RMSMM dU1cont rms 0.0437469, min -0.168291 at 40 56 0 0,  max 0.194081 at 82 1 0 0,  ITER 0 
+RMSMM dU2cont rms 0.0174359, min -0.289574 at 39 58 0 0,  max 0.107421 at 133 32 0 0,  ITER 0 
+RMSMM dU3cont rms 0, min 0 at 0 0 0 0,  max 0 at 0 0 0 0,  ITER 0 
+RMSMM dp rms 1.55031, min -1.28026 at 120 49 0 0,  max 3.34758 at 59 27 0 0,  ITER 0 
+
+----- c: copy -----     time 1.27   change 0  maxsize 45445120
+copy rmsmm to rmsmmcont  size=20, type=d
+
+----- c: arraydumpmore -----     time 1.27   change 0  maxsize 45445120
+appending dump to file out/converge:   rmsmmcont
+
+--------------input from file inn.cont, loops remaining 4
+
+
+----- c: copy -----     time 1.27   change 0  maxsize 45445120
+copy U1 to U1bcont  size=28208, type=d
+
+----- c: copy -----     time 1.27   change 0  maxsize 45445120
+copy U2 to U2bcont  size=28208, type=d
+
+----- c: copy -----     time 1.27   change 0  maxsize 45445120
+copy U3 to U3bcont  size=28208, type=d
+
+----- c: contrhsu -----     time 1.27   change 0  maxsize 45445120
+
+----- c: contrhsexit -----     time 1.28   change 0.01  maxsize 45445120
+ 1 outflow regions:
+ exit 0 flowout 3 -1 164 0 0 0 165 87 3 1 164 1 1 0
+rhsc at ifix -1.94479e-17 flow rate 0.0100107
+
+----- c: eqnsolvep -----     time 1.28   change 0  maxsize 45445120
+ init:  perr-rms 0.00320832    perr-min -0.0251659 at 119 64 1 0    perr-max 0.0314188 at 18 30 1 0
+enter solvep
+Procedure: Iibjkb ,  10 iterations
+ L=0, 85 strings for 8515 equations
+ L=1, 163 strings for 8515 equations
+ L=2, 8515 strings for 8515 equations
+ iter 0  perr-rms 0.00303566    perr-min -0.0120351    perr-max 0.0187071
+ iter 9  perr-rms 0.00286735    perr-min -0.0114182    perr-max 0.0174411
+Procedure: end
+end solve
+
+----- c: contdu -----     time 1.37   change 0.09  maxsize 45445120
+
+----- c: algebra -----     time 1.37   change 0  maxsize 45445120
+dU1cont =  *(-1 * U1bcont + 0)^1 + U1
+
+----- c: algebra -----     time 1.37   change 0  maxsize 45445120
+dU2cont =  *(-1 * U2bcont + 0)^1 + U2
+
+----- c: algebra -----     time 1.37   change 0  maxsize 45445120
+dU3cont =  *(-1 * U3bcont + 0)^1 + U3
+
+----- c: rmsminmax -----     time 1.37   change 0  maxsize 45445120
+RMSMM dU1cont rms 0.0149203, min -0.107703 at 41 58 0 0,  max 0.0616018 at 34 57 0 0,  ITER 0 
+RMSMM dU2cont rms 0.00964771, min -0.073243 at 34 56 0 0,  max 0.10864 at 41 58 0 0,  ITER 0 
+RMSMM dU3cont rms 0, min 0 at 0 0 0 0,  max 0 at 0 0 0 0,  ITER 0 
+RMSMM dp rms 0.941607, min -0.841782 at 116 51 0 0,  max 1.68626 at 29 30 0 0,  ITER 0 
+
+----- c: copy -----     time 1.37   change 0  maxsize 45445120
+copy rmsmm to rmsmmcont  size=20, type=d
+
+----- c: arraydumpmore -----     time 1.37   change 0  maxsize 45445120
+appending dump to file out/converge:   rmsmmcont
+
+--------------input from file inn.cont, loops remaining 3
+
+
+----- c: copy -----     time 1.37   change 0  maxsize 45445120
+copy U1 to U1bcont  size=28208, type=d
+
+----- c: copy -----     time 1.37   change 0  maxsize 45445120
+copy U2 to U2bcont  size=28208, type=d
+
+----- c: copy -----     time 1.37   change 0  maxsize 45445120
+copy U3 to U3bcont  size=28208, type=d
+
+----- c: contrhsu -----     time 1.37   change 0  maxsize 45445120
+
+----- c: contrhsexit -----     time 1.38   change 0.01  maxsize 45445120
+ 1 outflow regions:
+ exit 0 flowout 3 -1 164 0 0 0 165 87 3 1 164 1 1 0
+rhsc at ifix 1.09504e-17 flow rate 0.0100107
+
+----- c: eqnsolvep -----     time 1.38   change 0  maxsize 45445120
+ init:  perr-rms 0.00294716    perr-min -0.0202624 at 119 64 1 0    perr-max 0.0224786 at 18 30 1 0
+enter solvep
+Procedure: Iibjkb ,  10 iterations
+ L=0, 85 strings for 8515 equations
+ L=1, 163 strings for 8515 equations
+ L=2, 8515 strings for 8515 equations
+ iter 0  perr-rms 0.00285331    perr-min -0.0117188    perr-max 0.017565
+ iter 9  perr-rms 0.00271891    perr-min -0.0107599    perr-max 0.0158116
+Procedure: end
+end solve
+
+----- c: contdu -----     time 1.46   change 0.08  maxsize 45445120
+
+----- c: algebra -----     time 1.47   change 0.01  maxsize 45445120
+dU1cont =  *(-1 * U1bcont + 0)^1 + U1
+
+----- c: algebra -----     time 1.47   change 0  maxsize 45445120
+dU2cont =  *(-1 * U2bcont + 0)^1 + U2
+
+----- c: algebra -----     time 1.47   change 0  maxsize 45445120
+dU3cont =  *(-1 * U3bcont + 0)^1 + U3
+
+----- c: rmsminmax -----     time 1.47   change 0  maxsize 45445120
+RMSMM dU1cont rms 0.011635, min -0.0491375 at 40 57 0 0,  max 0.0443141 at 112 19 0 0,  ITER 0 
+RMSMM dU2cont rms 0.00751657, min -0.0411503 at 107 18 0 0,  max 0.0462197 at 41 58 0 0,  ITER 0 
+RMSMM dU3cont rms 0, min 0 at 0 0 0 0,  max 0 at 0 0 0 0,  ITER 0 
+RMSMM dp rms 0.837441, min -0.694829 at 114 49 0 0,  max 1.52854 at 33 32 0 0,  ITER 0 
+
+----- c: copy -----     time 1.47   change 0  maxsize 45445120
+copy rmsmm to rmsmmcont  size=20, type=d
+
+----- c: arraydumpmore -----     time 1.47   change 0  maxsize 45445120
+appending dump to file out/converge:   rmsmmcont
+
+--------------input from file inn.cont, loops remaining 2
+
+
+----- c: copy -----     time 1.47   change 0  maxsize 45445120
+copy U1 to U1bcont  size=28208, type=d
+
+----- c: copy -----     time 1.47   change 0  maxsize 45445120
+copy U2 to U2bcont  size=28208, type=d
+
+----- c: copy -----     time 1.47   change 0  maxsize 45445120
+copy U3 to U3bcont  size=28208, type=d
+
+----- c: contrhsu -----     time 1.47   change 0  maxsize 45445120
+
+----- c: contrhsexit -----     time 1.48   change 0.01  maxsize 45445120
+ 1 outflow regions:
+ exit 0 flowout 3 -1 164 0 0 0 165 87 3 1 164 1 1 0
+rhsc at ifix -3.36103e-18 flow rate 0.0100107
+
+----- c: eqnsolvep -----     time 1.48   change 0  maxsize 45445120
+ init:  perr-rms 0.00277296    perr-min -0.0162249 at 112 64 1 0    perr-max 0.0175298 at 35 14 1 0
+enter solvep
+Procedure: Iibjkb ,  10 iterations
+ L=0, 85 strings for 8515 equations
+ L=1, 163 strings for 8515 equations
+ L=2, 8515 strings for 8515 equations
+ iter 0  perr-rms 0.00270784    perr-min -0.0109634    perr-max 0.0159035
+ iter 9  perr-rms 0.00259535    perr-min -0.0100093    perr-max 0.0142116
+Procedure: end
+end solve
+
+----- c: contdu -----     time 1.56   change 0.08  maxsize 45445120
+
+----- c: algebra -----     time 1.57   change 0.01  maxsize 45445120
+dU1cont =  *(-1 * U1bcont + 0)^1 + U1
+
+----- c: algebra -----     time 1.57   change 0  maxsize 45445120
+dU2cont =  *(-1 * U2bcont + 0)^1 + U2
+
+----- c: algebra -----     time 1.57   change 0  maxsize 45445120
+dU3cont =  *(-1 * U3bcont + 0)^1 + U3
+
+----- c: rmsminmax -----     time 1.57   change 0  maxsize 45445120
+RMSMM dU1cont rms 0.0096124, min -0.0296508 at 40 58 0 0,  max 0.0400322 at 112 19 0 0,  ITER 0 
+RMSMM dU2cont rms 0.00662078, min -0.0318668 at 107 18 0 0,  max 0.0249632 at 41 58 0 0,  ITER 0 
+RMSMM dU3cont rms 0, min 0 at 0 0 0 0,  max 0 at 0 0 0 0,  ITER 0 
+RMSMM dp rms 0.75521, min -0.597975 at 114 49 0 0,  max 1.38526 at 33 32 0 0,  ITER 0 
+
+----- c: copy -----     time 1.57   change 0  maxsize 45445120
+copy rmsmm to rmsmmcont  size=20, type=d
+
+----- c: arraydumpmore -----     time 1.57   change 0  maxsize 45445120
+appending dump to file out/converge:   rmsmmcont
+
+--------------input from file inn.cont, loops remaining 1
+
+
+----- c: copy -----     time 1.57   change 0  maxsize 45445120
+copy U1 to U1bcont  size=28208, type=d
+
+----- c: copy -----     time 1.57   change 0  maxsize 45445120
+copy U2 to U2bcont  size=28208, type=d
+
+----- c: copy -----     time 1.57   change 0  maxsize 45445120
+copy U3 to U3bcont  size=28208, type=d
+
+----- c: contrhsu -----     time 1.57   change 0  maxsize 45445120
+
+----- c: contrhsexit -----     time 1.58   change 0.01  maxsize 45445120
+ 1 outflow regions:
+ exit 0 flowout 3 -1 164 0 0 0 165 87 3 1 164 1 1 0
+rhsc at ifix -7.58942e-18 flow rate 0.0100107
+
+----- c: eqnsolvep -----     time 1.58   change 0  maxsize 45445120
+ init:  perr-rms 0.00263678    perr-min -0.0151259 at 112 64 1 0    perr-max 0.0156449 at 35 14 1 0
+enter solvep
+Procedure: Iibjkb ,  10 iterations
+ L=0, 85 strings for 8515 equations
+ L=1, 163 strings for 8515 equations
+ L=2, 8515 strings for 8515 equations
+ iter 0  perr-rms 0.00258616    perr-min -0.010306    perr-max 0.01428
+ iter 9  perr-rms 0.00248925    perr-min -0.00929247    perr-max 0.0128224
+Procedure: end
+end solve
+
+----- c: contdu -----     time 1.66   change 0.08  maxsize 45445120
+
+----- c: algebra -----     time 1.66   change 0  maxsize 45445120
+dU1cont =  *(-1 * U1bcont + 0)^1 + U1
+
+----- c: algebra -----     time 1.66   change 0  maxsize 45445120
+dU2cont =  *(-1 * U2bcont + 0)^1 + U2
+
+----- c: algebra -----     time 1.66   change 0  maxsize 45445120
+dU3cont =  *(-1 * U3bcont + 0)^1 + U3
+
+----- c: rmsminmax -----     time 1.66   change 0  maxsize 45445120
+RMSMM dU1cont rms 0.00822984, min -0.0194836 at 111 62 0 0,  max 0.035569 at 112 19 0 0,  ITER 0 
+RMSMM dU2cont rms 0.00612265, min -0.0260255 at 107 18 0 0,  max 0.0189227 at 40 58 0 0,  ITER 0 
+RMSMM dU3cont rms 0, min 0 at 0 0 0 0,  max 0 at 0 0 0 0,  ITER 0 
+RMSMM dp rms 0.687388, min -0.529888 at 112 49 0 0,  max 1.25426 at 33 32 0 0,  ITER 0 
+
+----- c: copy -----     time 1.66   change 0  maxsize 45445120
+copy rmsmm to rmsmmcont  size=20, type=d
+
+----- c: arraydumpmore -----     time 1.66   change 0  maxsize 45445120
+appending dump to file out/converge:   rmsmmcont
+
+--------------input from file inn.iter.uvwpmarvs, loops remaining 2
+
+
+----- c: copy -----     time 1.66   change 0  maxsize 45445120
+copy ppsav to pp  size=43065, type=d
+
+----- c: edit -----     time 1.66   change 0  maxsize 45445120
+ name ITER,   type i,  1 dims  n 1
+ a 1         1 1
+ e  end edit
+
+----- c: algebra -----     time 1.66   change 0  maxsize 45445120
+dU1 =  *(-1 * U1up + 0)^1 + U1
+
+----- c: algebra -----     time 1.66   change 0  maxsize 45445120
+dU2 =  *(-1 * U2up + 0)^1 + U2
+
+----- c: algebra -----     time 1.66   change 0  maxsize 45445120
+dU3 =  *(-1 * U3up + 0)^1 + U3
+
+----- c: algebra -----     time 1.66   change 0  maxsize 45674496
+dp =  *(-1 * ppup + 0)^1 + pp
+
+----- c: algebra -----     time 1.66   change 0  maxsize 45674496
+dq =  *(-1 * qturbup + 0)^1 + qturb
+
+----- c: algebra -----     time 1.67   change 0.01  maxsize 45674496
+dom =  *(-1 * omturbup + 0)^1 + omturb
+
+----- c: algebra -----     time 1.67   change 0  maxsize 45674496
+dbij =  *(-1 * bijup + 0)^1 + bij
+
+----- c: if -----     time 1.67   change 0  maxsize 45674496
+ if ITER % ITERAVE, then continue, otherwise find NOAVERAGE 1 % 2 ?  Not true, NOAVERAGE found
+
+----- c: rmsminmax -----     time 1.67   change 0  maxsize 45674496
+RMSMM U1 rms 0.63297, min -0.14525 at 121 43 0 0,  max 1.15818 at 118 17 0 0,  ITER 1 
+RMSMM U2 rms 0.569965, min -1.01084 at 107 18 0 0,  max 1.09556 at 20 42 0 0,  ITER 1 
+RMSMM U3 rms 0, min 0 at 0 0 0 0,  max 0 at 0 0 0 0,  ITER 1 
+RMSMM pp rms 3.38421, min -16.0222 at 119 40 0 0,  max 17.6392 at 33 34 0 0,  ITER 1 
+RMSMM qturb rms 0.114944, min 0 at 33 27 0 0,  max 0.1356 at 0 0 0 0,  ITER 1 
+RMSMM omturb rms 59.1255, min 1.14022 at 13 6 0 0,  max 818.66 at 33 27 0 0,  ITER 1 
+RMSMM bij rms 0.018245, min -0.33333 at 57 27 0 1,  max 0.250259 at 119 39 0 3,  ITER 1 
+
+----- c: copy -----     time 1.67   change 0  maxsize 45674496
+copy rmsmm to rmsmmprop  size=20, type=d
+
+----- c: rmsminmax -----     time 1.67   change 0  maxsize 45674496
+RMSMM dU1 rms 0.197889, min -0.86459 at 121 43 0 0,  max 0.438837 at 118 17 0 0,  ITER 1 
+RMSMM dU2 rms 0.230123, min -0.852699 at 35 25 0 0,  max 0.857446 at 121 35 0 0,  ITER 1 
+RMSMM dU3 rms 0, min 0 at 0 0 0 0,  max 0 at 0 0 0 0,  ITER 1 
+RMSMM dp rms 3.35224, min -15.5222 at 119 40 0 0,  max 18.1392 at 33 34 0 0,  ITER 1 
+RMSMM dq rms 0.0274192, min -0.0840016 at 93 50 0 0,  max 0 at 0 0 0 0,  ITER 1 
+RMSMM dom rms 58.9712, min -0.0237765 at 13 6 0 0,  max 817.496 at 33 27 0 0,  ITER 1 
+RMSMM dbij rms 0.018245, min -0.33333 at 57 27 0 1,  max 0.250259 at 119 39 0 3,  ITER 1 
+
+----- c: copy -----     time 1.67   change 0  maxsize 45674496
+copy rmsmm to rmsmmchange  size=20, type=d
+
+----- c: arraydumpmore -----     time 1.67   change 0  maxsize 45674496
+appending dump to file out/converge:   ITER rmsmmprop rmsmmchange updateq updateom updatebij
+
+----- c: infile -----     time 1.67   change 0  maxsize 45674496
+
+--------------input from file inn.analysis10.50, loops remaining 1
+
+
+----- c: if -----     time 1.67   change 0  maxsize 45674496
+ if FIFTY > TEN, then find endinit, otherwise continue  Failed: FIFTY not found
+  Failed: TEN not found
+ Not true, continue
+
+----- c: constant -----     time 1.67   change 0  maxsize 45674496
+TEN, type: i, length 1, values 10
+
+----- c: constant -----     time 1.67   change 0  maxsize 45674496
+FIFTY, type: i, length 1, values 50
+
+----- c: copy -----     time 1.67   change 0  maxsize 45674496
+copy U1 to dU1TEN  size=28208, type=d
+
+----- c: copy -----     time 1.67   change 0  maxsize 45903872
+copy U2 to dU2TEN  size=28208, type=d
+
+----- c: copy -----     time 1.67   change 0  maxsize 46133248
+copy U3 to dU3TEN  size=28208, type=d
+
+----- c: copy -----     time 1.67   change 0  maxsize 46362624
+copy pp to dpTEN  size=43065, type=d
+
+----- c: copy -----     time 1.67   change 0  maxsize 46710784
+copy qturb to dqturbTEN  size=28208, type=d
+
+----- c: copy -----     time 1.67   change 0  maxsize 46940160
+copy omturb to domturbTEN  size=28208, type=d
+
+----- c: copy -----     time 1.67   change 0  maxsize 47169536
+copy bij to dbijTEN  size=169248, type=d
+
+----- c: copy -----     time 1.67   change 0  maxsize 48525312
+copy U1 to dU1FIFTY  size=28208, type=d
+
+----- c: copy -----     time 1.67   change 0  maxsize 48754688
+copy U2 to dU2FIFTY  size=28208, type=d
+
+----- c: copy -----     time 1.67   change 0  maxsize 48984064
+copy U3 to dU3FIFTY  size=28208, type=d
+
+----- c: copy -----     time 1.67   change 0  maxsize 49213440
+copy pp to dpFIFTY  size=43065, type=d
+
+----- c: copy -----     time 1.67   change 0  maxsize 49561600
+copy qturb to dqturbFIFTY  size=28208, type=d
+
+----- c: copy -----     time 1.67   change 0  maxsize 49790976
+copy omturb to domturbFIFTY  size=28208, type=d
+
+----- c: copy -----     time 1.67   change 0  maxsize 50020352
+copy bij to dbijFIFTY  size=169248, type=d
+
+----- c: if -----     time 1.67   change 0  maxsize 51376128
+ if FIFTY > 10, then find endanalysis, otherwise continue 50 > 10 ?  True, endanalysis found
+
+--------------input from file inn.iter.uvwpmarvs, loops remaining 2
+
+
+----- c: infile -----     time 1.67   change 0  maxsize 51376128
+
+--------------input from file inn.iter.output, loops remaining 1
+
+
+----- c: areaflowint -----     time 1.67   change 0  maxsize 51376128
+integration for a=0.49995, b=-0.5 to 1.5, c=0 to 1
+properties:
+   a,b,or c  area  flow+ flow- flow  (property averages)
+AFINT a0.49995 0.0140001  0.00838237 0  0.00838237 ITER 1
+
+----- c: copypart -----     time 1.67   change 0  maxsize 51376128
+from averages  1
+ x 7 7 7
+to flowm 1
+ x 1 1 1
+ flowm not found so it is  being created d 1
+
+----- c: algebra -----     time 1.67   change 0  maxsize 51376128
+flowmdif = flowm *(1 * flowrate + 0)^-1 + 
+
+----- c: algebra -----     time 1.67   change 0  maxsize 51376128
+flowmdif =  *(1 * flowmdif + -1)^1 + 
+
+----- c: arraydumpmore -----     time 1.67   change 0  maxsize 51376128
+appending dump to file out/converge:   flowmdif
+
+----- c: if -----     time 1.67   change 0  maxsize 51376128
+ if ITER % ITERDUMP, then continue, otherwise find NODUMP 1 % 100 ?  Not true, NODUMP found
+
+----- c: if -----     time 1.67   change 0  maxsize 51376128
+ if ITER % ITERPLOT, then continue, otherwise find NOPLOT 1 % 100 ?  Not true, NOPLOT found
+
+--------------input from file inn.iter.uvwpmarvs, loops remaining 2
+
+
+--------------input from file inn.iter.uvwpmarvs, loops remaining 1
+
+
+----- c: copy -----     time 1.67   change 0  maxsize 51376128
+copy U1 to U1up  size=28208, type=d
+
+----- c: copy -----     time 1.67   change 0  maxsize 51376128
+copy U2 to U2up  size=28208, type=d
+
+----- c: copy -----     time 1.67   change 0  maxsize 51376128
+copy U3 to U3up  size=28208, type=d
+
+----- c: copy -----     time 1.67   change 0  maxsize 51376128
+copy qturb to qturbup  size=28208, type=d
+
+----- c: copy -----     time 1.67   change 0  maxsize 51376128
+copy omturb to omturbup  size=28208, type=d
+
+----- c: copy -----     time 1.67   change 0  maxsize 51376128
+copy bij to bijup  size=169248, type=d
+
+----- c: copy -----     time 1.67   change 0  maxsize 51376128
+copy pp to ppup  size=43065, type=d
+
+----- c: copy -----     time 1.67   change 0  maxsize 51376128
+copy xyzp to xyzpold  size=129195, type=d
+
+----- c: infile -----     time 1.67   change 0  maxsize 51376128
+
+--------------input from file inn.newcv, loops remaining 1
+
+
+----- c: cvdcreset -----     time 1.67   change 0  maxsize 51376128
+viscosity vlam, timestep dumdt, t2cvlim 10  using viscosity
+cvd_change 8515 pts, rms: 0.198901 0.194529 0 max 0.812449 dir 1 at 135 48 1 0 ITER 1  
+ set 7012 missed sleeping faces
+sleep done
+face done
+
+----- c: set_xyzdouble -----     time 1.74   change 0.07  maxsize 51376128
+
+----- c: set_volmom -----     time 1.75   change 0.01  maxsize 51376128
+
+----- c: set_cpsleep -----     time 1.77   change 0.02  maxsize 51376128
+
+----- c: ppreset -----     time 1.77   change 0  maxsize 51376128
+
+----- c: set_cpda -----     time 1.87   change 0.1  maxsize 51724288
+ar=0 cenfac=0, linear: ar=0.05 cenfac=0.5 to ar=0.15 cenfac=0
+ omit 1 pt types: i
+ cpda cleared at 4174 points based on type
+   components cleared at 24034 points based on csym
+
+----- c: set_cpflop -----     time 1.96   change 0.09  maxsize 51724288
+iw range 0 8668
+checking cpflop consistency
+    maximum sum/cmax = 2.75159e-13
+
+----- c: coefconv -----     time 2.01   change 0.05  maxsize 54398976
+ convection=coef 1, set for its=0 to ite=0
+
+----- c: coefviscstep -----     time 2.09   change 0.08  maxsize 54398976
+ viscosity: vlam, at coef 0
+
+----- c: coeffix -----     time 2.13   change 0.04  maxsize 54398976
+ nyperm 1, coef 0 to 2.  Limits: limsumnz 0  poselim 0.4 displim -1.1
+omit 2 pt types: i w ,  its 0 ite 0
+abs(sum)max 8.79029e-09, fixed+ at 0 points, fixed- at 12 points
+for 8400 points, pose min 0.68768 disp min -0.792023
+pose groups  0 <0,  0 <0.1,  0 <0.2,  0 <0.3,  0 <0.4,  0 <0.5,  0 <0.6,  5 <0.7,  590 <0.8,  2398 <0.9,  5319 <1,
+
+--------------input from file inn.iter.uvwpmarvs, loops remaining 1
+
+
+----- c: infile -----     time 2.13   change 0  maxsize 54398976
+
+--------------input from file inn.iter.marvs, loops remaining 1
+
+
+----- c: viscmarv -----     time 2.13   change 0  maxsize 54398976
+
+----- c: coefviscstep -----     time 2.15   change 0.02  maxsize 54398976
+ viscosity: vmarv, at coef 0
+
+----- c: coeffix -----     time 2.18   change 0.03  maxsize 54398976
+ nyperm 1, coef 0 to 3.  Limits: limsumnz 0  poselim 0.6 displim -1.1
+omit 2 pt types: i w ,  its 0 ite 0
+abs(sum)max 8.86196e-09, fixed+ at 0 points, fixed- at 16 points
+for 8400 points, pose min 0.687616 disp min -0.991701
+pose groups  0 <0,  0 <0.1,  0 <0.2,  0 <0.3,  0 <0.4,  0 <0.5,  0 <0.6,  5 <0.7,  595 <0.8,  2412 <0.9,  5300 <1,
+
+----- c: set_pkdk -----     time 2.19   change 0.01  maxsize 54398976
+set pkdk using bij for bij
+
+----- c: set_gbij -----     time 2.22   change 0.03  maxsize 54398976
+
+----- c: coefadd -----     time 2.23   change 0.01  maxsize 54398976
+coef_c.0= +1 *coef_c.1 +1 *coef_c.2 +1.36054 *coef_c.3
+
+----- c: omrhsmarv -----     time 2.23   change 0  maxsize 54398976
+coefficient set 0 used for convection, viscous, and/or time
+
+----- c: eqnsolves -----     time 2.25   change 0.02  maxsize 54398976
+on the grid equations with rhs=rhsomturb, center_add=caomturb, change=dom
+oldnewdom n omit 2 pt types: i w,  eq range 0, 8669
+ 269 of 8669 active eqs, type deactivated
+ init:  err-rms 1.6145    err-min -0.00693833 at 15 7 0 0    err-max 11.2325 at 120 48 0 0
+Procedure: ijk ,  1 iterations
+ L=0, 84 strings for 8400 equations
+ L=1, 162 strings for 8400 equations
+ L=2, 8400 strings for 8400 equations
+ iter 0  err-rms 0.684981    err-min -0.00636306 at 15 7 0 0    err-max 4.21277 at 45 61 0 0
+Procedure: end
+end solve
+
+----- c: varupdate -----     time 2.26   change 0.01  maxsize 54398976
+update omturb with dom method l
+update omturb: facmin 0.989746, fac<.5 for 0 pts, <.001 for 0 pts
+
+----- c: copy -----     time 2.26   change 0  maxsize 54398976
+copy updatew to updateom  size=3, type=d
+
+----- c: function -----     time 2.26   change 0  maxsize 54398976
+omturb=max(omturb,ommin)
+
+----- c: coefadd -----     time 2.26   change 0  maxsize 54398976
+coef_c.0= +1 *coef_c.1 +1 *coef_c.2 +1 *coef_c.3
+
+----- c: bijrhsmarvs -----     time 2.27   change 0.01  maxsize 54398976
+ saving  pde~,rt~,geff,fw,fb,c1,c3,c4,c6,fr,capg,c1homo in beqex
+
+----- c: eqnsolvebij -----     time 2.35   change 0.08  maxsize 54398976
+using cambij, oldnewch=n, omit 2 pt types: i w,  eq range 0, 8669
+nybijeq set
+cplus set 
+ rhs6 set 
+ bij 0:  err-rms 0.0013557    err-min -0.0105539 at 94 50 0 0   err-max 0.0091587 at 18 37 0 0
+ bij 1:  err-rms 0.00139342    err-min -0.0105574 at 55 50 0 0   err-max 0.0068326 at 17 9 0 0
+ bij 2:  err-rms 0.000676113    err-min -6.04349e-05 at 69 68 0 0   err-max 0.00500535 at 71 50 0 0
+ bij 3:  err-rms 0.00160576    err-min -0.00817165 at 71 50 0 0   err-max 0.0163135 at 15 8 0 0
+ bij 4:  err-rms 0    err-min 0 at 0 0 0 0   err-max 0 at 0 0 0 0
+ bij 5:  err-rms 0    err-min 0 at 0 0 0 0   err-max 0 at 0 0 0 0
+ init:  err-rms 0.00106577    |err-max| 0.0163135
+Procedure: ijkc ,  1 iterations
+ L=0, 85 strings for 8669 equations
+ L=1, 164 strings for 8669 equations
+ L=2, 8669 strings for 8669 equations
+  iter 0  ddb-rms 0.0125072  ddb-max 0.0731797  for 8516 of 8669 eqs realfix 0 pts fmin 1
+  iter 0  err-rms 0.000534617    err-max 0.00448007
+Procedure: end
+end solve
+
+----- c: varupdate -----     time 2.4   change 0.05  maxsize 55234560
+update bij with dbij method b
+update bij: facmin 0, fac<.5 for 22 pts, <.001 for 22 pts
+
+----- c: copy -----     time 2.41   change 0.01  maxsize 55234560
+copy updatew to updatebij  size=3, type=d
+
+----- c: bijwallsplat -----     time 2.41   change 0  maxsize 55234560
+
+----- c: coefadd -----     time 2.41   change 0  maxsize 55234560
+coef_c.0= +1 *coef_c.1 +1 *coef_c.2 +1 *coef_c.3
+
+----- c: qturbrhs -----     time 2.41   change 0  maxsize 55234560
+coefficient set 0 used for convection, viscous, and/or time
+
+----- c: eqnsolves -----     time 2.43   change 0.02  maxsize 55234560
+on the grid equations with rhs=rhsqturb, center_add=caqturb, change=dq
+oldnewdq n omit 2 pt types: i w,  eq range 0, 8669
+ 269 of 8669 active eqs, type deactivated
+ init:  err-rms 0.000644058    err-min -0.00629301 at 31 25 0 0    err-max 0.0203935 at 32 26 0 0
+Procedure: ijk ,  1 iterations
+ L=0, 84 strings for 8400 equations
+ L=1, 162 strings for 8400 equations
+ L=2, 8400 strings for 8400 equations
+ iter 0  err-rms 0.000367733    err-min -0.00570651 at 32 26 0 0    err-max 0.00643091 at 31 25 0 0
+Procedure: end
+end solve
+
+----- c: varupdate -----     time 2.45   change 0.02  maxsize 55234560
+update qturb with dq method l
+update qturb: facmin 0.859186, fac<.5 for 0 pts, <.001 for 0 pts
+
+----- c: copy -----     time 2.45   change 0  maxsize 55234560
+copy updatew to updateq  size=3, type=d
+
+----- c: function -----     time 2.45   change 0  maxsize 55234560
+qturb=max(qturb,qmin)
+
+----- c: algebra -----     time 2.45   change 0  maxsize 55234560
+qturb = wallzero *(1 * qturb + 0)^1 + 
+
+----- c: omwallmarvs -----     time 2.45   change 0  maxsize 55234560
+
+--------------input from file inn.iter.uvwpmarvs, loops remaining 1
+
+
+----- c: coefadd -----     time 2.45   change 0  maxsize 55234560
+coef_c.0= +1 *coef_c.1 +1 *coef_c.2
+
+----- c: momrhsr -----     time 2.45   change 0  maxsize 55234560
+oldnew n, jcoef 0 included, bij  included, pp  at ppts included,
+
+----- c: momcam -----     time 2.48   change 0.03  maxsize 55234560
+cami=max of caminew and  1 caminew +0 camiold
+
+----- c: eqnupdatem -----     time 2.55   change 0.07  maxsize 55234560
+ny save dUn 1 omit 2 pt types: i w
+ update U1, 269 of 8669 eqs, type and sym-plane deactivated
+ init:  err-rms 0.809601    err-min -8.96008 at 25 34 0 0    err-max 0.729491 at 41 19 0 0
+ center update  err-rms 0.682654    err-min -6.94004 at 25 36 0 0    err-max 0.603724 at 42 19 0 0
+ update U2, 269 of 8669 eqs, type and sym-plane deactivated
+ init:  err-rms 0.954607    err-min -8.06207 at 25 33 0 0    err-max 6.19637 at 127 38 0 0
+ center update  err-rms 0.811187    err-min -6.41583 at 26 33 0 0    err-max 4.67641 at 127 38 0 0
+2-d symmetry plane, omit update for U3
+
+----- c: contcpcdu -----     time 2.55   change 0  maxsize 55234560
+
+----- c: contcpcfixed -----     time 2.6   change 0.05  maxsize 55234560
+ fix cpc: facrc 1, facrcperm 1, poselim 0.5, displim -1, poselimperm 0, displimperm -20
+perm. fix 0 p-eqs, pose min= 0.450565, disp min=-1.02114
+pose groups  0 <0,  0 <0.1,  0 <0.2,  0 <0.3,  0 <0.4,  36 <0.5,  552 <0.6,  1285 <0.7,  774 <0.8,  700 <0.9,  5168 <1,
+iter 0 poselim 0 displim -20
+iter 0 poselim 0 displim -20 maximum facmix= 0
+iter 1 poselim 0.5 displim -1
+ieq 2560, 49 24 1 0 facmix 0.00400021 cen 0.000812768 sump 0.00163209 cmin -0.00048607 pose 0.497992 disp -0.598044
+ieq 2587, 76 24 1 0 facmix 0.0148384 cen 0.000994442 sump 0.0020193 cmin -0.000597149 pose 0.492469 disp -0.600487
+ieq 2678, 81 25 1 0 facmix 0.0166232 cen 0.000767998 sump 0.00156241 cmin -0.000430429 pose 0.491548 disp -0.560456
+ieq 2691, 94 25 1 0 facmix 0.0302701 cen 0.000620683 sump 0.00128136 cmin -0.000364473 pose 0.484393 disp -0.587212
+ieq 3854, 33 34 1 0 facmix 0.848399 cen 0.00026339 sump 0.000264931 cmin -0.000264697 pose 0.994182 disp -1.00496
+ieq 6448, 82 50 1 0 facmix 0.00906195 cen 0.000324967 sump 0.000651241 cmin -0.000327924 pose 0.498996 disp -1.0091
+ieq 6457, 91 50 1 0 facmix 0.0241517 cen 0.000380293 sump 0.000779888 cmin -0.000388331 pose 0.487625 disp -1.02114
+iter 1 poselim 0.5 displim -1 maximum facmix= 0.848399
+
+----- c: contcpcexit -----     time 2.6   change 0  maxsize 55234560
+ 1 outflow regions:
+ exit 0 flowout 3 -1 164 0 0 0 165 87 3 1 164 1 1 0
+
+----- c: contrhsu -----     time 2.6   change 0  maxsize 55234560
+
+----- c: contrhsp -----     time 2.61   change 0.01  maxsize 55234560
+
+----- c: contrhsexit -----     time 2.61   change 0  maxsize 55234560
+ 1 outflow regions:
+ exit 0 flowout 3 -1 164 0 0 0 165 87 3 1 164 1 1 0
+rhsc at ifix -0.000217569 flow rate 0.0100107
+
+----- c: eqnsolvep -----     time 2.61   change 0  maxsize 55234560
+ init:  perr-rms 0.0918573    perr-min -1.35738 at 33 35 1 0    perr-max 1.36845 at 120 39 1 0
+enter solvep
+Procedure: Ibjkib ,  1 iterations
+ L=1, 163 strings for 8515 equations
+ L=2, 8515 strings for 8515 equations
+ L=0, 85 strings for 8515 equations
+ iter 0  perr-rms 0.0140158    perr-min -0.211968    perr-max 0.110228
+Procedure: pqbijkb ,  5 iterations
+blockcoef p
+ ipb 25 12 1 1
+  300 equations
+blockcoef q
+ ipb 25 12 1 1
+  300 equations
+ rhsb  rhs 0.000262276 min -0.00119431 max 0.0016545
+ rhsb  rhs 3.5628e-05 min -0.000140152 max 0.000110366
+ iter 0  perr-rms 0.0104279    perr-min -0.136711    perr-max 0.0889228
+ rhsb  rhs 0.000231247 min -0.00113231 max 0.00143155
+ rhsb  rhs 3.04798e-05 min -0.000116052 max 8.40644e-05
+ rhsb  rhs 0.000199634 min -0.00101091 max 0.0012198
+ rhsb  rhs 2.68784e-05 min -9.94844e-05 max 6.47335e-05
+ rhsb  rhs 0.000173903 min -0.000906168 max 0.00106149
+ rhsb  rhs 2.47633e-05 min -8.84948e-05 max 5.26924e-05
+ rhsb  rhs 0.000151464 min -0.000806951 max 0.000926733
+ rhsb  rhs 2.33405e-05 min -8.01501e-05 max 4.42144e-05
+ iter 4  perr-rms 0.00479233    perr-min -0.0502801    perr-max 0.049529
+Procedure: ibjkb ,  10 iterations
+ iter 0  perr-rms 0.00406814    perr-min -0.0400898    perr-max 0.0439724
+ iter 9  perr-rms 0.00193639    perr-min -0.00952482    perr-max 0.01743
+Procedure: end
+end solve
+
+----- c: contdu -----     time 2.69   change 0.08  maxsize 55906304
+
+----- c: algebra -----     time 2.69   change 0  maxsize 55906304
+pp =  *(1 * pp + 0)^1 + dp
+
+----- c: if -----     time 2.69   change 0  maxsize 55906304
+ if ppinlet = ppinlet, then continue, otherwise find NOPPINLET-0.5 = -0.5 ?  True, continue
+
+----- c: copypart -----     time 2.69   change 0  maxsize 55906304
+from pp  1
+ a 1 1 1
+to ppnew 1
+ a 1 1 1
+
+----- c: algebra -----     time 2.69   change 0  maxsize 55906304
+dpin =  *(-1 * ppnew + 0)^1 + ppinlet
+
+----- c: algebra -----     time 2.69   change 0  maxsize 55906304
+pp =  *(1 * pp + -1.02231)^1 + 
+
+----- c: if -----     time 2.69   change 0  maxsize 55906304
+ if ITCONT > 0, then continue, otherwise find NOCONT 5 > 0 ?  True, continue
+
+----- c: copy -----     time 2.69   change 0  maxsize 55906304
+copy pp to ppsav  size=43065, type=d
+
+----- c: infile -----     time 2.69   change 0  maxsize 55906304
+
+--------------input from file inn.cont, loops remaining 5
+
+
+----- c: copy -----     time 2.69   change 0  maxsize 55906304
+copy U1 to U1bcont  size=28208, type=d
+
+----- c: copy -----     time 2.69   change 0  maxsize 55906304
+copy U2 to U2bcont  size=28208, type=d
+
+----- c: copy -----     time 2.69   change 0  maxsize 55906304
+copy U3 to U3bcont  size=28208, type=d
+
+----- c: contrhsu -----     time 2.69   change 0  maxsize 55906304
+
+----- c: contrhsexit -----     time 2.7   change 0.01  maxsize 55906304
+ 1 outflow regions:
+ exit 0 flowout 3 -1 164 0 0 0 165 87 3 1 164 1 1 0
+rhsc at ifix 1.80082e-08 flow rate 0.0100107
+
+----- c: eqnsolvep -----     time 2.7   change 0  maxsize 55906304
+ init:  perr-rms 0.00270209    perr-min -0.0264042 at 18 29 1 0    perr-max 0.0345309 at 92 14 1 0
+enter solvep
+Procedure: Iibjkb ,  10 iterations
+ L=0, 85 strings for 8515 equations
+ L=1, 163 strings for 8515 equations
+ L=2, 8515 strings for 8515 equations
+ iter 0  perr-rms 0.00241689    perr-min -0.00996887    perr-max 0.0140229
+ iter 9  perr-rms 0.00202505    perr-min -0.00837634    perr-max 0.0140876
+Procedure: end
+end solve
+
+----- c: contdu -----     time 2.79   change 0.09  maxsize 55906304
+
+----- c: algebra -----     time 2.79   change 0  maxsize 55906304
+dU1cont =  *(-1 * U1bcont + 0)^1 + U1
+
+----- c: algebra -----     time 2.79   change 0  maxsize 55906304
+dU2cont =  *(-1 * U2bcont + 0)^1 + U2
+
+----- c: algebra -----     time 2.79   change 0  maxsize 55906304
+dU3cont =  *(-1 * U3bcont + 0)^1 + U3
+
+----- c: rmsminmax -----     time 2.79   change 0  maxsize 55906304
+RMSMM dU1cont rms 0.0499088, min -0.243815 at 35 17 0 0,  max 0.397293 at 24 35 0 0,  ITER 1 
+RMSMM dU2cont rms 0.0381046, min -0.33307 at 71 16 0 0,  max 0.303878 at 19 28 0 0,  ITER 1 
+RMSMM dU3cont rms 0, min 0 at 0 0 0 0,  max 0 at 0 0 0 0,  ITER 1 
+RMSMM dp rms 1.34338, min -0.90767 at 154 12 0 0,  max 2.75004 at 2 34 0 0,  ITER 1 
+
+----- c: copy -----     time 2.79   change 0  maxsize 55906304
+copy rmsmm to rmsmmcont  size=20, type=d
+
+----- c: arraydumpmore -----     time 2.79   change 0  maxsize 55906304
+appending dump to file out/converge:   rmsmmcont
+
+--------------input from file inn.cont, loops remaining 4
+
+
+----- c: copy -----     time 2.79   change 0  maxsize 55906304
+copy U1 to U1bcont  size=28208, type=d
+
+----- c: copy -----     time 2.79   change 0  maxsize 55906304
+copy U2 to U2bcont  size=28208, type=d
+
+----- c: copy -----     time 2.79   change 0  maxsize 55906304
+copy U3 to U3bcont  size=28208, type=d
+
+----- c: contrhsu -----     time 2.79   change 0  maxsize 55906304
+
+----- c: contrhsexit -----     time 2.8   change 0.01  maxsize 55906304
+ 1 outflow regions:
+ exit 0 flowout 3 -1 164 0 0 0 165 87 3 1 164 1 1 0
+rhsc at ifix 4.58075e-18 flow rate 0.0100107
+
+----- c: eqnsolvep -----     time 2.8   change 0  maxsize 55906304
+ init:  perr-rms 0.00215851    perr-min -0.00955966 at 16 64 1 0    perr-max 0.0151808 at 34 64 1 0
+enter solvep
+Procedure: Iibjkb ,  10 iterations
+ L=0, 85 strings for 8515 equations
+ L=1, 163 strings for 8515 equations
+ L=2, 8515 strings for 8515 equations
+ iter 0  perr-rms 0.00199979    perr-min -0.00861915    perr-max 0.0139742
+ iter 9  perr-rms 0.00177783    perr-min -0.00756856    perr-max 0.0127103
+Procedure: end
+end solve
+
+----- c: contdu -----     time 2.89   change 0.09  maxsize 55906304
+
+----- c: algebra -----     time 2.89   change 0  maxsize 55906304
+dU1cont =  *(-1 * U1bcont + 0)^1 + U1
+
+----- c: algebra -----     time 2.89   change 0  maxsize 55906304
+dU2cont =  *(-1 * U2bcont + 0)^1 + U2
+
+----- c: algebra -----     time 2.89   change 0  maxsize 55906304
+dU3cont =  *(-1 * U3bcont + 0)^1 + U3
+
+----- c: rmsminmax -----     time 2.89   change 0  maxsize 55906304
+RMSMM dU1cont rms 0.0196725, min -0.0586633 at 35 20 0 0,  max 0.108627 at 99 61 0 0,  ITER 1 
+RMSMM dU2cont rms 0.0110597, min -0.0863997 at 24 33 0 0,  max 0.0942306 at 18 12 0 0,  ITER 1 
+RMSMM dU3cont rms 0, min 0 at 0 0 0 0,  max 0 at 0 0 0 0,  ITER 1 
+RMSMM dp rms 0.809847, min -0.607378 at 164 79 0 0,  max 1.48976 at 17 85 0 0,  ITER 1 
+
+----- c: copy -----     time 2.89   change 0  maxsize 55906304
+copy rmsmm to rmsmmcont  size=20, type=d
+
+----- c: arraydumpmore -----     time 2.89   change 0  maxsize 55906304
+appending dump to file out/converge:   rmsmmcont
+
+--------------input from file inn.cont, loops remaining 3
+
+
+----- c: copy -----     time 2.89   change 0  maxsize 55906304
+copy U1 to U1bcont  size=28208, type=d
+
+----- c: copy -----     time 2.89   change 0  maxsize 55906304
+copy U2 to U2bcont  size=28208, type=d
+
+----- c: copy -----     time 2.89   change 0  maxsize 55906304
+copy U3 to U3bcont  size=28208, type=d
+
+----- c: contrhsu -----     time 2.89   change 0  maxsize 55906304
+
+----- c: contrhsexit -----     time 2.9   change 0.01  maxsize 55906304
+ 1 outflow regions:
+ exit 0 flowout 3 -1 164 0 0 0 165 87 3 1 164 1 1 0
+rhsc at ifix -9.16151e-18 flow rate 0.0100107
+
+----- c: eqnsolvep -----     time 2.9   change 0  maxsize 55906304
+ init:  perr-rms 0.0018269    perr-min -0.00797856 at 112 64 1 0    perr-max 0.0138994 at 34 64 1 0
+enter solvep
+Procedure: Iibjkb ,  10 iterations
+ L=0, 85 strings for 8515 equations
+ L=1, 163 strings for 8515 equations
+ L=2, 8515 strings for 8515 equations
+ iter 0  perr-rms 0.00175948    perr-min -0.00774329    perr-max 0.0126439
+ iter 9  perr-rms 0.00160725    perr-min -0.00689279    perr-max 0.0135826
+Procedure: end
+end solve
+
+----- c: contdu -----     time 2.98   change 0.08  maxsize 55906304
+
+----- c: algebra -----     time 2.99   change 0.01  maxsize 55906304
+dU1cont =  *(-1 * U1bcont + 0)^1 + U1
+
+----- c: algebra -----     time 2.99   change 0  maxsize 55906304
+dU2cont =  *(-1 * U2bcont + 0)^1 + U2
+
+----- c: algebra -----     time 2.99   change 0  maxsize 55906304
+dU3cont =  *(-1 * U3bcont + 0)^1 + U3
+
+----- c: rmsminmax -----     time 2.99   change 0  maxsize 55906304
+RMSMM dU1cont rms 0.0141815, min -0.0264212 at 100 59 0 0,  max 0.0680285 at 73 14 0 0,  ITER 1 
+RMSMM dU2cont rms 0.00534278, min -0.0492209 at 99 62 0 0,  max 0.041332 at 74 17 0 0,  ITER 1 
+RMSMM dU3cont rms 0, min 0 at 0 0 0 0,  max 0 at 0 0 0 0,  ITER 1 
+RMSMM dp rms 0.68934, min -0.500223 at 164 48 0 0,  max 1.22795 at 17 83 0 0,  ITER 1 
+
+----- c: copy -----     time 2.99   change 0  maxsize 55906304
+copy rmsmm to rmsmmcont  size=20, type=d
+
+----- c: arraydumpmore -----     time 2.99   change 0  maxsize 55906304
+appending dump to file out/converge:   rmsmmcont
+
+--------------input from file inn.cont, loops remaining 2
+
+
+----- c: copy -----     time 2.99   change 0  maxsize 55906304
+copy U1 to U1bcont  size=28208, type=d
+
+----- c: copy -----     time 2.99   change 0  maxsize 55906304
+copy U2 to U2bcont  size=28208, type=d
+
+----- c: copy -----     time 2.99   change 0  maxsize 55906304
+copy U3 to U3bcont  size=28208, type=d
+
+----- c: contrhsu -----     time 2.99   change 0  maxsize 55906304
+
+----- c: contrhsexit -----     time 3   change 0.01  maxsize 55906304
+ 1 outflow regions:
+ exit 0 flowout 3 -1 164 0 0 0 165 87 3 1 164 1 1 0
+rhsc at ifix -5.02799e-18 flow rate 0.0100107
+
+----- c: eqnsolvep -----     time 3   change 0  maxsize 55906304
+ init:  perr-rms 0.0016466    perr-min -0.00706905 at 115 66 1 0    perr-max 0.0130748 at 34 52 1 0
+enter solvep
+Procedure: Iibjkb ,  10 iterations
+ L=0, 85 strings for 8515 equations
+ L=1, 163 strings for 8515 equations
+ L=2, 8515 strings for 8515 equations
+ iter 0  perr-rms 0.00159297    perr-min -0.00702721    perr-max 0.0127939
+ iter 9  perr-rms 0.00147271    perr-min -0.00631521    perr-max 0.0137845
+Procedure: end
+end solve
+
+----- c: contdu -----     time 3.08   change 0.08  maxsize 55906304
+
+----- c: algebra -----     time 3.09   change 0.01  maxsize 55906304
+dU1cont =  *(-1 * U1bcont + 0)^1 + U1
+
+----- c: algebra -----     time 3.09   change 0  maxsize 55906304
+dU2cont =  *(-1 * U2bcont + 0)^1 + U2
+
+----- c: algebra -----     time 3.09   change 0  maxsize 55906304
+dU3cont =  *(-1 * U3bcont + 0)^1 + U3
+
+----- c: rmsminmax -----     time 3.09   change 0  maxsize 55906304
+RMSMM dU1cont rms 0.0112131, min -0.0277783 at 100 59 0 0,  max 0.0510617 at 73 15 0 0,  ITER 1 
+RMSMM dU2cont rms 0.00371618, min -0.0388052 at 99 62 0 0,  max 0.027381 at 74 17 0 0,  ITER 1 
+RMSMM dU3cont rms 0, min 0 at 0 0 0 0,  max 0 at 0 0 0 0,  ITER 1 
+RMSMM dp rms 0.596168, min -0.420722 at 164 47 0 0,  max 1.08871 at 32 49 0 0,  ITER 1 
+
+----- c: copy -----     time 3.09   change 0  maxsize 55906304
+copy rmsmm to rmsmmcont  size=20, type=d
+
+----- c: arraydumpmore -----     time 3.09   change 0  maxsize 55906304
+appending dump to file out/converge:   rmsmmcont
+
+--------------input from file inn.cont, loops remaining 1
+
+
+----- c: copy -----     time 3.09   change 0  maxsize 55906304
+copy U1 to U1bcont  size=28208, type=d
+
+----- c: copy -----     time 3.09   change 0  maxsize 55906304
+copy U2 to U2bcont  size=28208, type=d
+
+----- c: copy -----     time 3.09   change 0  maxsize 55906304
+copy U3 to U3bcont  size=28208, type=d
+
+----- c: contrhsu -----     time 3.09   change 0  maxsize 55906304
+
+----- c: contrhsexit -----     time 3.1   change 0.01  maxsize 55906304
+ 1 outflow regions:
+ exit 0 flowout 3 -1 164 0 0 0 165 87 3 1 164 1 1 0
+rhsc at ifix -8.68717e-18 flow rate 0.0100107
+
+----- c: eqnsolvep -----     time 3.1   change 0  maxsize 55906304
+ init:  perr-rms 0.00150774    perr-min -0.00646479 at 115 66 1 0    perr-max 0.0134137 at 34 52 1 0
+enter solvep
+Procedure: Iibjkb ,  10 iterations
+ L=0, 85 strings for 8515 equations
+ L=1, 163 strings for 8515 equations
+ L=2, 8515 strings for 8515 equations
+ iter 0  perr-rms 0.00146115    perr-min -0.00642374    perr-max 0.0132125
+ iter 9  perr-rms 0.00135999    perr-min -0.00580416    perr-max 0.0133965
+Procedure: end
+end solve
+
+----- c: contdu -----     time 3.18   change 0.08  maxsize 55906304
+
+----- c: algebra -----     time 3.18   change 0  maxsize 55906304
+dU1cont =  *(-1 * U1bcont + 0)^1 + U1
+
+----- c: algebra -----     time 3.18   change 0  maxsize 55906304
+dU2cont =  *(-1 * U2bcont + 0)^1 + U2
+
+----- c: algebra -----     time 3.19   change 0.01  maxsize 55906304
+dU3cont =  *(-1 * U3bcont + 0)^1 + U3
+
+----- c: rmsminmax -----     time 3.19   change 0  maxsize 55906304
+RMSMM dU1cont rms 0.00928964, min -0.0228918 at 100 57 0 0,  max 0.0402363 at 73 16 0 0,  ITER 1 
+RMSMM dU2cont rms 0.00331473, min -0.0317563 at 100 62 0 0,  max 0.0215544 at 51 59 0 0,  ITER 1 
+RMSMM dU3cont rms 0, min 0 at 0 0 0 0,  max 0 at 0 0 0 0,  ITER 1 
+RMSMM dp rms 0.520587, min -0.358103 at 164 46 0 0,  max 0.987652 at 32 49 0 0,  ITER 1 
+
+----- c: copy -----     time 3.19   change 0  maxsize 55906304
+copy rmsmm to rmsmmcont  size=20, type=d
+
+----- c: arraydumpmore -----     time 3.19   change 0  maxsize 55906304
+appending dump to file out/converge:   rmsmmcont
+
+--------------input from file inn.iter.uvwpmarvs, loops remaining 1
+
+
+----- c: copy -----     time 3.19   change 0  maxsize 55906304
+copy ppsav to pp  size=43065, type=d
+
+----- c: edit -----     time 3.19   change 0  maxsize 55906304
+ name ITER,   type i,  1 dims  n 1
+ a 1         1 1
+ e  end edit
+
+----- c: algebra -----     time 3.19   change 0  maxsize 55906304
+dU1 =  *(-1 * U1up + 0)^1 + U1
+
+----- c: algebra -----     time 3.19   change 0  maxsize 55906304
+dU2 =  *(-1 * U2up + 0)^1 + U2
+
+----- c: algebra -----     time 3.19   change 0  maxsize 55906304
+dU3 =  *(-1 * U3up + 0)^1 + U3
+
+----- c: algebra -----     time 3.19   change 0  maxsize 55906304
+dp =  *(-1 * ppup + 0)^1 + pp
+
+----- c: algebra -----     time 3.19   change 0  maxsize 55906304
+dq =  *(-1 * qturbup + 0)^1 + qturb
+
+----- c: algebra -----     time 3.19   change 0  maxsize 55906304
+dom =  *(-1 * omturbup + 0)^1 + omturb
+
+----- c: algebra -----     time 3.19   change 0  maxsize 55906304
+dbij =  *(-1 * bijup + 0)^1 + bij
+
+----- c: if -----     time 3.19   change 0  maxsize 55906304
+ if ITER % ITERAVE, then continue, otherwise find NOAVERAGE 2 % 2 ?  True, continue
+
+----- c: algebra -----     time 3.19   change 0  maxsize 55906304
+U1 =  *(0.5 * dU1 + 0)^1 + U1up
+
+----- c: algebra -----     time 3.19   change 0  maxsize 55906304
+U2 =  *(0.5 * dU2 + 0)^1 + U2up
+
+----- c: algebra -----     time 3.19   change 0  maxsize 55906304
+U3 =  *(0.5 * dU3 + 0)^1 + U3up
+
+----- c: algebra -----     time 3.19   change 0  maxsize 55906304
+qturb =  *(0.5 * dq + 0)^1 + qturbup
+
+----- c: algebra -----     time 3.19   change 0  maxsize 55906304
+omturb = omturbup *(1 * omturb + 0)^1 + 
+
+----- c: algebra -----     time 3.19   change 0  maxsize 55906304
+omturb =  *(1 * omturb + 0)^0.5 + 
+
+----- c: algebra -----     time 3.19   change 0  maxsize 55906304
+bij =  *(0.5 * dbij + 0)^1 + bijup
+
+----- c: algebra -----     time 3.19   change 0  maxsize 55906304
+pp =  *(0.5 * dp + 0)^1 + ppup
+
+----- c: algebra -----     time 3.19   change 0  maxsize 55906304
+xyzp =  *(1 * xyzp + 0)^1 + xyzpold
+
+----- c: algebra -----     time 3.19   change 0  maxsize 55906304
+xyzp =  *(0.5 * xyzp + 0)^1 + 
+
+----- c: rmsminmax -----     time 3.19   change 0  maxsize 55906304
+RMSMM U1 rms 0.644726, min -0.16706 at 25 36 0 0,  max 1.2401 at 116 18 0 0,  ITER 2 
+RMSMM U2 rms 0.576029, min -1.12537 at 107 18 0 0,  max 1.11936 at 20 42 0 0,  ITER 2 
+RMSMM U3 rms 0, min 0 at 0 0 0 0,  max 0 at 0 0 0 0,  ITER 2 
+RMSMM pp rms 3.02958, min -10.0073 at 119 40 0 0,  max 10.5051 at 33 34 0 0,  ITER 2 
+RMSMM qturb rms 0.114457, min 0 at 33 27 0 0,  max 0.1356 at 0 0 0 0,  ITER 2 
+RMSMM omturb rms 61.1106, min 1.1286 at 13 7 0 0,  max 907.224 at 33 27 0 0,  ITER 2 
+RMSMM bij rms 0.0189885, min -0.33333 at 57 27 0 1,  max 0.250924 at 119 39 0 3,  ITER 2 
+
+----- c: copy -----     time 3.19   change 0  maxsize 55906304
+copy rmsmm to rmsmmprop  size=20, type=d
+
+----- c: rmsminmax -----     time 3.19   change 0  maxsize 55906304
+RMSMM dU1 rms 0.0677548, min -0.272432 at 112 62 0 0,  max 0.260411 at 112 18 0 0,  ITER 2 
+RMSMM dU2 rms 0.0896778, min -0.341824 at 93 7 0 0,  max 0.215988 at 36 59 0 0,  ITER 2 
+RMSMM dU3 rms 0, min 0 at 0 0 0 0,  max 0 at 0 0 0 0,  ITER 2 
+RMSMM dp rms 1.88196, min -14.2684 at 33 34 0 0,  max 12.2018 at 119 38 0 0,  ITER 2 
+RMSMM dq rms 0.00394794, min -0.0214894 at 43 55 0 0,  max 0.0357221 at 32 28 0 0,  ITER 2 
+RMSMM dom rms 37.1558, min -116.111 at 70 27 0 0,  max 291.298 at 33 28 0 0,  ITER 2 
+RMSMM dbij rms 0.00994042, min -0.112076 at 62 26 0 1,  max 0.0731797 at 120 37 0 3,  ITER 2 
+
+----- c: copy -----     time 3.19   change 0  maxsize 55906304
+copy rmsmm to rmsmmchange  size=20, type=d
+
+----- c: arraydumpmore -----     time 3.19   change 0  maxsize 55906304
+appending dump to file out/converge:   ITER rmsmmprop rmsmmchange updateq updateom updatebij
+
+----- c: infile -----     time 3.19   change 0  maxsize 55906304
+
+--------------input from file inn.analysis10.50, loops remaining 1
+
+
+----- c: if -----     time 3.19   change 0  maxsize 55906304
+ if FIFTY > TEN, then find endinit, otherwise continue 50 > 10 ?  True, endinit found
+
+----- c: if -----     time 3.19   change 0  maxsize 55906304
+ if ITER % TEN, then continue, otherwise find endten 2 % 10 ?  Not true, endten found
+
+----- c: if -----     time 3.19   change 0  maxsize 55906304
+ if ITER % FIFTY, then continue, otherwise find endfifty 2 % 50 ?  Not true, endfifty found
+
+--------------input from file inn.iter.uvwpmarvs, loops remaining 1
+
+
+----- c: infile -----     time 3.19   change 0  maxsize 55906304
+
+--------------input from file inn.iter.output, loops remaining 1
+
+
+----- c: areaflowint -----     time 3.19   change 0  maxsize 55906304
+integration for a=0.49995, b=-0.5 to 1.5, c=0 to 1
+properties:
+   a,b,or c  area  flow+ flow- flow  (property averages)
+AFINT a0.49995 0.0140001  0.00857467 0  0.00857467 ITER 2
+
+----- c: copypart -----     time 3.19   change 0  maxsize 55906304
+from averages  1
+ x 7 7 7
+to flowm 1
+ x 1 1 1
+
+----- c: algebra -----     time 3.19   change 0  maxsize 55906304
+flowmdif = flowm *(1 * flowrate + 0)^-1 + 
+
+----- c: algebra -----     time 3.19   change 0  maxsize 55906304
+flowmdif =  *(1 * flowmdif + -1)^1 + 
+
+----- c: arraydumpmore -----     time 3.19   change 0  maxsize 55906304
+appending dump to file out/converge:   flowmdif
+
+----- c: if -----     time 3.19   change 0  maxsize 55906304
+ if ITER % ITERDUMP, then continue, otherwise find NODUMP 2 % 100 ?  Not true, NODUMP found
+
+----- c: if -----     time 3.19   change 0  maxsize 55906304
+ if ITER % ITERPLOT, then continue, otherwise find NOPLOT 2 % 100 ?  Not true, NOPLOT found
+
+--------------input from file inn.iter.uvwpmarvs, loops remaining 1
+
+
+--------------input from file stdin, loops remaining 1
+
+
+----- c: printcontrol -----     time 3.19   change 0  maxsize 55906304
+
+ printcontrol: stopping normal print on stdout
+
+ printcontrol: resuming print on stdout
+
+----- c: infile -----     time 758.01   change 0  maxsize 61939712
+
+--------------input from file inn.iter.uvwpmarvs, loops remaining 2
+
+
+----- c: copy -----     time 758.01   change 0  maxsize 61939712
+copy U1 to U1up  size=28208, type=d
+
+----- c: copy -----     time 758.01   change 0  maxsize 61939712
+copy U2 to U2up  size=28208, type=d
+
+----- c: copy -----     time 758.01   change 0  maxsize 61939712
+copy U3 to U3up  size=28208, type=d
+
+----- c: copy -----     time 758.01   change 0  maxsize 61939712
+copy qturb to qturbup  size=28208, type=d
+
+----- c: copy -----     time 758.01   change 0  maxsize 61939712
+copy omturb to omturbup  size=28208, type=d
+
+----- c: copy -----     time 758.01   change 0  maxsize 61939712
+copy bij to bijup  size=169248, type=d
+
+----- c: copy -----     time 758.01   change 0  maxsize 61939712
+copy pp to ppup  size=43065, type=d
+
+----- c: copy -----     time 758.01   change 0  maxsize 61939712
+copy xyzp to xyzpold  size=129195, type=d
+
+----- c: infile -----     time 758.01   change 0  maxsize 61939712
+
+--------------input from file inn.newcv, loops remaining 1
+
+
+----- c: cvdcreset -----     time 758.01   change 0  maxsize 61939712
+viscosity vlam, timestep dumdt, t2cvlim 10  using viscosity
+cvd_change 8515 pts, rms: 0.00043111 0.00116231 0 max 0.0911329 dir 1 at 139 37 1 0 ITER 498  
+ set 7012 missed sleeping faces
+sleep done
+face done
+
+----- c: set_xyzdouble -----     time 758.08   change 0.07  maxsize 61939712
+
+----- c: set_volmom -----     time 758.1   change 0.02  maxsize 61939712
+
+----- c: set_cpsleep -----     time 758.11   change 0.01  maxsize 61939712
+
+----- c: ppreset -----     time 758.11   change 0  maxsize 61939712
+
+----- c: set_cpda -----     time 758.19   change 0.08  maxsize 61939712
+ar=0 cenfac=0, linear: ar=0.05 cenfac=0.5 to ar=0.15 cenfac=0
+ omit 1 pt types: i
+ cpda cleared at 4174 points based on type
+   components cleared at 24034 points based on csym
+
+----- c: set_cpflop -----     time 758.28   change 0.09  maxsize 61939712
+iw range 0 8668
+checking cpflop consistency
+    maximum sum/cmax = 2.93674e-13
+
+----- c: coefconv -----     time 758.33   change 0.05  maxsize 61939712
+ convection=coef 1, set for its=0 to ite=0
+
+----- c: coefviscstep -----     time 758.41   change 0.08  maxsize 61939712
+ viscosity: vlam, at coef 0
+
+----- c: coeffix -----     time 758.45   change 0.04  maxsize 61939712
+ nyperm 1, coef 0 to 2.  Limits: limsumnz 0  poselim 0.4 displim -1.1
+omit 2 pt types: i w ,  its 0 ite 0
+abs(sum)max 7.80762e-09, fixed+ at 0 points, fixed- at 5 points
+for 8400 points, pose min 0.707034 disp min -0.792003
+pose groups  0 <0,  0 <0.1,  0 <0.2,  0 <0.3,  0 <0.4,  0 <0.5,  0 <0.6,  0 <0.7,  578 <0.8,  2424 <0.9,  5306 <1,
+
+--------------input from file inn.iter.uvwpmarvs, loops remaining 2
+
+
+----- c: infile -----     time 758.45   change 0  maxsize 61939712
+
+--------------input from file inn.iter.marvs, loops remaining 1
+
+
+----- c: viscmarv -----     time 758.45   change 0  maxsize 61939712
+
+----- c: coefviscstep -----     time 758.46   change 0.01  maxsize 61939712
+ viscosity: vmarv, at coef 0
+
+----- c: coeffix -----     time 758.5   change 0.04  maxsize 61939712
+ nyperm 1, coef 0 to 3.  Limits: limsumnz 0  poselim 0.6 displim -1.1
+omit 2 pt types: i w ,  its 0 ite 0
+abs(sum)max 8.33902e-09, fixed+ at 0 points, fixed- at 4 points
+for 8400 points, pose min 0.69753 disp min -0.944871
+pose groups  0 <0,  0 <0.1,  0 <0.2,  0 <0.3,  0 <0.4,  0 <0.5,  0 <0.6,  2 <0.7,  852 <0.8,  2301 <0.9,  5244 <1,
+
+----- c: set_pkdk -----     time 758.51   change 0.01  maxsize 61939712
+set pkdk using bij for bij
+
+----- c: set_gbij -----     time 758.54   change 0.03  maxsize 61939712
+
+----- c: coefadd -----     time 758.55   change 0.01  maxsize 61939712
+coef_c.0= +1 *coef_c.1 +1 *coef_c.2 +1.36054 *coef_c.3
+
+----- c: omrhsmarv -----     time 758.55   change 0  maxsize 61939712
+coefficient set 0 used for convection, viscous, and/or time
+
+----- c: eqnsolves -----     time 758.57   change 0.02  maxsize 61939712
+on the grid equations with rhs=rhsomturb, center_add=caomturb, change=dom
+oldnewdom n omit 2 pt types: i w,  eq range 0, 8669
+ 269 of 8669 active eqs, type deactivated
+ init:  err-rms 0.0169814    err-min -0.543984 at 137 33 0 0    err-max 0.701039 at 138 36 0 0
+Procedure: ijk ,  1 iterations
+ L=0, 84 strings for 8400 equations
+ L=1, 162 strings for 8400 equations
+ L=2, 8400 strings for 8400 equations
+ iter 0  err-rms 0.00248646    err-min -0.0282655 at 122 35 0 0    err-max 0.0781877 at 139 36 0 0
+Procedure: end
+end solve
+
+----- c: varupdate -----     time 758.58   change 0.01  maxsize 61939712
+update omturb with dom method l
+update omturb: facmin 0.993679, fac<.5 for 0 pts, <.001 for 0 pts
+
+----- c: copy -----     time 758.58   change 0  maxsize 61939712
+copy updatew to updateom  size=3, type=d
+
+----- c: function -----     time 758.58   change 0  maxsize 61939712
+omturb=max(omturb,ommin)
+
+----- c: coefadd -----     time 758.58   change 0  maxsize 61939712
+coef_c.0= +1 *coef_c.1 +1 *coef_c.2 +1 *coef_c.3
+
+----- c: bijrhsmarvs -----     time 758.59   change 0.01  maxsize 61939712
+ saving  pde~,rt~,geff,fw,fb,c1,c3,c4,c6,fr,capg,c1homo in beqex
+
+----- c: eqnsolvebij -----     time 758.67   change 0.08  maxsize 61939712
+using cambij, oldnewch=n, omit 2 pt types: i w,  eq range 0, 8669
+nybijeq set
+cplus set 
+ rhs6 set 
+ bij 0:  err-rms 0.000144986    err-min -0.0037228 at 140 36 0 0   err-max 0.0103799 at 138 36 0 0
+ bij 1:  err-rms 0.000153815    err-min -0.0107237 at 138 36 0 0   err-max 0.00300025 at 140 36 0 0
+ bij 2:  err-rms 4.10676e-05    err-min -0.00110469 at 136 35 0 0   err-max 0.00151274 at 137 37 0 0
+ bij 3:  err-rms 0.000167413    err-min -0.0107 at 138 36 0 0   err-max 0.0029074 at 135 33 0 0
+ bij 4:  err-rms 0    err-min 0 at 0 0 0 0   err-max 0 at 0 0 0 0
+ bij 5:  err-rms 0    err-min 0 at 0 0 0 0   err-max 0 at 0 0 0 0
+ init:  err-rms 0.00011135    |err-max| 0.0107237
+Procedure: ijkc ,  1 iterations
+ L=0, 85 strings for 8669 equations
+ L=1, 164 strings for 8669 equations
+ L=2, 8669 strings for 8669 equations
+  iter 0  ddb-rms 0.00014259  ddb-max 0.011351  for 8512 of 8669 eqs realfix 0 pts fmin 1
+  iter 0  err-rms 5.44033e-06    err-max 0.000209743
+Procedure: end
+end solve
+
+----- c: varupdate -----     time 758.72   change 0.05  maxsize 61939712
+update bij with dbij method b
+update bij: facmin 0, fac<.5 for 14 pts, <.001 for 14 pts
+
+----- c: copy -----     time 758.73   change 0.01  maxsize 61939712
+copy updatew to updatebij  size=3, type=d
+
+----- c: bijwallsplat -----     time 758.73   change 0  maxsize 61939712
+
+----- c: coefadd -----     time 758.73   change 0  maxsize 61939712
+coef_c.0= +1 *coef_c.1 +1 *coef_c.2 +1 *coef_c.3
+
+----- c: qturbrhs -----     time 758.73   change 0  maxsize 61939712
+coefficient set 0 used for convection, viscous, and/or time
+
+----- c: eqnsolves -----     time 758.75   change 0.02  maxsize 61939712
+on the grid equations with rhs=rhsqturb, center_add=caqturb, change=dq
+oldnewdq n omit 2 pt types: i w,  eq range 0, 8669
+ 269 of 8669 active eqs, type deactivated
+ init:  err-rms 8.10339e-05    err-min -0.00234625 at 137 33 0 0    err-max 0.00489711 at 138 36 0 0
+Procedure: ijk ,  1 iterations
+ L=0, 84 strings for 8400 equations
+ L=1, 162 strings for 8400 equations
+ L=2, 8400 strings for 8400 equations
+ iter 0  err-rms 1.71536e-05    err-min -0.000160065 at 137 33 0 0    err-max 0.000452973 at 139 37 0 0
+Procedure: end
+end solve
+
+----- c: varupdate -----     time 758.77   change 0.02  maxsize 61939712
+update qturb with dq method l
+update qturb: facmin 0.993041, fac<.5 for 0 pts, <.001 for 0 pts
+
+----- c: copy -----     time 758.77   change 0  maxsize 61939712
+copy updatew to updateq  size=3, type=d
+
+----- c: function -----     time 758.77   change 0  maxsize 61939712
+qturb=max(qturb,qmin)
+
+----- c: algebra -----     time 758.77   change 0  maxsize 61939712
+qturb = wallzero *(1 * qturb + 0)^1 + 
+
+----- c: omwallmarvs -----     time 758.77   change 0  maxsize 61939712
+
+--------------input from file inn.iter.uvwpmarvs, loops remaining 2
+
+
+----- c: coefadd -----     time 758.77   change 0  maxsize 61939712
+coef_c.0= +1 *coef_c.1 +1 *coef_c.2
+
+----- c: momrhsr -----     time 758.77   change 0  maxsize 61939712
+oldnew n, jcoef 0 included, bij  included, pp  at ppts included,
+
+----- c: momcam -----     time 758.8   change 0.03  maxsize 61939712
+cami=max of caminew and  1 caminew +0 camiold
+
+----- c: eqnupdatem -----     time 758.87   change 0.07  maxsize 61939712
+ny save dUn 1 omit 2 pt types: i w
+ update U1, 269 of 8669 eqs, type and sym-plane deactivated
+ init:  err-rms 0.00552443    err-min -0.243798 at 139 36 0 0    err-max 0.0457133 at 140 37 0 0
+ center update  err-rms 0.00339606    err-min -0.0768809 at 24 40 0 0    err-max 0.0274462 at 136 35 0 0
+ update U2, 269 of 8669 eqs, type and sym-plane deactivated
+ init:  err-rms 0.00390863    err-min -0.0668862 at 24 35 0 0    err-max 0.217016 at 139 36 0 0
+ center update  err-rms 0.00205266    err-min -0.0481746 at 24 36 0 0    err-max 0.0217852 at 136 35 0 0
+2-d symmetry plane, omit update for U3
+
+----- c: contcpcdu -----     time 758.87   change 0  maxsize 61939712
+
+----- c: contcpcfixed -----     time 758.92   change 0.05  maxsize 61939712
+ fix cpc: facrc 1, facrcperm 1, poselim 0.5, displim -1, poselimperm 0, displimperm -20
+perm. fix 0 p-eqs, pose min= 0.469629, disp min=-1.36235
+pose groups  0 <0,  0 <0.1,  0 <0.2,  0 <0.3,  0 <0.4,  10 <0.5,  288 <0.6,  1277 <0.7,  529 <0.8,  692 <0.9,  5719 <1,
+iter 0 poselim 0 displim -20
+iter 0 poselim 0 displim -20 maximum facmix= 0
+iter 1 poselim 0.5 displim -1
+ieq 2536, 111 23 1 0 facmix 0.0245639 cen 0.000120308 sump 0.000246831 cmin -7.42174e-05 pose 0.487409 disp -0.616898
+ieq 2879, 110 27 1 0 facmix 0.0272078 cen 3.7402e-05 sump 7.09424e-05 cmin -3.83145e-05 pose 0.527216 disp -1.0244
+ieq 2880, 111 27 1 0 facmix 0.0560835 cen 3.25462e-05 sump 6.83841e-05 cmin -3.45561e-05 pose 0.475932 disp -1.06176
+ieq 3004, 133 28 1 0 facmix 0.38963 cen 0.000124372 sump 0.000240035 cmin -0.000169438 pose 0.518139 disp -1.36235
+ieq 3854, 33 34 1 0 facmix 0.500234 cen 0.000246937 sump 0.000247357 cmin -0.000247147 pose 0.998303 disp -1.00085
+ieq 5417, 120 43 1 0 facmix 0.00494877 cen 4.01473e-05 sump 8.03381e-05 cmin -4.03462e-05 pose 0.49973 disp -1.00495
+ieq 5581, 120 44 1 0 facmix 0.0108377 cen 4.00951e-05 sump 8.10786e-05 cmin -4.0462e-05 pose 0.494522 disp -1.00915
+ieq 6483, 117 50 1 0 facmix 0.0165046 cen 2.43925e-05 sump 4.90943e-05 cmin -2.48002e-05 pose 0.496849 disp -1.01671
+iter 1 poselim 0.5 displim -1 maximum facmix= 0.500234
+
+----- c: contcpcexit -----     time 758.92   change 0  maxsize 61939712
+ 1 outflow regions:
+ exit 0 flowout 3 -1 164 0 0 0 165 87 3 1 164 1 1 0
+
+----- c: contrhsu -----     time 758.92   change 0  maxsize 61939712
+
+----- c: contrhsp -----     time 758.93   change 0.01  maxsize 61939712
+
+----- c: contrhsexit -----     time 758.93   change 0  maxsize 61939712
+ 1 outflow regions:
+ exit 0 flowout 3 -1 164 0 0 0 165 87 3 1 164 1 1 0
+rhsc at ifix 1.46148e-08 flow rate 0.0100107
+
+----- c: eqnsolvep -----     time 758.93   change 0  maxsize 61939712
+ init:  perr-rms 7.84998e-05    perr-min -0.00242617 at 139 37 1 0    perr-max 0.00643493 at 139 36 1 0
+enter solvep
+Procedure: Ibjkib ,  1 iterations
+ L=1, 163 strings for 8515 equations
+ L=2, 8515 strings for 8515 equations
+ L=0, 85 strings for 8515 equations
+ iter 0  perr-rms 9.19922e-06    perr-min -0.000376912    perr-max 0.000502594
+Procedure: pqbijkb ,  5 iterations
+blockcoef p
+ ipb 25 12 1 1
+  300 equations
+blockcoef q
+ ipb 25 12 1 1
+  300 equations
+ rhsb  rhs 5.33644e-08 min -5.29784e-07 max 4.8516e-07
+ rhsb  rhs 5.58151e-09 min -2.12825e-10 max 2.37192e-08
+ iter 0  perr-rms 3.09611e-06    perr-min -6.24388e-05    perr-max 0.000154718
+ rhsb  rhs 4.93115e-08 min -3.19224e-07 max 4.89602e-07
+ rhsb  rhs 5.70255e-09 min 6.99093e-11 max 2.21201e-08
+ rhsb  rhs 5.09944e-08 min -3.95688e-07 max 5.779e-07
+ rhsb  rhs 5.54388e-09 min -8.45914e-10 max 2.15772e-08
+ rhsb  rhs 4.51963e-08 min -3.80175e-07 max 4.9113e-07
+ rhsb  rhs 5.43843e-09 min -4.13701e-10 max 2.06924e-08
+ rhsb  rhs 3.94413e-08 min -3.34423e-07 max 4.02485e-07
+ rhsb  rhs 5.32022e-09 min 2.57192e-10 max 2.04125e-08
+ iter 4  perr-rms 8.35726e-07    perr-min -9.17359e-06    perr-max 1.52414e-05
+Procedure: ibjkb ,  10 iterations
+ iter 0  perr-rms 7.38511e-07    perr-min -6.93093e-06    perr-max 1.42465e-05
+ iter 9  perr-rms 4.08091e-07    perr-min -3.79771e-06    perr-max 5.99006e-06
+Procedure: end
+end solve
+
+----- c: contdu -----     time 759.02   change 0.09  maxsize 61939712
+
+----- c: algebra -----     time 759.03   change 0.01  maxsize 61939712
+pp =  *(1 * pp + 0)^1 + dp
+
+----- c: if -----     time 759.03   change 0  maxsize 61939712
+ if ppinlet = ppinlet, then continue, otherwise find NOPPINLET-0.5 = -0.5 ?  True, continue
+
+----- c: copypart -----     time 759.03   change 0  maxsize 61939712
+from pp  1
+ a 1 1 1
+to ppnew 1
+ a 1 1 1
+
+----- c: algebra -----     time 759.03   change 0  maxsize 61939712
+dpin =  *(-1 * ppnew + 0)^1 + ppinlet
+
+----- c: algebra -----     time 759.03   change 0  maxsize 61939712
+pp =  *(1 * pp + -0.000151916)^1 + 
+
+----- c: if -----     time 759.03   change 0  maxsize 61939712
+ if ITCONT > 0, then continue, otherwise find NOCONT 5 > 0 ?  True, continue
+
+----- c: copy -----     time 759.03   change 0  maxsize 61939712
+copy pp to ppsav  size=43065, type=d
+
+----- c: infile -----     time 759.03   change 0  maxsize 61939712
+
+--------------input from file inn.cont, loops remaining 5
+
+
+----- c: copy -----     time 759.03   change 0  maxsize 61939712
+copy U1 to U1bcont  size=28208, type=d
+
+----- c: copy -----     time 759.03   change 0  maxsize 61939712
+copy U2 to U2bcont  size=28208, type=d
+
+----- c: copy -----     time 759.03   change 0  maxsize 61939712
+copy U3 to U3bcont  size=28208, type=d
+
+----- c: contrhsu -----     time 759.03   change 0  maxsize 61939712
+
+----- c: contrhsexit -----     time 759.04   change 0.01  maxsize 61939712
+ 1 outflow regions:
+ exit 0 flowout 3 -1 164 0 0 0 165 87 3 1 164 1 1 0
+rhsc at ifix -7.02886e-15 flow rate 0.0100107
+
+----- c: eqnsolvep -----     time 759.04   change 0  maxsize 61939712
+ init:  perr-rms 0.000537473    perr-min -0.0101449 at 141 36 1 0    perr-max 0.0114609 at 24 39 1 0
+enter solvep
+Procedure: Iibjkb ,  10 iterations
+ L=0, 85 strings for 8515 equations
+ L=1, 163 strings for 8515 equations
+ L=2, 8515 strings for 8515 equations
+ iter 0  perr-rms 4.4762e-05    perr-min -0.00105925    perr-max 0.000436826
+ iter 9  perr-rms 6.40486e-06    perr-min -3.75288e-05    perr-max 6.02313e-05
+Procedure: end
+end solve
+
+----- c: contdu -----     time 759.13   change 0.09  maxsize 61939712
+
+----- c: algebra -----     time 759.13   change 0  maxsize 61939712
+dU1cont =  *(-1 * U1bcont + 0)^1 + U1
+
+----- c: algebra -----     time 759.13   change 0  maxsize 61939712
+dU2cont =  *(-1 * U2bcont + 0)^1 + U2
+
+----- c: algebra -----     time 759.13   change 0  maxsize 61939712
+dU3cont =  *(-1 * U3bcont + 0)^1 + U3
+
+----- c: rmsminmax -----     time 759.13   change 0  maxsize 61939712
+RMSMM dU1cont rms 0.00364903, min -0.03604 at 137 36 0 0,  max 0.102736 at 24 36 0 0,  ITER 498 
+RMSMM dU2cont rms 0.00222951, min -0.0641948 at 139 36 0 0,  max 0.0565167 at 24 35 0 0,  ITER 498 
+RMSMM dU3cont rms 0, min 0 at 0 0 0 0,  max 0 at 0 0 0 0,  ITER 498 
+RMSMM dp rms 0.00417201, min -0.0544148 at 33 40 0 0,  max 0.0169689 at 28 46 0 0,  ITER 498 
+
+----- c: copy -----     time 759.13   change 0  maxsize 61939712
+copy rmsmm to rmsmmcont  size=20, type=d
+
+----- c: arraydumpmore -----     time 759.13   change 0  maxsize 61939712
+appending dump to file out/converge:   rmsmmcont
+
+--------------input from file inn.cont, loops remaining 4
+
+
+----- c: copy -----     time 759.13   change 0  maxsize 61939712
+copy U1 to U1bcont  size=28208, type=d
+
+----- c: copy -----     time 759.13   change 0  maxsize 61939712
+copy U2 to U2bcont  size=28208, type=d
+
+----- c: copy -----     time 759.13   change 0  maxsize 61939712
+copy U3 to U3bcont  size=28208, type=d
+
+----- c: contrhsu -----     time 759.13   change 0  maxsize 61939712
+
+----- c: contrhsexit -----     time 759.14   change 0.01  maxsize 61939712
+ 1 outflow regions:
+ exit 0 flowout 3 -1 164 0 0 0 165 87 3 1 164 1 1 0
+rhsc at ifix 2.9409e-18 flow rate 0.0100107
+
+----- c: eqnsolvep -----     time 759.14   change 0  maxsize 61939712
+ init:  perr-rms 0.000230454    perr-min -0.00651206 at 141 36 1 0    perr-max 0.00399537 at 119 13 1 0
+enter solvep
+Procedure: Iibjkb ,  10 iterations
+ L=0, 85 strings for 8515 equations
+ L=1, 163 strings for 8515 equations
+ L=2, 8515 strings for 8515 equations
+ iter 0  perr-rms 1.74867e-05    perr-min -0.0004771    perr-max 0.000182589
+ iter 9  perr-rms 4.1765e-06    perr-min -2.70052e-05    perr-max 4.14683e-05
+Procedure: end
+end solve
+
+----- c: contdu -----     time 759.23   change 0.09  maxsize 61939712
+
+----- c: algebra -----     time 759.23   change 0  maxsize 61939712
+dU1cont =  *(-1 * U1bcont + 0)^1 + U1
+
+----- c: algebra -----     time 759.23   change 0  maxsize 61939712
+dU2cont =  *(-1 * U2bcont + 0)^1 + U2
+
+----- c: algebra -----     time 759.23   change 0  maxsize 61939712
+dU3cont =  *(-1 * U3bcont + 0)^1 + U3
+
+----- c: rmsminmax -----     time 759.23   change 0  maxsize 61939712
+RMSMM dU1cont rms 0.000649179, min -0.0135538 at 137 36 0 0,  max 0.0465934 at 139 36 0 0,  ITER 498 
+RMSMM dU2cont rms 0.00052468, min -0.0413715 at 139 36 0 0,  max 0.00836054 at 140 37 0 0,  ITER 498 
+RMSMM dU3cont rms 0, min 0 at 0 0 0 0,  max 0 at 0 0 0 0,  ITER 498 
+RMSMM dp rms 0.000666028, min -0.00575012 at 141 36 0 0,  max 0.00639836 at 109 27 0 0,  ITER 498 
+
+----- c: copy -----     time 759.23   change 0  maxsize 61939712
+copy rmsmm to rmsmmcont  size=20, type=d
+
+----- c: arraydumpmore -----     time 759.23   change 0  maxsize 61939712
+appending dump to file out/converge:   rmsmmcont
+
+--------------input from file inn.cont, loops remaining 3
+
+
+----- c: copy -----     time 759.23   change 0  maxsize 61939712
+copy U1 to U1bcont  size=28208, type=d
+
+----- c: copy -----     time 759.23   change 0  maxsize 61939712
+copy U2 to U2bcont  size=28208, type=d
+
+----- c: copy -----     time 759.23   change 0  maxsize 61939712
+copy U3 to U3bcont  size=28208, type=d
+
+----- c: contrhsu -----     time 759.23   change 0  maxsize 61939712
+
+----- c: contrhsexit -----     time 759.24   change 0.01  maxsize 61939712
+ 1 outflow regions:
+ exit 0 flowout 3 -1 164 0 0 0 165 87 3 1 164 1 1 0
+rhsc at ifix -4.63496e-18 flow rate 0.0100107
+
+----- c: eqnsolvep -----     time 759.24   change 0  maxsize 61939712
+ init:  perr-rms 0.000177347    perr-min -0.00427402 at 141 36 1 0    perr-max 0.00433983 at 119 13 1 0
+enter solvep
+Procedure: Iibjkb ,  10 iterations
+ L=0, 85 strings for 8515 equations
+ L=1, 163 strings for 8515 equations
+ L=2, 8515 strings for 8515 equations
+ iter 0  perr-rms 1.11811e-05    perr-min -0.000231354    perr-max 0.000133681
+ iter 9  perr-rms 2.96565e-06    perr-min -1.9414e-05    perr-max 2.96874e-05
+Procedure: end
+end solve
+
+----- c: contdu -----     time 759.33   change 0.09  maxsize 61939712
+
+----- c: algebra -----     time 759.34   change 0.01  maxsize 61939712
+dU1cont =  *(-1 * U1bcont + 0)^1 + U1
+
+----- c: algebra -----     time 759.34   change 0  maxsize 61939712
+dU2cont =  *(-1 * U2bcont + 0)^1 + U2
+
+----- c: algebra -----     time 759.34   change 0  maxsize 61939712
+dU3cont =  *(-1 * U3bcont + 0)^1 + U3
+
+----- c: rmsminmax -----     time 759.34   change 0  maxsize 61939712
+RMSMM dU1cont rms 0.000358193, min -0.00844525 at 140 36 0 0,  max 0.0268699 at 139 36 0 0,  ITER 498 
+RMSMM dU2cont rms 0.000308596, min -0.024843 at 139 36 0 0,  max 0.00549797 at 140 37 0 0,  ITER 498 
+RMSMM dU3cont rms 0, min 0 at 0 0 0 0,  max 0 at 0 0 0 0,  ITER 498 
+RMSMM dp rms 0.000382454, min -0.00417527 at 142 37 0 0,  max 0.00499801 at 109 27 0 0,  ITER 498 
+
+----- c: copy -----     time 759.34   change 0  maxsize 61939712
+copy rmsmm to rmsmmcont  size=20, type=d
+
+----- c: arraydumpmore -----     time 759.34   change 0  maxsize 61939712
+appending dump to file out/converge:   rmsmmcont
+
+--------------input from file inn.cont, loops remaining 2
+
+
+----- c: copy -----     time 759.34   change 0  maxsize 61939712
+copy U1 to U1bcont  size=28208, type=d
+
+----- c: copy -----     time 759.34   change 0  maxsize 61939712
+copy U2 to U2bcont  size=28208, type=d
+
+----- c: copy -----     time 759.34   change 0  maxsize 61939712
+copy U3 to U3bcont  size=28208, type=d
+
+----- c: contrhsu -----     time 759.34   change 0  maxsize 61939712
+
+----- c: contrhsexit -----     time 759.35   change 0.01  maxsize 61939712
+ 1 outflow regions:
+ exit 0 flowout 3 -1 164 0 0 0 165 87 3 1 164 1 1 0
+rhsc at ifix 1.13028e-17 flow rate 0.0100107
+
+----- c: eqnsolvep -----     time 759.35   change 0  maxsize 61939712
+ init:  perr-rms 0.00014825    perr-min -0.00328658 at 135 30 1 0    perr-max 0.00396048 at 119 13 1 0
+enter solvep
+Procedure: Iibjkb ,  10 iterations
+ L=0, 85 strings for 8515 equations
+ L=1, 163 strings for 8515 equations
+ L=2, 8515 strings for 8515 equations
+ iter 0  perr-rms 8.57447e-06    perr-min -0.0001494    perr-max 0.000133147
+ iter 9  perr-rms 2.26115e-06    perr-min -1.36515e-05    perr-max 2.18494e-05
+Procedure: end
+end solve
+
+----- c: contdu -----     time 759.44   change 0.09  maxsize 61939712
+
+----- c: algebra -----     time 759.45   change 0.01  maxsize 61939712
+dU1cont =  *(-1 * U1bcont + 0)^1 + U1
+
+----- c: algebra -----     time 759.45   change 0  maxsize 61939712
+dU2cont =  *(-1 * U2bcont + 0)^1 + U2
+
+----- c: algebra -----     time 759.45   change 0  maxsize 61939712
+dU3cont =  *(-1 * U3bcont + 0)^1 + U3
+
+----- c: rmsminmax -----     time 759.45   change 0  maxsize 61939712
+RMSMM dU1cont rms 0.000236644, min -0.00574479 at 140 36 0 0,  max 0.0159724 at 139 36 0 0,  ITER 498 
+RMSMM dU2cont rms 0.000210234, min -0.0146953 at 139 36 0 0,  max 0.00435719 at 133 30 0 0,  ITER 498 
+RMSMM dU3cont rms 0, min 0 at 0 0 0 0,  max 0 at 0 0 0 0,  ITER 498 
+RMSMM dp rms 0.000265912, min -0.0035893 at 142 37 0 0,  max 0.00377223 at 109 27 0 0,  ITER 498 
+
+----- c: copy -----     time 759.45   change 0  maxsize 61939712
+copy rmsmm to rmsmmcont  size=20, type=d
+
+----- c: arraydumpmore -----     time 759.45   change 0  maxsize 61939712
+appending dump to file out/converge:   rmsmmcont
+
+--------------input from file inn.cont, loops remaining 1
+
+
+----- c: copy -----     time 759.45   change 0  maxsize 61939712
+copy U1 to U1bcont  size=28208, type=d
+
+----- c: copy -----     time 759.45   change 0  maxsize 61939712
+copy U2 to U2bcont  size=28208, type=d
+
+----- c: copy -----     time 759.45   change 0  maxsize 61939712
+copy U3 to U3bcont  size=28208, type=d
+
+----- c: contrhsu -----     time 759.45   change 0  maxsize 61939712
+
+----- c: contrhsexit -----     time 759.46   change 0.01  maxsize 61939712
+ 1 outflow regions:
+ exit 0 flowout 3 -1 164 0 0 0 165 87 3 1 164 1 1 0
+rhsc at ifix -1.46367e-17 flow rate 0.0100107
+
+----- c: eqnsolvep -----     time 759.46   change 0  maxsize 61939712
+ init:  perr-rms 0.000129221    perr-min -0.00255269 at 135 30 1 0    perr-max 0.0034296 at 119 13 1 0
+enter solvep
+Procedure: Iibjkb ,  10 iterations
+ L=0, 85 strings for 8515 equations
+ L=1, 163 strings for 8515 equations
+ L=2, 8515 strings for 8515 equations
+ iter 0  perr-rms 7.32589e-06    perr-min -0.000162326    perr-max 0.000138622
+ iter 9  perr-rms 1.82542e-06    perr-min -1.5718e-05    perr-max 1.64732e-05
+Procedure: end
+end solve
+
+----- c: contdu -----     time 759.54   change 0.08  maxsize 61939712
+
+----- c: algebra -----     time 759.55   change 0.01  maxsize 61939712
+dU1cont =  *(-1 * U1bcont + 0)^1 + U1
+
+----- c: algebra -----     time 759.55   change 0  maxsize 61939712
+dU2cont =  *(-1 * U2bcont + 0)^1 + U2
+
+----- c: algebra -----     time 759.55   change 0  maxsize 61939712
+dU3cont =  *(-1 * U3bcont + 0)^1 + U3
+
+----- c: rmsminmax -----     time 759.55   change 0  maxsize 61939712
+RMSMM dU1cont rms 0.00017054, min -0.0038998 at 140 36 0 0,  max 0.00975668 at 139 36 0 0,  ITER 498 
+RMSMM dU2cont rms 0.000155587, min -0.008576 at 139 36 0 0,  max 0.00394987 at 133 30 0 0,  ITER 498 
+RMSMM dU3cont rms 0, min 0 at 0 0 0 0,  max 0 at 0 0 0 0,  ITER 498 
+RMSMM dp rms 0.000208936, min -0.00314 at 110 27 0 0,  max 0.00295692 at 109 27 0 0,  ITER 498 
+
+----- c: copy -----     time 759.55   change 0  maxsize 61939712
+copy rmsmm to rmsmmcont  size=20, type=d
+
+----- c: arraydumpmore -----     time 759.55   change 0  maxsize 61939712
+appending dump to file out/converge:   rmsmmcont
+
+--------------input from file inn.iter.uvwpmarvs, loops remaining 2
+
+
+----- c: copy -----     time 759.55   change 0  maxsize 61939712
+copy ppsav to pp  size=43065, type=d
+
+----- c: edit -----     time 759.55   change 0  maxsize 61939712
+ name ITER,   type i,  1 dims  n 1
+ a 1         1 1
+ e  end edit
+
+----- c: algebra -----     time 759.55   change 0  maxsize 61939712
+dU1 =  *(-1 * U1up + 0)^1 + U1
+
+----- c: algebra -----     time 759.55   change 0  maxsize 61939712
+dU2 =  *(-1 * U2up + 0)^1 + U2
+
+----- c: algebra -----     time 759.55   change 0  maxsize 61939712
+dU3 =  *(-1 * U3up + 0)^1 + U3
+
+----- c: algebra -----     time 759.55   change 0  maxsize 61939712
+dp =  *(-1 * ppup + 0)^1 + pp
+
+----- c: algebra -----     time 759.55   change 0  maxsize 61939712
+dq =  *(-1 * qturbup + 0)^1 + qturb
+
+----- c: algebra -----     time 759.55   change 0  maxsize 61939712
+dom =  *(-1 * omturbup + 0)^1 + omturb
+
+----- c: algebra -----     time 759.55   change 0  maxsize 61939712
+dbij =  *(-1 * bijup + 0)^1 + bij
+
+----- c: if -----     time 759.55   change 0  maxsize 61939712
+ if ITER % ITERAVE, then continue, otherwise find NOAVERAGE 499 % 2 ?  Not true, NOAVERAGE found
+
+----- c: rmsminmax -----     time 759.55   change 0  maxsize 61939712
+RMSMM U1 rms 0.686549, min -0.410702 at 25 34 0 0,  max 1.94179 at 62 62 0 0,  ITER 499 
+RMSMM U2 rms 0.935157, min -1.63219 at 90 68 0 0,  max 1.54126 at 23 41 0 0,  ITER 499 
+RMSMM U3 rms 0, min 0 at 0 0 0 0,  max 0 at 0 0 0 0,  ITER 499 
+RMSMM pp rms 1.24979, min -2.16755 at 70 49 0 0,  max 0.19455 at 51 29 0 0,  ITER 499 
+RMSMM qturb rms 0.137283, min 0 at 33 27 0 0,  max 0.421805 at 139 35 0 0,  ITER 499 
+RMSMM omturb rms 44.6588, min 1.00769 at 35 82 0 0,  max 296.968 at 33 34 0 0,  ITER 499 
+RMSMM bij rms 0.103838, min -0.463371 at 77 27 0 3,  max 0.562041 at 58 26 0 0,  ITER 499 
+
+----- c: copy -----     time 759.55   change 0  maxsize 61939712
+copy rmsmm to rmsmmprop  size=20, type=d
+
+----- c: rmsminmax -----     time 759.55   change 0  maxsize 61939712
+RMSMM dU1 rms 0.000319321, min -0.0141103 at 137 36 0 0,  max 0.0178896 at 139 37 0 0,  ITER 499 
+RMSMM dU2 rms 0.000350847, min -0.0120393 at 139 35 0 0,  max 0.0235095 at 139 36 0 0,  ITER 499 
+RMSMM dU3 rms 0, min 0 at 0 0 0 0,  max 0 at 0 0 0 0,  ITER 499 
+RMSMM dp rms 0.000144194, min -0.00370891 at 140 38 0 0,  max 0.00412743 at 139 36 0 0,  ITER 499 
+RMSMM dq rms 0.000140432, min -0.00431265 at 137 34 0 0,  max 0.00729266 at 138 36 0 0,  ITER 499 
+RMSMM dom rms 0.0380434, min -0.90206 at 119 36 0 0,  max 1.0917 at 138 36 0 0,  ITER 499 
+RMSMM dbij rms 0.000117102, min -0.011058 at 138 36 0 1,  max 0.011351 at 138 36 0 0,  ITER 499 
+
+----- c: copy -----     time 759.55   change 0  maxsize 61939712
+copy rmsmm to rmsmmchange  size=20, type=d
+
+----- c: arraydumpmore -----     time 759.55   change 0  maxsize 61939712
+appending dump to file out/converge:   ITER rmsmmprop rmsmmchange updateq updateom updatebij
+
+----- c: infile -----     time 759.55   change 0  maxsize 61939712
+
+--------------input from file inn.analysis10.50, loops remaining 1
+
+
+----- c: if -----     time 759.55   change 0  maxsize 61939712
+ if FIFTY > TEN, then find endinit, otherwise continue 50 > 10 ?  True, endinit found
+
+----- c: if -----     time 759.55   change 0  maxsize 61939712
+ if ITER % TEN, then continue, otherwise find endten 499 % 10 ?  Not true, endten found
+
+----- c: if -----     time 759.55   change 0  maxsize 61939712
+ if ITER % FIFTY, then continue, otherwise find endfifty 499 % 50 ?  Not true, endfifty found
+
+--------------input from file inn.iter.uvwpmarvs, loops remaining 2
+
+
+----- c: infile -----     time 759.55   change 0  maxsize 61939712
+
+--------------input from file inn.iter.output, loops remaining 1
+
+
+----- c: areaflowint -----     time 759.55   change 0  maxsize 61939712
+integration for a=0.49995, b=-0.5 to 1.5, c=0 to 1
+properties:
+   a,b,or c  area  flow+ flow- flow  (property averages)
+AFINT a0.49995 0.0140001  0.0100106 0  0.0100106 ITER 499
+
+----- c: copypart -----     time 759.55   change 0  maxsize 61939712
+from averages  1
+ x 7 7 7
+to flowm 1
+ x 1 1 1
+
+----- c: algebra -----     time 759.55   change 0  maxsize 61939712
+flowmdif = flowm *(1 * flowrate + 0)^-1 + 
+
+----- c: algebra -----     time 759.55   change 0  maxsize 61939712
+flowmdif =  *(1 * flowmdif + -1)^1 + 
+
+----- c: arraydumpmore -----     time 759.55   change 0  maxsize 61939712
+appending dump to file out/converge:   flowmdif
+
+----- c: if -----     time 759.55   change 0  maxsize 61939712
+ if ITER % ITERDUMP, then continue, otherwise find NODUMP 499 % 100 ?  Not true, NODUMP found
+
+----- c: if -----     time 759.55   change 0  maxsize 61939712
+ if ITER % ITERPLOT, then continue, otherwise find NOPLOT 499 % 100 ?  Not true, NOPLOT found
+
+--------------input from file inn.iter.uvwpmarvs, loops remaining 2
+
+
+--------------input from file inn.iter.uvwpmarvs, loops remaining 1
+
+
+----- c: copy -----     time 759.55   change 0  maxsize 61939712
+copy U1 to U1up  size=28208, type=d
+
+----- c: copy -----     time 759.55   change 0  maxsize 61939712
+copy U2 to U2up  size=28208, type=d
+
+----- c: copy -----     time 759.55   change 0  maxsize 61939712
+copy U3 to U3up  size=28208, type=d
+
+----- c: copy -----     time 759.55   change 0  maxsize 61939712
+copy qturb to qturbup  size=28208, type=d
+
+----- c: copy -----     time 759.55   change 0  maxsize 61939712
+copy omturb to omturbup  size=28208, type=d
+
+----- c: copy -----     time 759.55   change 0  maxsize 61939712
+copy bij to bijup  size=169248, type=d
+
+----- c: copy -----     time 759.55   change 0  maxsize 61939712
+copy pp to ppup  size=43065, type=d
+
+----- c: copy -----     time 759.55   change 0  maxsize 61939712
+copy xyzp to xyzpold  size=129195, type=d
+
+----- c: infile -----     time 759.55   change 0  maxsize 61939712
+
+--------------input from file inn.newcv, loops remaining 1
+
+
+----- c: cvdcreset -----     time 759.56   change 0.01  maxsize 61939712
+viscosity vlam, timestep dumdt, t2cvlim 10  using viscosity
+cvd_change 8515 pts, rms: 0.00100385 0.00280721 0 max 0.228175 dir 1 at 139 37 1 0 ITER 499  
+ set 7012 missed sleeping faces
+sleep done
+face done
+
+----- c: set_xyzdouble -----     time 759.62   change 0.06  maxsize 61939712
+
+----- c: set_volmom -----     time 759.64   change 0.02  maxsize 61939712
+
+----- c: set_cpsleep -----     time 759.65   change 0.01  maxsize 61939712
+
+----- c: ppreset -----     time 759.65   change 0  maxsize 61939712
+
+----- c: set_cpda -----     time 759.73   change 0.08  maxsize 61939712
+ar=0 cenfac=0, linear: ar=0.05 cenfac=0.5 to ar=0.15 cenfac=0
+ omit 1 pt types: i
+ cpda cleared at 4174 points based on type
+   components cleared at 24034 points based on csym
+
+----- c: set_cpflop -----     time 759.82   change 0.09  maxsize 61939712
+iw range 0 8668
+checking cpflop consistency
+    maximum sum/cmax = 2.53513e-13
+
+----- c: coefconv -----     time 759.87   change 0.05  maxsize 61939712
+ convection=coef 1, set for its=0 to ite=0
+
+----- c: coefviscstep -----     time 759.95   change 0.08  maxsize 61939712
+ viscosity: vlam, at coef 0
+
+----- c: coeffix -----     time 759.99   change 0.04  maxsize 61939712
+ nyperm 1, coef 0 to 2.  Limits: limsumnz 0  poselim 0.4 displim -1.1
+omit 2 pt types: i w ,  its 0 ite 0
+abs(sum)max 7.80763e-09, fixed+ at 0 points, fixed- at 5 points
+for 8400 points, pose min 0.711108 disp min -0.792003
+pose groups  0 <0,  0 <0.1,  0 <0.2,  0 <0.3,  0 <0.4,  0 <0.5,  0 <0.6,  0 <0.7,  578 <0.8,  2422 <0.9,  5308 <1,
+
+--------------input from file inn.iter.uvwpmarvs, loops remaining 1
+
+
+----- c: infile -----     time 759.99   change 0  maxsize 61939712
+
+--------------input from file inn.iter.marvs, loops remaining 1
+
+
+----- c: viscmarv -----     time 759.99   change 0  maxsize 61939712
+
+----- c: coefviscstep -----     time 760.01   change 0.02  maxsize 61939712
+ viscosity: vmarv, at coef 0
+
+----- c: coeffix -----     time 760.04   change 0.03  maxsize 61939712
+ nyperm 1, coef 0 to 3.  Limits: limsumnz 0  poselim 0.6 displim -1.1
+omit 2 pt types: i w ,  its 0 ite 0
+abs(sum)max 8.43129e-09, fixed+ at 0 points, fixed- at 3 points
+for 8400 points, pose min 0.695155 disp min -0.944871
+pose groups  0 <0,  0 <0.1,  0 <0.2,  0 <0.3,  0 <0.4,  0 <0.5,  0 <0.6,  2 <0.7,  851 <0.8,  2301 <0.9,  5245 <1,
+
+----- c: set_pkdk -----     time 760.05   change 0.01  maxsize 61939712
+set pkdk using bij for bij
+
+----- c: set_gbij -----     time 760.08   change 0.03  maxsize 61939712
+
+----- c: coefadd -----     time 760.09   change 0.01  maxsize 61939712
+coef_c.0= +1 *coef_c.1 +1 *coef_c.2 +1.36054 *coef_c.3
+
+----- c: omrhsmarv -----     time 760.09   change 0  maxsize 61939712
+coefficient set 0 used for convection, viscous, and/or time
+
+----- c: eqnsolves -----     time 760.11   change 0.02  maxsize 61939712
+on the grid equations with rhs=rhsomturb, center_add=caomturb, change=dom
+oldnewdom n omit 2 pt types: i w,  eq range 0, 8669
+ 269 of 8669 active eqs, type deactivated
+ init:  err-rms 0.0182467    err-min -0.488508 at 137 33 0 0    err-max 0.972556 at 138 36 0 0
+Procedure: ijk ,  1 iterations
+ L=0, 84 strings for 8400 equations
+ L=1, 162 strings for 8400 equations
+ L=2, 8400 strings for 8400 equations
+ iter 0  err-rms 0.00232595    err-min -0.0269525 at 122 35 0 0    err-max 0.0710234 at 139 36 0 0
+Procedure: end
+end solve
+
+----- c: varupdate -----     time 760.12   change 0.01  maxsize 61939712
+update omturb with dom method l
+update omturb: facmin 0.993002, fac<.5 for 0 pts, <.001 for 0 pts
+
+----- c: copy -----     time 760.12   change 0  maxsize 61939712
+copy updatew to updateom  size=3, type=d
+
+----- c: function -----     time 760.12   change 0  maxsize 61939712
+omturb=max(omturb,ommin)
+
+----- c: coefadd -----     time 760.12   change 0  maxsize 61939712
+coef_c.0= +1 *coef_c.1 +1 *coef_c.2 +1 *coef_c.3
+
+----- c: bijrhsmarvs -----     time 760.13   change 0.01  maxsize 61939712
+ saving  pde~,rt~,geff,fw,fb,c1,c3,c4,c6,fr,capg,c1homo in beqex
+
+----- c: eqnsolvebij -----     time 760.21   change 0.08  maxsize 61939712
+using cambij, oldnewch=n, omit 2 pt types: i w,  eq range 0, 8669
+nybijeq set
+cplus set 
+ rhs6 set 
+ bij 0:  err-rms 0.000132974    err-min -0.0023789 at 140 36 0 0   err-max 0.00947 at 138 36 0 0
+ bij 1:  err-rms 0.000134153    err-min -0.00904668 at 138 36 0 0   err-max 0.00212798 at 136 39 0 0
+ bij 2:  err-rms 3.98811e-05    err-min -0.000535016 at 136 39 0 0   err-max 0.00143708 at 139 37 0 0
+ bij 3:  err-rms 0.0002115    err-min -0.0153624 at 138 36 0 0   err-max 0.00319634 at 139 37 0 0
+ bij 4:  err-rms 0    err-min 0 at 0 0 0 0   err-max 0 at 0 0 0 0
+ bij 5:  err-rms 0    err-min 0 at 0 0 0 0   err-max 0 at 0 0 0 0
+ init:  err-rms 0.000116906    |err-max| 0.0153624
+Procedure: ijkc ,  1 iterations
+ L=0, 85 strings for 8669 equations
+ L=1, 164 strings for 8669 equations
+ L=2, 8669 strings for 8669 equations
+  iter 0  ddb-rms 0.000140133  ddb-max 0.0105347  for 8516 of 8669 eqs realfix 0 pts fmin 1
+  iter 0  err-rms 5.49388e-06    err-max 0.000200298
+Procedure: end
+end solve
+
+----- c: varupdate -----     time 760.27   change 0.06  maxsize 61939712
+update bij with dbij method b
+update bij: facmin 0, fac<.5 for 22 pts, <.001 for 22 pts
+
+----- c: copy -----     time 760.27   change 0  maxsize 61939712
+copy updatew to updatebij  size=3, type=d
+
+----- c: bijwallsplat -----     time 760.27   change 0  maxsize 61939712
+
+----- c: coefadd -----     time 760.27   change 0  maxsize 61939712
+coef_c.0= +1 *coef_c.1 +1 *coef_c.2 +1 *coef_c.3
+
+----- c: qturbrhs -----     time 760.27   change 0  maxsize 61939712
+coefficient set 0 used for convection, viscous, and/or time
+
+----- c: eqnsolves -----     time 760.29   change 0.02  maxsize 61939712
+on the grid equations with rhs=rhsqturb, center_add=caqturb, change=dq
+oldnewdq n omit 2 pt types: i w,  eq range 0, 8669
+ 269 of 8669 active eqs, type deactivated
+ init:  err-rms 8.60074e-05    err-min -0.00192795 at 137 33 0 0    err-max 0.00577017 at 138 36 0 0
+Procedure: ijk ,  1 iterations
+ L=0, 84 strings for 8400 equations
+ L=1, 162 strings for 8400 equations
+ L=2, 8400 strings for 8400 equations
+ iter 0  err-rms 1.53613e-05    err-min -0.000140761 at 142 35 0 0    err-max 0.000459208 at 139 37 0 0
+Procedure: end
+end solve
+
+----- c: varupdate -----     time 760.31   change 0.02  maxsize 61939712
+update qturb with dq method l
+update qturb: facmin 0.993223, fac<.5 for 0 pts, <.001 for 0 pts
+
+----- c: copy -----     time 760.31   change 0  maxsize 61939712
+copy updatew to updateq  size=3, type=d
+
+----- c: function -----     time 760.31   change 0  maxsize 61939712
+qturb=max(qturb,qmin)
+
+----- c: algebra -----     time 760.31   change 0  maxsize 61939712
+qturb = wallzero *(1 * qturb + 0)^1 + 
+
+----- c: omwallmarvs -----     time 760.31   change 0  maxsize 61939712
+
+--------------input from file inn.iter.uvwpmarvs, loops remaining 1
+
+
+----- c: coefadd -----     time 760.31   change 0  maxsize 61939712
+coef_c.0= +1 *coef_c.1 +1 *coef_c.2
+
+----- c: momrhsr -----     time 760.31   change 0  maxsize 61939712
+oldnew n, jcoef 0 included, bij  included, pp  at ppts included,
+
+----- c: momcam -----     time 760.34   change 0.03  maxsize 61939712
+cami=max of caminew and  1 caminew +0 camiold
+
+----- c: eqnupdatem -----     time 760.41   change 0.07  maxsize 61939712
+ny save dUn 1 omit 2 pt types: i w
+ update U1, 269 of 8669 eqs, type and sym-plane deactivated
+ init:  err-rms 0.00531859    err-min -0.201031 at 139 36 0 0    err-max 0.0476315 at 140 37 0 0
+ center update  err-rms 0.0033918    err-min -0.0768809 at 24 40 0 0    err-max 0.0248378 at 136 35 0 0
+ update U2, 269 of 8669 eqs, type and sym-plane deactivated
+ init:  err-rms 0.00363555    err-min -0.0668864 at 24 35 0 0    err-max 0.171281 at 139 36 0 0
+ center update  err-rms 0.00203888    err-min -0.0481748 at 24 36 0 0    err-max 0.0196354 at 136 35 0 0
+2-d symmetry plane, omit update for U3
+
+----- c: contcpcdu -----     time 760.42   change 0.01  maxsize 61939712
+
+----- c: contcpcfixed -----     time 760.46   change 0.04  maxsize 61939712
+ fix cpc: facrc 1, facrcperm 1, poselim 0.5, displim -1, poselimperm 0, displimperm -20
+perm. fix 0 p-eqs, pose min= 0.469983, disp min=-1.36469
+pose groups  0 <0,  0 <0.1,  0 <0.2,  0 <0.3,  0 <0.4,  10 <0.5,  288 <0.6,  1278 <0.7,  528 <0.8,  694 <0.9,  5717 <1,
+iter 0 poselim 0 displim -20
+iter 0 poselim 0 displim -20 maximum facmix= 0
+iter 1 poselim 0.5 displim -1
+ieq 2536, 111 23 1 0 facmix 0.0248968 cen 0.000120245 sump 0.00024679 cmin -7.41455e-05 pose 0.487234 disp -0.616622
+ieq 2879, 110 27 1 0 facmix 0.0269405 cen 3.73347e-05 sump 7.09468e-05 cmin -3.82402e-05 pose 0.526235 disp -1.02425
+ieq 2880, 111 27 1 0 facmix 0.0561258 cen 3.2587e-05 sump 6.84269e-05 cmin -3.45986e-05 pose 0.476231 disp -1.06173
+ieq 3004, 133 28 1 0 facmix 0.391286 cen 0.00012439 sump 0.000240326 cmin -0.000169754 pose 0.51759 disp -1.36469
+ieq 3854, 33 34 1 0 facmix 0.500234 cen 0.000246937 sump 0.000247357 cmin -0.000247147 pose 0.998303 disp -1.00085
+ieq 5417, 120 43 1 0 facmix 0.0049536 cen 4.01468e-05 sump 8.03381e-05 cmin -4.03459e-05 pose 0.499723 disp -1.00496
+ieq 5581, 120 44 1 0 facmix 0.0108504 cen 4.00953e-05 sump 8.10799e-05 cmin -4.04624e-05 pose 0.494515 disp -1.00916
+ieq 6483, 117 50 1 0 facmix 0.0165129 cen 2.43932e-05 sump 4.90961e-05 cmin -2.48011e-05 pose 0.496846 disp -1.01672
+iter 1 poselim 0.5 displim -1 maximum facmix= 0.500234
+
+----- c: contcpcexit -----     time 760.46   change 0  maxsize 61939712
+ 1 outflow regions:
+ exit 0 flowout 3 -1 164 0 0 0 165 87 3 1 164 1 1 0
+
+----- c: contrhsu -----     time 760.46   change 0  maxsize 61939712
+
+----- c: contrhsp -----     time 760.47   change 0.01  maxsize 61939712
+
+----- c: contrhsexit -----     time 760.47   change 0  maxsize 61939712
+ 1 outflow regions:
+ exit 0 flowout 3 -1 164 0 0 0 165 87 3 1 164 1 1 0
+rhsc at ifix 1.44015e-08 flow rate 0.0100107
+
+----- c: eqnsolvep -----     time 760.47   change 0  maxsize 61939712
+ init:  perr-rms 6.7539e-05    perr-min -0.00328591 at 140 37 1 0    perr-max 0.00469461 at 139 37 1 0
+enter solvep
+Procedure: Ibjkib ,  1 iterations
+ L=1, 163 strings for 8515 equations
+ L=2, 8515 strings for 8515 equations
+ L=0, 85 strings for 8515 equations
+ iter 0  perr-rms 2.19754e-05    perr-min -0.000967207    perr-max 0.000500307
+Procedure: pqbijkb ,  5 iterations
+blockcoef p
+ ipb 25 12 1 1
+  300 equations
+blockcoef q
+ ipb 25 12 1 1
+  300 equations
+ rhsb  rhs 2.84745e-07 min -3.55325e-06 max 3.17835e-06
+ rhsb  rhs 1.09812e-08 min -1.21834e-08 max 1.09673e-07
+ iter 0  perr-rms 9.58756e-06    perr-min -0.000288001    perr-max 0.000300686
+ rhsb  rhs 2.97633e-07 min -3.94516e-06 max 3.0117e-06
+ rhsb  rhs 1.00736e-08 min -1.43858e-08 max 9.34312e-08
+ rhsb  rhs 2.2123e-07 min -2.98751e-06 max 2.21729e-06
+ rhsb  rhs 8.7817e-09 min -1.16778e-08 max 7.92258e-08
+ rhsb  rhs 1.63543e-07 min -2.20175e-06 max 1.64751e-06
+ rhsb  rhs 7.91087e-09 min -6.4198e-09 max 6.56092e-08
+ rhsb  rhs 1.25157e-07 min -1.67329e-06 max 1.25846e-06
+ rhsb  rhs 7.27863e-09 min -2.79809e-09 max 5.51445e-08
+ iter 4  perr-rms 3.23416e-06    perr-min -7.89481e-05    perr-max 4.87149e-05
+Procedure: ibjkb ,  10 iterations
+ iter 0  perr-rms 2.76293e-06    perr-min -5.64798e-05    perr-max 3.82114e-05
+ iter 9  perr-rms 1.37918e-06    perr-min -2.10811e-05    perr-max 1.65435e-05
+Procedure: end
+end solve
+
+----- c: contdu -----     time 760.56   change 0.09  maxsize 61939712
+
+----- c: algebra -----     time 760.56   change 0  maxsize 61939712
+pp =  *(1 * pp + 0)^1 + dp
+
+----- c: if -----     time 760.56   change 0  maxsize 61939712
+ if ppinlet = ppinlet, then continue, otherwise find NOPPINLET-0.5 = -0.5 ?  True, continue
+
+----- c: copypart -----     time 760.56   change 0  maxsize 61939712
+from pp  1
+ a 1 1 1
+to ppnew 1
+ a 1 1 1
+
+----- c: algebra -----     time 760.56   change 0  maxsize 61939712
+dpin =  *(-1 * ppnew + 0)^1 + ppinlet
+
+----- c: algebra -----     time 760.56   change 0  maxsize 61939712
+pp =  *(1 * pp + -0.000143819)^1 + 
+
+----- c: if -----     time 760.56   change 0  maxsize 61939712
+ if ITCONT > 0, then continue, otherwise find NOCONT 5 > 0 ?  True, continue
+
+----- c: copy -----     time 760.56   change 0  maxsize 61939712
+copy pp to ppsav  size=43065, type=d
+
+----- c: infile -----     time 760.56   change 0  maxsize 61939712
+
+--------------input from file inn.cont, loops remaining 5
+
+
+----- c: copy -----     time 760.56   change 0  maxsize 61939712
+copy U1 to U1bcont  size=28208, type=d
+
+----- c: copy -----     time 760.56   change 0  maxsize 61939712
+copy U2 to U2bcont  size=28208, type=d
+
+----- c: copy -----     time 760.56   change 0  maxsize 61939712
+copy U3 to U3bcont  size=28208, type=d
+
+----- c: contrhsu -----     time 760.56   change 0  maxsize 61939712
+
+----- c: contrhsexit -----     time 760.57   change 0.01  maxsize 61939712
+ 1 outflow regions:
+ exit 0 flowout 3 -1 164 0 0 0 165 87 3 1 164 1 1 0
+rhsc at ifix 3.9282e-16 flow rate 0.0100107
+
+----- c: eqnsolvep -----     time 760.57   change 0  maxsize 61939712
+ init:  perr-rms 0.000535115    perr-min -0.0100486 at 119 14 1 0    perr-max 0.0114609 at 24 39 1 0
+enter solvep
+Procedure: Iibjkb ,  10 iterations
+ L=0, 85 strings for 8515 equations
+ L=1, 163 strings for 8515 equations
+ L=2, 8515 strings for 8515 equations
+ iter 0  perr-rms 4.32088e-05    perr-min -0.000887788    perr-max 0.000422017
+ iter 9  perr-rms 6.31284e-06    perr-min -3.3392e-05    perr-max 5.68595e-05
+Procedure: end
+end solve
+
+----- c: contdu -----     time 760.66   change 0.09  maxsize 61939712
+
+----- c: algebra -----     time 760.67   change 0.01  maxsize 61939712
+dU1cont =  *(-1 * U1bcont + 0)^1 + U1
+
+----- c: algebra -----     time 760.67   change 0  maxsize 61939712
+dU2cont =  *(-1 * U2bcont + 0)^1 + U2
+
+----- c: algebra -----     time 760.67   change 0  maxsize 61939712
+dU3cont =  *(-1 * U3bcont + 0)^1 + U3
+
+----- c: rmsminmax -----     time 760.67   change 0  maxsize 61939712
+RMSMM dU1cont rms 0.00360518, min -0.0433169 at 140 37 0 0,  max 0.102736 at 24 36 0 0,  ITER 499 
+RMSMM dU2cont rms 0.00217067, min -0.0359061 at 139 36 0 0,  max 0.0565168 at 24 35 0 0,  ITER 499 
+RMSMM dU3cont rms 0, min 0 at 0 0 0 0,  max 0 at 0 0 0 0,  ITER 499 
+RMSMM dp rms 0.00417834, min -0.0544334 at 33 40 0 0,  max 0.0169506 at 28 46 0 0,  ITER 499 
+
+----- c: copy -----     time 760.67   change 0  maxsize 61939712
+copy rmsmm to rmsmmcont  size=20, type=d
+
+----- c: arraydumpmore -----     time 760.67   change 0  maxsize 61939712
+appending dump to file out/converge:   rmsmmcont
+
+--------------input from file inn.cont, loops remaining 4
+
+
+----- c: copy -----     time 760.67   change 0  maxsize 61939712
+copy U1 to U1bcont  size=28208, type=d
+
+----- c: copy -----     time 760.67   change 0  maxsize 61939712
+copy U2 to U2bcont  size=28208, type=d
+
+----- c: copy -----     time 760.67   change 0  maxsize 61939712
+copy U3 to U3bcont  size=28208, type=d
+
+----- c: contrhsu -----     time 760.67   change 0  maxsize 61939712
+
+----- c: contrhsexit -----     time 760.68   change 0.01  maxsize 61939712
+ 1 outflow regions:
+ exit 0 flowout 3 -1 164 0 0 0 165 87 3 1 164 1 1 0
+rhsc at ifix -6.81692e-18 flow rate 0.0100107
+
+----- c: eqnsolvep -----     time 760.68   change 0  maxsize 61939712
+ init:  perr-rms 0.00023413    perr-min -0.00612257 at 141 36 1 0    perr-max 0.00485598 at 141 37 1 0
+enter solvep
+Procedure: Iibjkb ,  10 iterations
+ L=0, 85 strings for 8515 equations
+ L=1, 163 strings for 8515 equations
+ L=2, 8515 strings for 8515 equations
+ iter 0  perr-rms 1.60581e-05    perr-min -0.000478812    perr-max 0.000255912
+ iter 9  perr-rms 4.16076e-06    perr-min -2.71046e-05    perr-max 3.93403e-05
+Procedure: end
+end solve
+
+----- c: contdu -----     time 760.76   change 0.08  maxsize 61939712
+
+----- c: algebra -----     time 760.77   change 0.01  maxsize 61939712
+dU1cont =  *(-1 * U1bcont + 0)^1 + U1
+
+----- c: algebra -----     time 760.77   change 0  maxsize 61939712
+dU2cont =  *(-1 * U2bcont + 0)^1 + U2
+
+----- c: algebra -----     time 760.77   change 0  maxsize 61939712
+dU3cont =  *(-1 * U3bcont + 0)^1 + U3
+
+----- c: rmsminmax -----     time 760.77   change 0  maxsize 61939712
+RMSMM dU1cont rms 0.000542, min -0.0107663 at 137 36 0 0,  max 0.0260277 at 139 36 0 0,  ITER 499 
+RMSMM dU2cont rms 0.000420118, min -0.0183746 at 139 36 0 0,  max 0.0101761 at 140 37 0 0,  ITER 499 
+RMSMM dU3cont rms 0, min 0 at 0 0 0 0,  max 0 at 0 0 0 0,  ITER 499 
+RMSMM dp rms 0.000664872, min -0.00566562 at 27 35 0 0,  max 0.00677871 at 141 37 0 0,  ITER 499 
+
+----- c: copy -----     time 760.77   change 0  maxsize 61939712
+copy rmsmm to rmsmmcont  size=20, type=d
+
+----- c: arraydumpmore -----     time 760.77   change 0  maxsize 61939712
+appending dump to file out/converge:   rmsmmcont
+
+--------------input from file inn.cont, loops remaining 3
+
+
+----- c: copy -----     time 760.77   change 0  maxsize 61939712
+copy U1 to U1bcont  size=28208, type=d
+
+----- c: copy -----     time 760.77   change 0  maxsize 61939712
+copy U2 to U2bcont  size=28208, type=d
+
+----- c: copy -----     time 760.77   change 0  maxsize 61939712
+copy U3 to U3bcont  size=28208, type=d
+
+----- c: contrhsu -----     time 760.77   change 0  maxsize 61939712
+
+----- c: contrhsexit -----     time 760.78   change 0.01  maxsize 61939712
+ 1 outflow regions:
+ exit 0 flowout 3 -1 164 0 0 0 165 87 3 1 164 1 1 0
+rhsc at ifix 1.09775e-18 flow rate 0.0100107
+
+----- c: eqnsolvep -----     time 760.78   change 0  maxsize 61939712
+ init:  perr-rms 0.000185763    perr-min -0.00447154 at 141 36 1 0    perr-max 0.00434988 at 119 13 1 0
+enter solvep
+Procedure: Iibjkb ,  10 iterations
+ L=0, 85 strings for 8515 equations
+ L=1, 163 strings for 8515 equations
+ L=2, 8515 strings for 8515 equations
+ iter 0  perr-rms 1.05639e-05    perr-min -0.000228126    perr-max 0.000193601
+ iter 9  perr-rms 2.96632e-06    perr-min -1.9339e-05    perr-max 2.8574e-05
+Procedure: end
+end solve
+
+----- c: contdu -----     time 760.87   change 0.09  maxsize 61939712
+
+----- c: algebra -----     time 760.87   change 0  maxsize 61939712
+dU1cont =  *(-1 * U1bcont + 0)^1 + U1
+
+----- c: algebra -----     time 760.87   change 0  maxsize 61939712
+dU2cont =  *(-1 * U2bcont + 0)^1 + U2
+
+----- c: algebra -----     time 760.87   change 0  maxsize 61939712
+dU3cont =  *(-1 * U3bcont + 0)^1 + U3
+
+----- c: rmsminmax -----     time 760.87   change 0  maxsize 61939712
+RMSMM dU1cont rms 0.000301971, min -0.00652383 at 140 36 0 0,  max 0.016493 at 139 36 0 0,  ITER 499 
+RMSMM dU2cont rms 0.000253443, min -0.0120782 at 139 36 0 0,  max 0.00790037 at 140 37 0 0,  ITER 499 
+RMSMM dU3cont rms 0, min 0 at 0 0 0 0,  max 0 at 0 0 0 0,  ITER 499 
+RMSMM dp rms 0.000383458, min -0.00441321 at 142 37 0 0,  max 0.00553735 at 141 37 0 0,  ITER 499 
+
+----- c: copy -----     time 760.87   change 0  maxsize 61939712
+copy rmsmm to rmsmmcont  size=20, type=d
+
+----- c: arraydumpmore -----     time 760.87   change 0  maxsize 61939712
+appending dump to file out/converge:   rmsmmcont
+
+--------------input from file inn.cont, loops remaining 2
+
+
+----- c: copy -----     time 760.87   change 0  maxsize 61939712
+copy U1 to U1bcont  size=28208, type=d
+
+----- c: copy -----     time 760.87   change 0  maxsize 61939712
+copy U2 to U2bcont  size=28208, type=d
+
+----- c: copy -----     time 760.87   change 0  maxsize 61939712
+copy U3 to U3bcont  size=28208, type=d
+
+----- c: contrhsu -----     time 760.87   change 0  maxsize 61939712
+
+----- c: contrhsexit -----     time 760.88   change 0.01  maxsize 61939712
+ 1 outflow regions:
+ exit 0 flowout 3 -1 164 0 0 0 165 87 3 1 164 1 1 0
+rhsc at ifix -2.31748e-18 flow rate 0.0100107
+
+----- c: eqnsolvep -----     time 760.88   change 0  maxsize 61939712
+ init:  perr-rms 0.000158337    perr-min -0.00345343 at 141 36 1 0    perr-max 0.00396749 at 119 13 1 0
+enter solvep
+Procedure: Iibjkb ,  10 iterations
+ L=0, 85 strings for 8515 equations
+ L=1, 163 strings for 8515 equations
+ L=2, 8515 strings for 8515 equations
+ iter 0  perr-rms 8.49109e-06    perr-min -0.000157143    perr-max 0.000149548
+ iter 9  perr-rms 2.26796e-06    perr-min -1.35088e-05    perr-max 2.13551e-05
+Procedure: end
+end solve
+
+----- c: contdu -----     time 760.97   change 0.09  maxsize 61939712
+
+----- c: algebra -----     time 760.97   change 0  maxsize 61939712
+dU1cont =  *(-1 * U1bcont + 0)^1 + U1
+
+----- c: algebra -----     time 760.97   change 0  maxsize 61939712
+dU2cont =  *(-1 * U2bcont + 0)^1 + U2
+
+----- c: algebra -----     time 760.97   change 0  maxsize 61939712
+dU3cont =  *(-1 * U3bcont + 0)^1 + U3
+
+----- c: rmsminmax -----     time 760.97   change 0  maxsize 61939712
+RMSMM dU1cont rms 0.000214029, min -0.00492721 at 140 36 0 0,  max 0.0111038 at 139 36 0 0,  ITER 499 
+RMSMM dU2cont rms 0.000190253, min -0.00807944 at 139 36 0 0,  max 0.00608195 at 140 37 0 0,  ITER 499 
+RMSMM dU3cont rms 0, min 0 at 0 0 0 0,  max 0 at 0 0 0 0,  ITER 499 
+RMSMM dp rms 0.000268471, min -0.00400803 at 142 37 0 0,  max 0.00444389 at 141 37 0 0,  ITER 499 
+
+----- c: copy -----     time 760.97   change 0  maxsize 61939712
+copy rmsmm to rmsmmcont  size=20, type=d
+
+----- c: arraydumpmore -----     time 760.97   change 0  maxsize 61939712
+appending dump to file out/converge:   rmsmmcont
+
+--------------input from file inn.cont, loops remaining 1
+
+
+----- c: copy -----     time 760.97   change 0  maxsize 61939712
+copy U1 to U1bcont  size=28208, type=d
+
+----- c: copy -----     time 760.97   change 0  maxsize 61939712
+copy U2 to U2bcont  size=28208, type=d
+
+----- c: copy -----     time 760.97   change 0  maxsize 61939712
+copy U3 to U3bcont  size=28208, type=d
+
+----- c: contrhsu -----     time 760.97   change 0  maxsize 61939712
+
+----- c: contrhsexit -----     time 760.98   change 0.01  maxsize 61939712
+ 1 outflow regions:
+ exit 0 flowout 3 -1 164 0 0 0 165 87 3 1 164 1 1 0
+rhsc at ifix -7.69784e-18 flow rate 0.0100107
+
+----- c: eqnsolvep -----     time 760.98   change 0  maxsize 61939712
+ init:  perr-rms 0.000139494    perr-min -0.00295046 at 142 37 1 0    perr-max 0.00343541 at 119 13 1 0
+enter solvep
+Procedure: Iibjkb ,  10 iterations
+ L=0, 85 strings for 8515 equations
+ L=1, 163 strings for 8515 equations
+ L=2, 8515 strings for 8515 equations
+ iter 0  perr-rms 7.47953e-06    perr-min -0.000163946    perr-max 0.000139648
+ iter 9  perr-rms 1.83791e-06    perr-min -1.73076e-05    perr-max 1.62954e-05
+Procedure: end
+end solve
+
+----- c: contdu -----     time 761.07   change 0.09  maxsize 61939712
+
+----- c: algebra -----     time 761.08   change 0.01  maxsize 61939712
+dU1cont =  *(-1 * U1bcont + 0)^1 + U1
+
+----- c: algebra -----     time 761.08   change 0  maxsize 61939712
+dU2cont =  *(-1 * U2bcont + 0)^1 + U2
+
+----- c: algebra -----     time 761.08   change 0  maxsize 61939712
+dU3cont =  *(-1 * U3bcont + 0)^1 + U3
+
+----- c: rmsminmax -----     time 761.08   change 0  maxsize 61939712
+RMSMM dU1cont rms 0.000163579, min -0.00362696 at 140 36 0 0,  max 0.00748131 at 139 36 0 0,  ITER 499 
+RMSMM dU2cont rms 0.000152264, min -0.0050839 at 139 36 0 0,  max 0.00486053 at 140 37 0 0,  ITER 499 
+RMSMM dU3cont rms 0, min 0 at 0 0 0 0,  max 0 at 0 0 0 0,  ITER 499 
+RMSMM dp rms 0.00021258, min -0.00355457 at 142 37 0 0,  max 0.00363271 at 141 37 0 0,  ITER 499 
+
+----- c: copy -----     time 761.08   change 0  maxsize 61939712
+copy rmsmm to rmsmmcont  size=20, type=d
+
+----- c: arraydumpmore -----     time 761.08   change 0  maxsize 61939712
+appending dump to file out/converge:   rmsmmcont
+
+--------------input from file inn.iter.uvwpmarvs, loops remaining 1
+
+
+----- c: copy -----     time 761.08   change 0  maxsize 61939712
+copy ppsav to pp  size=43065, type=d
+
+----- c: edit -----     time 761.08   change 0  maxsize 61939712
+ name ITER,   type i,  1 dims  n 1
+ a 1         1 1
+ e  end edit
+
+----- c: algebra -----     time 761.08   change 0  maxsize 61939712
+dU1 =  *(-1 * U1up + 0)^1 + U1
+
+----- c: algebra -----     time 761.08   change 0  maxsize 61939712
+dU2 =  *(-1 * U2up + 0)^1 + U2
+
+----- c: algebra -----     time 761.08   change 0  maxsize 61939712
+dU3 =  *(-1 * U3up + 0)^1 + U3
+
+----- c: algebra -----     time 761.08   change 0  maxsize 61939712
+dp =  *(-1 * ppup + 0)^1 + pp
+
+----- c: algebra -----     time 761.08   change 0  maxsize 61939712
+dq =  *(-1 * qturbup + 0)^1 + qturb
+
+----- c: algebra -----     time 761.08   change 0  maxsize 61939712
+dom =  *(-1 * omturbup + 0)^1 + omturb
+
+----- c: algebra -----     time 761.08   change 0  maxsize 61939712
+dbij =  *(-1 * bijup + 0)^1 + bij
+
+----- c: if -----     time 761.08   change 0  maxsize 61939712
+ if ITER % ITERAVE, then continue, otherwise find NOAVERAGE 500 % 2 ?  True, continue
+
+----- c: algebra -----     time 761.08   change 0  maxsize 61939712
+U1 =  *(0.5 * dU1 + 0)^1 + U1up
+
+----- c: algebra -----     time 761.08   change 0  maxsize 61939712
+U2 =  *(0.5 * dU2 + 0)^1 + U2up
+
+----- c: algebra -----     time 761.08   change 0  maxsize 61939712
+U3 =  *(0.5 * dU3 + 0)^1 + U3up
+
+----- c: algebra -----     time 761.08   change 0  maxsize 61939712
+qturb =  *(0.5 * dq + 0)^1 + qturbup
+
+----- c: algebra -----     time 761.08   change 0  maxsize 61939712
+omturb = omturbup *(1 * omturb + 0)^1 + 
+
+----- c: algebra -----     time 761.08   change 0  maxsize 61939712
+omturb =  *(1 * omturb + 0)^0.5 + 
+
+----- c: algebra -----     time 761.08   change 0  maxsize 61939712
+bij =  *(0.5 * dbij + 0)^1 + bijup
+
+----- c: algebra -----     time 761.08   change 0  maxsize 61939712
+pp =  *(0.5 * dp + 0)^1 + ppup
+
+----- c: algebra -----     time 761.08   change 0  maxsize 61939712
+xyzp =  *(1 * xyzp + 0)^1 + xyzpold
+
+----- c: algebra -----     time 761.08   change 0  maxsize 61939712
+xyzp =  *(0.5 * xyzp + 0)^1 + 
+
+----- c: rmsminmax -----     time 761.08   change 0  maxsize 61939712
+RMSMM U1 rms 0.686551, min -0.410702 at 25 34 0 0,  max 1.94179 at 62 62 0 0,  ITER 500 
+RMSMM U2 rms 0.93516, min -1.63219 at 90 68 0 0,  max 1.54126 at 23 41 0 0,  ITER 500 
+RMSMM U3 rms 0, min 0 at 0 0 0 0,  max 0 at 0 0 0 0,  ITER 500 
+RMSMM pp rms 1.24975, min -2.16756 at 70 49 0 0,  max 0.194503 at 51 29 0 0,  ITER 500 
+RMSMM qturb rms 0.137283, min 0 at 33 27 0 0,  max 0.421924 at 139 35 0 0,  ITER 500 
+RMSMM omturb rms 44.6574, min 1.00769 at 35 82 0 0,  max 296.968 at 33 34 0 0,  ITER 500 
+RMSMM bij rms 0.103839, min -0.463371 at 77 27 0 3,  max 0.562041 at 58 26 0 0,  ITER 500 
+
+----- c: copy -----     time 761.08   change 0  maxsize 61939712
+copy rmsmm to rmsmmprop  size=20, type=d
+
+----- c: rmsminmax -----     time 761.08   change 0  maxsize 61939712
+RMSMM dU1 rms 0.00049206, min -0.0248656 at 140 37 0 0,  max 0.0372875 at 139 37 0 0,  ITER 500 
+RMSMM dU2 rms 0.000406949, min -0.0227213 at 138 37 0 0,  max 0.0103096 at 137 36 0 0,  ITER 500 
+RMSMM dU3 rms 0, min 0 at 0 0 0 0,  max 0 at 0 0 0 0,  ITER 500 
+RMSMM dp rms 0.000524887, min -0.0136424 at 140 36 0 0,  max 0.00993749 at 139 37 0 0,  ITER 500 
+RMSMM dq rms 0.000132565, min -0.0041421 at 137 34 0 0,  max 0.00753994 at 138 36 0 0,  ITER 500 
+RMSMM dom rms 0.0378865, min -0.828786 at 137 34 0 0,  max 1.18576 at 138 36 0 0,  ITER 500 
+RMSMM dbij rms 0.000116221, min -0.0113479 at 138 36 0 3,  max 0.0105347 at 138 36 0 0,  ITER 500 
+
+----- c: copy -----     time 761.09   change 0.01  maxsize 61939712
+copy rmsmm to rmsmmchange  size=20, type=d
+
+----- c: arraydumpmore -----     time 761.09   change 0  maxsize 61939712
+appending dump to file out/converge:   ITER rmsmmprop rmsmmchange updateq updateom updatebij
+
+----- c: infile -----     time 761.09   change 0  maxsize 61939712
+
+--------------input from file inn.analysis10.50, loops remaining 1
+
+
+----- c: if -----     time 761.09   change 0  maxsize 61939712
+ if FIFTY > TEN, then find endinit, otherwise continue 50 > 10 ?  True, endinit found
+
+----- c: if -----     time 761.09   change 0  maxsize 61939712
+ if ITER % TEN, then continue, otherwise find endten 500 % 10 ?  True, continue
+
+----- c: algebra -----     time 761.09   change 0  maxsize 61939712
+dU1TEN =  *(-1 * U1 + 0)^1 + dU1TEN
+
+----- c: algebra -----     time 761.09   change 0  maxsize 61939712
+dU2TEN =  *(-1 * U2 + 0)^1 + dU2TEN
+
+----- c: algebra -----     time 761.09   change 0  maxsize 61939712
+dU3TEN =  *(-1 * U3 + 0)^1 + dU3TEN
+
+----- c: algebra -----     time 761.09   change 0  maxsize 61939712
+dpTEN =  *(-1 * pp + 0)^1 + dpTEN
+
+----- c: algebra -----     time 761.09   change 0  maxsize 61939712
+dqturbTEN =  *(-1 * qturb + 0)^1 + dqturbTEN
+
+----- c: algebra -----     time 761.09   change 0  maxsize 61939712
+domturbTEN =  *(-1 * omturb + 0)^1 + domturbTEN
+
+----- c: algebra -----     time 761.09   change 0  maxsize 61939712
+dbijTEN =  *(-1 * bij + 0)^1 + dbijTEN
+
+----- c: rmsminmax -----     time 761.09   change 0  maxsize 61939712
+RMSMM dU1TEN rms 0.00119098, min -0.0612054 at 138 35 0 0,  max 0.0349267 at 137 36 0 0,  ITER 500 
+RMSMM dU2TEN rms 0.00140624, min -0.0394486 at 138 36 0 0,  max 0.0628061 at 137 35 0 0,  ITER 500 
+RMSMM dU3TEN rms 0, min 0 at 0 0 0 0,  max 0 at 0 0 0 0,  ITER 500 
+RMSMM dpTEN rms 0.000675901, min -0.0193169 at 139 36 0 0,  max 0.0126541 at 140 37 0 0,  ITER 500 
+RMSMM dqturbTEN rms 0.00057242, min -0.0186167 at 136 37 0 0,  max 0.0150696 at 137 34 0 0,  ITER 500 
+RMSMM domturbTEN rms 0.121174, min -2.82012 at 138 35 0 0,  max 4.042 at 119 36 0 0,  ITER 500 
+RMSMM dbijTEN rms 0.000583451, min -0.0406869 at 138 36 0 0,  max 0.0404769 at 138 36 0 1,  ITER 500 
+
+----- c: copy -----     time 761.09   change 0  maxsize 61939712
+copy rmsmm to Rmsmmd10  size=20, type=d
+
+----- c: copy -----     time 761.09   change 0  maxsize 61939712
+copy ITER to ITer10  size=1, type=i
+
+----- c: arraydumpmore -----     time 761.09   change 0  maxsize 61939712
+appending dump to file out/converge:   ITer10 Rmsmmd10
+
+----- c: copy -----     time 761.09   change 0  maxsize 61939712
+copy U1 to dU1TEN  size=28208, type=d
+
+----- c: copy -----     time 761.09   change 0  maxsize 61939712
+copy U2 to dU2TEN  size=28208, type=d
+
+----- c: copy -----     time 761.09   change 0  maxsize 61939712
+copy U3 to dU3TEN  size=28208, type=d
+
+----- c: copy -----     time 761.09   change 0  maxsize 61939712
+copy pp to dpTEN  size=43065, type=d
+
+----- c: copy -----     time 761.09   change 0  maxsize 61939712
+copy qturb to dqturbTEN  size=28208, type=d
+
+----- c: copy -----     time 761.09   change 0  maxsize 61939712
+copy omturb to domturbTEN  size=28208, type=d
+
+----- c: copy -----     time 761.09   change 0  maxsize 61939712
+copy bij to dbijTEN  size=169248, type=d
+
+----- c: if -----     time 761.09   change 0  maxsize 61939712
+ if ITER % FIFTY, then continue, otherwise find endfifty 500 % 50 ?  True, continue
+
+----- c: algebra -----     time 761.09   change 0  maxsize 61939712
+dU1FIFTY =  *(-1 * U1 + 0)^1 + dU1FIFTY
+
+----- c: algebra -----     time 761.09   change 0  maxsize 61939712
+dU2FIFTY =  *(-1 * U2 + 0)^1 + dU2FIFTY
+
+----- c: algebra -----     time 761.09   change 0  maxsize 61939712
+dU3FIFTY =  *(-1 * U3 + 0)^1 + dU3FIFTY
+
+----- c: algebra -----     time 761.09   change 0  maxsize 61939712
+dpFIFTY =  *(-1 * pp + 0)^1 + dpFIFTY
+
+----- c: algebra -----     time 761.09   change 0  maxsize 61939712
+dqturbFIFTY =  *(-1 * qturb + 0)^1 + dqturbFIFTY
+
+----- c: algebra -----     time 761.09   change 0  maxsize 61939712
+domturbFIFTY =  *(-1 * omturb + 0)^1 + domturbFIFTY
+
+----- c: algebra -----     time 761.09   change 0  maxsize 61939712
+dbijFIFTY =  *(-1 * bij + 0)^1 + dbijFIFTY
+
+----- c: rmsminmax -----     time 761.09   change 0  maxsize 61939712
+RMSMM dU1FIFTY rms 0.000928437, min -0.039685 at 138 35 0 0,  max 0.0285359 at 137 36 0 0,  ITER 500 
+RMSMM dU2FIFTY rms 0.00119044, min -0.0252134 at 135 37 0 0,  max 0.0359319 at 137 35 0 0,  ITER 500 
+RMSMM dU3FIFTY rms 0, min 0 at 0 0 0 0,  max 0 at 0 0 0 0,  ITER 500 
+RMSMM dpFIFTY rms 0.00119755, min -0.0132106 at 138 38 0 0,  max 0.00771655 at 140 37 0 0,  ITER 500 
+RMSMM dqturbFIFTY rms 0.00041852, min -0.010427 at 136 37 0 0,  max 0.00953651 at 137 34 0 0,  ITER 500 
+RMSMM domturbFIFTY rms 0.169967, min -1.939 at 119 27 0 0,  max 4.76213 at 119 34 0 0,  ITER 500 
+RMSMM dbijFIFTY rms 0.000628459, min -0.0230938 at 124 34 0 0,  max 0.0248255 at 125 34 0 1,  ITER 500 
+
+----- c: copy -----     time 761.09   change 0  maxsize 61939712
+copy rmsmm to Rmsmmd50  size=20, type=d
+
+----- c: copy -----     time 761.09   change 0  maxsize 61939712
+copy ITER to ITer50  size=1, type=i
+
+----- c: arraydumpmore -----     time 761.09   change 0  maxsize 61939712
+appending dump to file out/converge:   ITer50 Rmsmmd50
+
+----- c: copy -----     time 761.09   change 0  maxsize 61939712
+copy U1 to dU1FIFTY  size=28208, type=d
+
+----- c: copy -----     time 761.09   change 0  maxsize 61939712
+copy U2 to dU2FIFTY  size=28208, type=d
+
+----- c: copy -----     time 761.09   change 0  maxsize 61939712
+copy U3 to dU3FIFTY  size=28208, type=d
+
+----- c: copy -----     time 761.09   change 0  maxsize 61939712
+copy pp to dpFIFTY  size=43065, type=d
+
+----- c: copy -----     time 761.09   change 0  maxsize 61939712
+copy qturb to dqturbFIFTY  size=28208, type=d
+
+----- c: copy -----     time 761.09   change 0  maxsize 61939712
+copy omturb to domturbFIFTY  size=28208, type=d
+
+----- c: copy -----     time 761.09   change 0  maxsize 61939712
+copy bij to dbijFIFTY  size=169248, type=d
+
+--------------input from file inn.iter.uvwpmarvs, loops remaining 1
+
+
+----- c: infile -----     time 761.09   change 0  maxsize 61939712
+
+--------------input from file inn.iter.output, loops remaining 1
+
+
+----- c: areaflowint -----     time 761.09   change 0  maxsize 61939712
+integration for a=0.49995, b=-0.5 to 1.5, c=0 to 1
+properties:
+   a,b,or c  area  flow+ flow- flow  (property averages)
+AFINT a0.49995 0.0140001  0.0100106 0  0.0100106 ITER 500
+
+----- c: copypart -----     time 761.09   change 0  maxsize 61939712
+from averages  1
+ x 7 7 7
+to flowm 1
+ x 1 1 1
+
+----- c: algebra -----     time 761.09   change 0  maxsize 61939712
+flowmdif = flowm *(1 * flowrate + 0)^-1 + 
+
+----- c: algebra -----     time 761.09   change 0  maxsize 61939712
+flowmdif =  *(1 * flowmdif + -1)^1 + 
+
+----- c: arraydumpmore -----     time 761.09   change 0  maxsize 61939712
+appending dump to file out/converge:   flowmdif
+
+----- c: if -----     time 761.09   change 0  maxsize 61939712
+ if ITER % ITERDUMP, then continue, otherwise find NODUMP 500 % 100 ?  True, continue
+
+----- c: arraydump -----     time 761.09   change 0  maxsize 61939712
+dumping to file out/u500:   ITER U1 U2 U3 qturb omturb bij pp xyzp
+
+----- c: if -----     time 761.26   change 0.17  maxsize 61939712
+ if ITER % ITERPLOT, then continue, otherwise find NOPLOT 500 % 100 ?  True, continue
+
+----- c: infile -----     time 761.26   change 0  maxsize 61939712
+
+--------------input from file inn.plotconv, loops remaining 1
+
+
+----- c: keyword -----     time 761.26   change 0  maxsize 61939712
+keyword from out/converge to out/convline
+
+ITER: ITER
+rmsmmchange: dU1rms dU1max dU2rms dU2max dU3rms dU3max dprmsd
+ dpmax dqrms dqmax domrms dommax dbijrms dbijmax
+updatebij: facmin
+ pts.5 pts0
+flowmdif: flowmdif
+ total 500 lines to file out/convline
+
+----- c: keyword -----     time 761.28   change 0.02  maxsize 61939712
+keyword from out/converge to out/convline10
+
+ITer10: ITER
+Rmsmmd10: dU1rms dU1max dU2rms dU2max dU3rms dU3max dprmsd
+ dpmax dqrms dqmax domrms dommax dbijrms dbijmax
+ total 50 lines to file out/convline10
+
+----- c: keyword -----     time 761.29   change 0.01  maxsize 61939712
+keyword from out/converge to out/convline50
+
+ITer50: ITER
+Rmsmmd50: dU1rms dU1max dU2rms dU2max dU3rms dU3max dprmsd
+ dpmax dqrms dqmax domrms dommax dbijrms dbijmax
+ total 10 lines to file out/convline50
+
+----- c: constant -----     time 761.3   change 0.01  maxsize 61939712
+itmax, type: d, length 1, values 200
+
+----- c: if -----     time 761.3   change 0  maxsize 61939712
+ if ITER > 200, then continue, otherwise find OK200 500 > 200 ?  True, continue
+
+----- c: constant -----     time 761.3   change 0  maxsize 61939712
+itmax, type: d, length 1, values 500
+
+----- c: if -----     time 761.3   change 0  maxsize 61939712
+ if ITER > 500, then continue, otherwise find OK500 500 > 500 ?  Not true, OK500 found
+
+----- c: algebra -----     time 761.3   change 0  maxsize 61939712
+itmaxh =  *(0.5 * itmax + 0)^1 + 
+
+----- c: lineplot -----     time 761.3   change 0  maxsize 61939712
+imagename imageconv datafile out/convline
+ input file Header:  keyword from out/converge
+     Variables: ITER dU1rms dU1max dU2rms dU2max dU3rms dU3max dprmsd dpmax dqrms dqmax domrms dommax dbijrms dbijmax facmin pts.5 pts0 flowmdif    500 values
+comment for bottom of box:  red=dU2rms blue=dqrms         dITER: .-1, o-10,  X-50
+x, then y extend of box: 120 520 140 540 boxcolor, gridcolor 1 7
+axis 1:  iter 0 500 250
+axis 2:   1e-05 10 0
+          X-axis, iter, from 0 to 500 by 250;   Y-axis, , from 1e-05 to 10 by 0;
+1 of 2 lines: red=dU2rms blue=dqrms         
+2 of 2 lines: dITER: .-1, o-10,  X-50
+        ITER 0 1 dU2rms 0 1 2 2 .
+          (ITER*1 +0) goes from 1 to 500
+          (dU2rms*1 +0) goes from 8.9921e-05 to 0.230123
+        ITER 0 1 dqrms 0 1 5 2 .
+          (ITER*1 +0) goes from 1 to 500
+          (dqrms*1 +0) goes from 2.95658e-05 to 0.0274192
+
+----- c: lineplot -----     time 761.31   change 0.01  maxsize 61939712
+imagename imageconv10 datafile out/convline10
+ input file Header:  keyword from out/converge
+     Variables: ITER dU1rms dU1max dU2rms dU2max dU3rms dU3max dprmsd dpmax dqrms dqmax domrms dommax dbijrms dbijmax    50 values
+comment for bottom of box:  
+x, then y extend of box: 120 520 140 540 boxcolor, gridcolor 1 7
+axis 1:  iter 0 500 250
+axis 2:   1e-05 10 0
+          X-axis, iter, from 0 to 500 by 250;   Y-axis, , from 1e-05 to 10 by 0;
+        ITER 0 1 dU2rms 0 1 2 0 o
+          (ITER*1 +0) goes from 10 to 500
+          (dU2rms*1 +0) goes from 0.000638106 to 0.266899
+        ITER 0 1 dqrms 0 1 5 0 o
+          (ITER*1 +0) goes from 10 to 500
+          (dqrms*1 +0) goes from 0.000227679 to 0.0181502
+
+----- c: lineplot -----     time 761.31   change 0  maxsize 61939712
+imagename imageconv50 datafile out/convline50
+ input file Header:  keyword from out/converge
+     Variables: ITER dU1rms dU1max dU2rms dU2max dU3rms dU3max dprmsd dpmax dqrms dqmax domrms dommax dbijrms dbijmax    10 values
+comment for bottom of box:  
+x, then y extend of box: 120 520 140 540 boxcolor, gridcolor 1 7
+axis 1:  iter 0 500 250
+axis 2:   1e-05 10 0
+          X-axis, iter, from 0 to 500 by 250;   Y-axis, , from 1e-05 to 10 by 0;
+        ITER 0 1 dU2rms 0 1 2 0 X
+          (ITER*1 +0) goes from 50 to 500
+          (dU2rms*1 +0) goes from 0.00119044 to 0.359416
+        ITER 0 1 dqrms 0 1 5 0 X
+          (ITER*1 +0) goes from 50 to 500
+          (dqrms*1 +0) goes from 0.00041852 to 0.0258349
+
+----- c: image -----     time 761.31   change 0  maxsize 61939712
+add to image imageconv, image imageconv10, lower-left at 0 0
+add to image imageconv, image imageconv50, lower-left at 0 0
+ writing image imageconv to file out/conv.gif, format gif
+
+----- c: lineplot -----     time 761.37   change 0.06  maxsize 61939712
+imagename imageconv datafile out/convline
+ input file Header:  keyword from out/converge
+     Variables: ITER dU1rms dU1max dU2rms dU2max dU3rms dU3max dprmsd dpmax dqrms dqmax domrms dommax dbijrms dbijmax facmin pts.5 pts0 flowmdif    500 values
+comment for bottom of box:  err mid.flow/flowrate         *1 blk, *10 blue, *100 red
+x, then y extend of box: 120 520 140 540 boxcolor, gridcolor 1 7
+axis 1:  iter 0 500 250
+axis 2:   -0.15 0.15 0.05
+          X-axis, iter, from 0 to 500 by 250;   Y-axis, , from -0.15 to 0.15 by 0.05;
+1 of 2 lines: err mid.flow/flowrate         
+2 of 2 lines: *1 blk, *10 blue, *100 red
+        ITER 0 1 flowmdif 0 1 1 2 .
+          (ITER*1 +0) goes from 1 to 500
+          (flowmdif*1 +0) goes from -0.162661 to 0.0505785
+        ITER 0 1 flowmdif 0 10 5 2 .
+          (ITER*1 +0) goes from 1 to 500
+          (flowmdif*10 +0) goes from -1.62661 to 0.505785
+        ITER 0 1 flowmdif 0 100 2 2 .
+          (ITER*1 +0) goes from 1 to 500
+          (flowmdif*100 +0) goes from -16.2661 to 5.05785
+
+----- c: image -----     time 761.38   change 0.01  maxsize 61939712
+ writing image imageconv to file out/convm.gif, format gif
+
+--------------input from file inn.iter.output, loops remaining 1
+
+
+--------------input from file inn.iter.uvwpmarvs, loops remaining 1
+
+
+--------------input from file stdin, loops remaining 1
+
+
+----- c: arraydumpmore -----     time 761.42   change 0.04  maxsize 61939712
+appending dump to file out/converge:   timespace
+
+----- c: end -----     time 761.42   change 0  maxsize 61939712

@@ -1,0 +1,1263 @@
+
+M4D - a research CFD code by Joan G. Moore
+  for steady or time accurate calculations
+  for inviscid, laminar or turbulent flow
+              Features: 
+    Convection adapted control volumes
+The transitional MARVS Reynolds stress model
+            Version 2015.2
+
+
+----- c: comment -----     time 0   change 0  maxsize 376832
+Temperature calc. for heat transfer
+
+----- c: constant -----     time 0   change 0  maxsize 389120
+xchord, type: d, length 1, values 0.171
+
+----- c: constant -----     time 0   change 0  maxsize 405504
+Re, type: d, length 1, values 66000
+
+----- c: infile -----     time 0   change 0  maxsize 405504
+
+--------------input from file inn.grid164x86, loops remaining 1
+
+
+----- c: comment -----     time 0   change 0  maxsize 409600
+langston cascade 2d scaled
+
+----- c: gridfrommefp -----     time 0   change 0  maxsize 409600
+ master geometry: MEFP style gridfile= grid.vpic.015.164.86.2
+grid at it=0
+164 86 2 1
+a= -0.8 to 1.6, b= -0.5 to 1.5, c= 0 to 1
+
+calculation grid 164 by 86 by 2 by 1
+dim 164 parm=  -0.8 -0.75 -0.7 -0.65 -0.6 -0.55 -0.5 -0.45 -0.4 -0.35
+           -0.3 -0.25 -0.2 -0.15 -0.11719 -0.07818 -0.05237 -0.03518 -0.02364 -0.015
+           -0.01 -0.00681 -0.00464 -0.00316 -0.00215 -0.00147 -0.001 -0.000681 -0.000464 -0.000316
+           -0.000215 -0.000147 -6.81e-05 0 0.00625 0.0125 0.02225 0.032 0.041 0.05
+           0.0565 0.063 0.0695 0.076 0.0845 0.093 0.1015 0.11 0.127 0.144
+           0.16095 0.1779 0.1948 0.2117 0.2286 0.2455 0.26245 0.2794 0.29635 0.3133
+           0.3302 0.3471 0.36405 0.381 0.3979 0.4148 0.43185 0.4489 0.4659 0.4829
+           0.49995 0.517 0.534 0.551 0.56785 0.5847 0.6015 0.6183 0.635 0.652
+           0.6688 0.6856 0.7025 0.7195 0.7364 0.7533 0.77 0.7872 0.804 0.821
+           0.838 0.855 0.872 0.889 0.902 0.915 0.9215 0.928 0.9345 0.941
+           0.944 0.947 0.95 0.953 0.9545 0.956 0.9575 0.959 0.9605 0.962
+           0.9635 0.965 0.9695 0.974 0.9785 0.983 0.98725 0.9915 0.99575 1
+           1.00007 1.00015 1.00022 1.00032 1.00046 1.00068 1.001 1.00147 1.00215 1.00316
+           1.00464 1.00681 1.01 1.015 1.021 1.025 1.03 1.035 1.0425 1.05
+           1.0625 1.075 1.0875 1.1 1.125 1.15 1.175 1.2 1.225 1.25
+           1.275 1.3 1.325 1.35 1.375 1.4 1.425 1.45 1.475 1.5
+           1.525 1.55 1.575 1.6
+dim 86 parm=  -0.5 -0.45 -0.4 -0.35 -0.3 -0.25 -0.2 -0.15 -0.1 -0.067
+           -0.05 -0.033 -0.023 -0.015 -0.01 -0.00681 -0.00464 -0.00316 -0.00215 -0.00147
+           -0.001 -0.000681 -0.000464 -0.000316 -0.000215 -0.000147 -6.81e-05 0 0.0085 0.017
+           0.0335 0.05 0.075 0.1 0.175 0.25 0.3125 0.375 0.4375 0.5
+           0.5625 0.625 0.6875 0.75 0.8 0.85 0.9 0.95 0.975 1
+           1.00007 1.00015 1.00022 1.00032 1.00046 1.00068 1.001 1.00147 1.00215 1.00316
+           1.00464 1.00681 1.01 1.015 1.024 1.0386 1.0534 1.0659 1.0844 1.112
+           1.131 1.15 1.175 1.2 1.225 1.25 1.275 1.3 1.325 1.35
+           1.375 1.4 1.425 1.45 1.475 1.5
+dim 2 parm=  0 1
+dim 1 parm=  0
+
+----- c: algebra -----     time 0.03   change 0.03  maxsize 1945600
+xyz =  *(0.171 * xyz + 0)^1 + 
+
+----- c: constant -----     time 0.03   change 0  maxsize 1953792
+csym, type: c, length 12, values n n n n z z s n r r R R
+
+----- c: blocksetabc -----     time 0.03   change 0  maxsize 1957888
+ creating blockijkp for 25 by 12 by 1 blocks
+ read a b or c 26
+ -0.8 -0.7 -0.6 -0.5 -0.4 -0.3 -0.2 -0.1 -0.05 0.05 0.15 0.25 0.35 0.45 0.55 0.65 0.75 0.85 0.95 1.05 1.1 1.2 1.3 1.4 1.5 1.6
+bl0 1 3 5 7 9 11 13 16 18 40 51 57 63 69 74 80 86 92 103 140 144 148 152 156 160 164
+ipinb0 -1 0 0 1 1 2 2 3 3 4 4 5 5 6 6 6 7 7 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 9 9 9 9 9 9 9 9 9 9 9 10 10 10 10 10 10 11 11 11 11 11 11 12 12 12 12 12 12 13 13 13 13 13 14 14 14 14 14 14 15 15 15 15 15 15 16 16 16 16 16 16 17 17 17 17 17 17 17 17 17 17 17 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 19 19 19 19 20 20 20 20 21 21 21 21 22 22 22 22 23 23 23 23 24 24 24 24 -1
+ read a b or c 13
+ -0.5 -0.4 -0.3 -0.2 -0.1 -0.05 0.5 1.05 1.1 1.2 1.3 1.4 1.5
+bl1 1 3 5 7 9 11 40 67 70 74 78 82 86
+ipinb1 -1 0 0 1 1 2 2 3 3 4 4 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 7 7 7 8 8 8 8 9 9 9 9 10 10 10 10 11 11 11 11 -1
+ individual lines for  2 
+bl2 1 2
+ipinb2 -1 0 -1
+
+----- c: blocksetabc -----     time 0.03   change 0  maxsize 1966080
+ creating blockijkq for 25 by 12 by 1 blocks
+ read a b or c 26
+ -0.8 -0.7 -0.6 -0.5 -0.4 -0.3 -0.2 -0.1 -0.05 0.05 0.15 0.25 0.35 0.45 0.55 0.65 0.75 0.85 0.95 1.05 1.1 1.2 1.3 1.4 1.5 1.6
+bl0 1 3 5 7 9 11 13 16 18 40 51 57 63 69 74 80 86 92 103 140 144 148 152 156 160 164
+ipinb0 -1 0 0 1 1 2 2 3 3 4 4 5 5 6 6 6 7 7 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 9 9 9 9 9 9 9 9 9 9 9 10 10 10 10 10 10 11 11 11 11 11 11 12 12 12 12 12 12 13 13 13 13 13 14 14 14 14 14 14 15 15 15 15 15 15 16 16 16 16 16 16 17 17 17 17 17 17 17 17 17 17 17 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 19 19 19 19 20 20 20 20 21 21 21 21 22 22 22 22 23 23 23 23 24 24 24 24 -1
+ read a b or c 13
+ -0.5 -0.4 -0.3 -0.2 -0.1 -0.05 0.5 1.05 1.1 1.2 1.3 1.4 1.5
+bl1 1 3 5 7 9 11 40 67 70 74 78 82 86
+ipinb1 -1 0 0 1 1 2 2 3 3 4 4 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 7 7 7 8 8 8 8 9 9 9 9 10 10 10 10 11 11 11 11 -1
+ individual lines for  2 
+bl2 1 2
+ipinb2 -1 0 -1
+
+----- c: gridmatch -----     time 0.03   change 0  maxsize 1966080
+ match consolidation for 210 points
+ match consolidation for 0 points
+10611 sleeping internal continuity volumes
+matchpc simplifcation at 392 points
+matchpc simplifcation at 0 points
+match repeating boundary set for L= 1
+
+----- c: set_wherefw -----     time 0.04   change 0.01  maxsize 2670592
+form wherefw excluding point types  s
+ 8669 independent points, each t 0 8669
+
+----- c: set_wherep -----     time 0.04   change 0  maxsize 2826240
+nop 10461
+set wherep,  whoisp, noindppts =   10461  0  10461
+
+----- c: cvdcinit -----     time 0.05   change 0.01  maxsize 3088384
+cvdc>= 0.5 and cvdc<= 0.5 
+ set 7012 missed sleeping faces
+
+----- c: set_xyzdouble -----     time 0.11   change 0.06  maxsize 6701056
+
+----- c: alias -----     time 0.12   change 0.01  maxsize 11780096
+alias for idim4d 4 parts idim jdim kdim tdim
+
+----- c: alias -----     time 0.12   change 0  maxsize 11780096
+alias for idim4dp 4 parts idimp jdimp kdimp tdimp
+
+----- c: edit -----     time 0.12   change 0  maxsize 11780096
+ name clt,   type c,  3 dims  i 164 j 86 k 2
+ r  f to  i         1 1      1 86      1 2
+ e  end edit
+
+----- c: cvdcparm -----     time 0.12   change 0  maxsize 11792384
+cvdc>= 0.01 and cvdc<= 0.99 
+  from f to i cvdc>= 0.99
+  from w to f cvdc>= 0.5
+
+----- c: wallnorm -----     time 0.12   change 0  maxsize 11792384
+nunber of independent wall point = 216
+
+--------------input from file stdin, loops remaining 1
+
+
+----- c: infile -----     time 0.12   change 0  maxsize 11808768
+
+--------------input from file inn.init.ButlerTu, loops remaining 1
+
+
+----- c: comment -----     time 0.12   change 0  maxsize 11808768
+----- init Butler, high turbulence, specified Re
+
+----- c: varinit -----     time 0.12   change 0  maxsize 11808768
+set U1: format 0  flow 0.71934, wall 0, solid 0
+
+----- c: varinit -----     time 0.12   change 0  maxsize 12042240
+set U2: format 1 fac=0.69466
+ a  -1 0.2 1 2
+ factors: 1 1 -1 -1
+ b factor: 1
+ c factor: 1
+ d factor: 1
+
+----- c: varinit -----     time 0.12   change 0  maxsize 12279808
+set wallzero: format 0  flow 1, wall 0, solid 0
+
+----- c: algebra -----     time 0.12   change 0  maxsize 12509184
+U2 = wallzero *(1 * U2 + 0)^1 + 
+
+----- c: varinit -----     time 0.12   change 0  maxsize 12509184
+set U3: format 0  flow 0, wall 0, solid 0
+
+----- c: varinit -----     time 0.12   change 0  maxsize 12738560
+set rho: format 0  flow 1, wall 1, solid 1
+
+----- c: edit -----     time 0.12   change 0  maxsize 12967936
+ name pp,   type d,  3 dims  i 165 j 87 k 3
+ Array pp created and cleared
+ s -0.5          1 165      1 87      1 3
+ e  end edit
+
+----- c: constant -----     time 0.13   change 0.01  maxsize 13316096
+ppinlet, type: d, length 1, values -0.5
+
+----- c: varinit -----     time 0.13   change 0  maxsize 13316096
+set qturb: format 0  flow 0.1356, wall 0, solid 0
+
+----- c: varinit -----     time 0.13   change 0  maxsize 13545472
+set omturb: format 0  flow 1.164, wall 1.164, solid 1.164
+
+----- c: edit -----     time 0.13   change 0  maxsize 13774848
+ name bij,   type d,  4 dims  i 164 j 86 k 2 L 6
+ Array bij created and cleared
+ s 0          1 164      1 86      1 2      1 6
+ e  end edit
+
+----- c: constant -----     time 0.13   change 0  maxsize 15130624
+qmin, type: d, length 1, values 0.0001
+
+----- c: constant -----     time 0.13   change 0  maxsize 15130624
+ommin, type: d, length 1, values 0.1
+
+----- c: algebra -----     time 0.13   change 0  maxsize 15130624
+vlamc = xchord *(1 * Re + 0)^-1 + 
+
+----- c: edit -----     time 0.13   change 0  maxsize 15130624
+ name vlam,   type d,  3 dims  i 163 j 85 k 1
+ Array vlam created and cleared
+ s 2.59091e-06          1 163      1 85      1 1
+ e  end edit
+
+----- c: areaflowint -----     time 0.13   change 0  maxsize 15241216
+integration for a=-0.8, b=-0.5 to 1.5, c=0 to 1
+properties:
+   a,b,or c  area  flow+ flow- flow  (property averages)
+AFINT a-0.8 0.0139165  0.0100107 0  0.0100107
+
+----- c: copypart -----     time 0.13   change 0  maxsize 15249408
+from averages  1
+ a 7 7 7
+to flowrate 1
+ a 1 1 1
+ flowrate not found so it is  being created d 1
+
+----- c: exitinit -----     time 0.13   change 0  maxsize 15261696
+ 1 outflow regions regions
+region 1, type 3, dL -1,  is[] 164 0 0 0, ie[] 165 87 3 1, ifix[] 164 1 1 0, value 0.0100107
+
+----- c: constant -----     time 0.13   change 0  maxsize 15265792
+ITER, type: i, length 1, values 0
+
+--------------input from file stdin, loops remaining 1
+
+
+----- c: arrayread -----     time 0.13   change 0  maxsize 15265792
+ reading from file out/u500
+             ITER   1   i
+           U1   28208   d
+           U2   28208   d
+           U3   28208   d
+           qturb   28208   d
+           omturb   28208   d
+           bij   169248   d
+           pp   43065   d
+           xyzp   129195   d
+
+----- c: constant -----     time 0.23   change 0.1  maxsize 15269888
+p.defaultdir, type: s, length 1, values ../../jgm
+
+----- c: cvdcparm -----     time 0.23   change 0  maxsize 15269888
+cvdc>= 0.01 and cvdc<= 0.99 
+  from f to i cvdc>= 0.99
+  from w to f cvdc>= 0.5
+  from f to w cvdc>= 0.5
+
+----- c: coefinit -----     time 0.23   change 0  maxsize 15269888
+coef arrays created, number of coefs = 4
+
+----- c: constant -----     time 0.23   change 0  maxsize 15446016
+prlam, type: d, length 1, values 0.7
+
+----- c: varinit -----     time 0.23   change 0  maxsize 15446016
+set TT: format 0  flow 0, wall 0, solid 0
+
+----- c: constant -----     time 0.23   change 0  maxsize 15675392
+fluxfac, type: d, length 1, values 1
+
+----- c: arraydump -----     time 0.23   change 0  maxsize 15675392
+dumping to file out/convheat:   fluxfac
+
+----- c: infile -----     time 0.23   change 0  maxsize 15675392
+
+--------------input from file inn.heatsetup, loops remaining 1
+
+
+----- c: walldist -----     time 0.23   change 0  maxsize 15675392
+ set walldist[noindppts], distance from mid-c.v. to nearest wall
+
+----- c: arraydump -----     time 0.45   change 0.22  maxsize 16277504
+dumping to file out/walldist:   walldist
+
+----- c: viscmarvheat -----     time 0.46   change 0.01  maxsize 16281600
+
+----- c: algebra -----     time 0.46   change 0  maxsize 16404480
+dpr =  *(1 * prlam + 0)^-1 + 
+
+----- c: algebra -----     time 0.46   change 0  maxsize 16404480
+vtot =  *(1.42857 * vlam + 0)^1 + vmarvheat
+
+----- c: cvdcreset -----     time 0.46   change 0  maxsize 16515072
+viscosity vtot, timestep dumdt, t2cvlim 10  using viscosity
+cvd_change 8515 pts, rms: 0.415219 0.183172 0 max 0.49 dir 0 at 1 1 1 0 ITER 500  
+ set 7012 missed sleeping faces
+sleep done
+face done
+
+----- c: coefconv -----     time 0.53   change 0.07  maxsize 16535552
+ convection=coef 1, set for its=0 to ite=0
+
+----- c: coefvisc -----     time 0.63   change 0.1  maxsize 22433792
+ viscosity: vtot, at coef 2
+
+----- c: coefadd -----     time 0.69   change 0.06  maxsize 22446080
+coef_c.0= +1 *coef_c.1 +1 *coef_c.2
+
+----- c: coeffix -----     time 0.69   change 0  maxsize 22446080
+ nyperm 1, coef 0 to -1.  Limits: limsumnz 0  poselim 0.4 displim -1.5
+omit 1 pt types: i ,  its 0 ite 0
+for 8616 points, pose min 0.541938 disp min -1.00016
+pose groups  0 <0,  0 <0.1,  0 <0.2,  0 <0.3,  0 <0.4,  0 <0.5,  7 <0.6,  114 <0.7,  2358 <0.8,  2312 <0.9,  2951 <1,
+
+----- c: coefrhs -----     time 0.69   change 0  maxsize 22913024
+rhs for TT, rhsTT, updated(-=) with 1*coefs 0, oldnew=n
+ rhsTT created
+
+----- c: algebra -----     time 0.69   change 0  maxsize 22982656
+wflux =  *(0 * rhsTT + 0)^1 + 
+
+----- c: wallflux -----     time 0.69   change 0  maxsize 23052288
+adding wall flux to wflux, flux/area= fluxfac
+
+--------------input from file stdin, loops remaining 1
+
+
+----- c: infile -----     time 0.7   change 0.01  maxsize 23052288
+
+--------------input from file inn.heatsolve, loops remaining 10
+
+
+----- c: coefrhs -----     time 0.7   change 0  maxsize 23052288
+rhs for TT, rhsTT, updated(-=) with 1*coefs 0, oldnew=n
+
+----- c: algebra -----     time 0.7   change 0  maxsize 23052288
+rhsTT =  *(1 * rhsTT + 0)^1 + wflux
+
+----- c: eqnsolves -----     time 0.7   change 0  maxsize 23052288
+on the grid equations with rhs=rhsTT, center_add=, change=dTT
+oldnewdTT n omit 1 pt types: i,  eq range 0, 8669
+ 53 of 8669 active eqs, type deactivated
+no center pt additions
+ init:  err-rms 0.995402    err-min 0 at 1 0 0 0    err-max 6.37878 at 119 47 0 0
+Procedure: ijk ,  100 iterations
+ L=0, 85 strings for 8616 equations
+ L=1, 163 strings for 8616 equations
+ L=2, 8616 strings for 8616 equations
+ iter 0  err-rms 0.301534    err-min -0.000143426 at 115 15 0 0    err-max 1.5431 at 32 26 0 0
+ iter 3  err-rms 0.282371    err-min -0.00686359 at 114 14 0 0    err-max 0.864307 at 33 27 0 0
+ iter 4  err-rms 0.283342    err-min -0.00728816 at 116 13 0 0    err-max 0.81787 at 33 27 0 0
+ iter 99  err-rms 0.0975998    err-min -1.43901e-08 at 14 13 0 0    err-max 0.406714 at 124 32 0 0
+Procedure: end
+end solve
+
+----- c: algebra -----     time 1.04   change 0.34  maxsize 23572480
+TT =  *(1 * TT + 0)^1 + dTT
+
+----- c: rmsminmax -----     time 1.04   change 0  maxsize 23572480
+RMSMM dTT rms 81.9861, min -2.47225e-05 at 14 35 0 0,  max 293.202 at 113 27 0 0,  ITER 500 
+RMSMM TT rms 81.9861, min -2.47225e-05 at 14 35 0 0,  max 293.202 at 113 27 0 0,  ITER 500 
+
+----- c: arraydumpmore -----     time 1.04   change 0  maxsize 23580672
+appending dump to file out/convheat:   rmsmm
+
+--------------input from file inn.heatsolve, loops remaining 9
+
+
+----- c: coefrhs -----     time 1.04   change 0  maxsize 23580672
+rhs for TT, rhsTT, updated(-=) with 1*coefs 0, oldnew=n
+
+----- c: algebra -----     time 1.04   change 0  maxsize 23580672
+rhsTT =  *(1 * rhsTT + 0)^1 + wflux
+
+----- c: eqnsolves -----     time 1.04   change 0  maxsize 23580672
+on the grid equations with rhs=rhsTT, center_add=, change=dTT
+oldnewdTT n omit 1 pt types: i,  eq range 0, 8669
+ 53 of 8669 active eqs, type deactivated
+no center pt additions
+ init:  err-rms 0.0975998    err-min -1.43901e-08 at 14 13 0 0    err-max 0.406714 at 124 32 0 0
+Procedure: ijk ,  100 iterations
+ L=0, 85 strings for 8616 equations
+ L=1, 163 strings for 8616 equations
+ L=2, 8616 strings for 8616 equations
+ iter 0  err-rms 0.0965128    err-min -1.38374e-08 at 14 13 0 0    err-max 0.403776 at 124 32 0 0
+ iter 99  err-rms 0.0326809    err-min -2.70316e-05 at 35 26 0 0    err-max 0.181504 at 123 32 0 0
+Procedure: end
+end solve
+
+----- c: algebra -----     time 1.39   change 0.35  maxsize 23584768
+TT =  *(1 * TT + 0)^1 + dTT
+
+----- c: rmsminmax -----     time 1.39   change 0  maxsize 23584768
+RMSMM dTT rms 26.7479, min -1.66032e-06 at 14 34 0 0,  max 139.856 at 119 32 0 0,  ITER 500 
+RMSMM TT rms 107.543, min -2.6321e-05 at 14 35 0 0,  max 424.241 at 119 32 0 0,  ITER 500 
+
+----- c: arraydumpmore -----     time 1.39   change 0  maxsize 23584768
+appending dump to file out/convheat:   rmsmm
+
+--------------input from file inn.heatsolve, loops remaining 8
+
+
+----- c: coefrhs -----     time 1.39   change 0  maxsize 23584768
+rhs for TT, rhsTT, updated(-=) with 1*coefs 0, oldnew=n
+
+----- c: algebra -----     time 1.39   change 0  maxsize 23584768
+rhsTT =  *(1 * rhsTT + 0)^1 + wflux
+
+----- c: eqnsolves -----     time 1.39   change 0  maxsize 23584768
+on the grid equations with rhs=rhsTT, center_add=, change=dTT
+oldnewdTT n omit 1 pt types: i,  eq range 0, 8669
+ 53 of 8669 active eqs, type deactivated
+no center pt additions
+ init:  err-rms 0.0326809    err-min -2.70316e-05 at 35 26 0 0    err-max 0.181504 at 123 32 0 0
+Procedure: ijk ,  100 iterations
+ L=0, 85 strings for 8616 equations
+ L=1, 163 strings for 8616 equations
+ L=2, 8616 strings for 8616 equations
+ iter 0  err-rms 0.032331    err-min -2.61934e-05 at 35 26 0 0    err-max 0.179927 at 123 32 0 0
+ iter 99  err-rms 0.0112326    err-min -5.22294e-07 at 35 26 0 0    err-max 0.0732185 at 123 32 0 0
+Procedure: end
+end solve
+
+----- c: algebra -----     time 1.74   change 0.35  maxsize 23584768
+TT =  *(1 * TT + 0)^1 + dTT
+
+----- c: rmsminmax -----     time 1.74   change 0  maxsize 23584768
+RMSMM dTT rms 9.05406, min -0.00746281 at 35 27 0 0,  max 59.9961 at 119 33 0 0,  ITER 500 
+RMSMM TT rms 115.891, min -2.63667e-05 at 14 35 0 0,  max 483.89 at 119 32 0 0,  ITER 500 
+
+----- c: arraydumpmore -----     time 1.74   change 0  maxsize 23584768
+appending dump to file out/convheat:   rmsmm
+
+--------------input from file inn.heatsolve, loops remaining 7
+
+
+----- c: coefrhs -----     time 1.74   change 0  maxsize 23584768
+rhs for TT, rhsTT, updated(-=) with 1*coefs 0, oldnew=n
+
+----- c: algebra -----     time 1.74   change 0  maxsize 23584768
+rhsTT =  *(1 * rhsTT + 0)^1 + wflux
+
+----- c: eqnsolves -----     time 1.74   change 0  maxsize 23584768
+on the grid equations with rhs=rhsTT, center_add=, change=dTT
+oldnewdTT n omit 1 pt types: i,  eq range 0, 8669
+ 53 of 8669 active eqs, type deactivated
+no center pt additions
+ init:  err-rms 0.0112326    err-min -5.22294e-07 at 35 26 0 0    err-max 0.0732185 at 123 32 0 0
+Procedure: ijk ,  100 iterations
+ L=0, 85 strings for 8616 equations
+ L=1, 163 strings for 8616 equations
+ L=2, 8616 strings for 8616 equations
+ iter 0  err-rms 0.0111139    err-min -4.9891e-07 at 35 26 0 0    err-max 0.0725374 at 123 32 0 0
+ iter 99  err-rms 0.00388329    err-min -4.5228e-13 at 14 13 0 0    err-max 0.0283306 at 123 32 0 0
+Procedure: end
+end solve
+
+----- c: algebra -----     time 2.09   change 0.35  maxsize 23584768
+TT =  *(1 * TT + 0)^1 + dTT
+
+----- c: rmsminmax -----     time 2.09   change 0  maxsize 23584768
+RMSMM dTT rms 3.11844, min -0.000103559 at 35 27 0 0,  max 24.295 at 119 33 0 0,  ITER 500 
+RMSMM TT rms 118.657, min -2.63683e-05 at 14 35 0 0,  max 507.514 at 119 32 0 0,  ITER 500 
+
+----- c: arraydumpmore -----     time 2.09   change 0  maxsize 23584768
+appending dump to file out/convheat:   rmsmm
+
+--------------input from file inn.heatsolve, loops remaining 6
+
+
+----- c: coefrhs -----     time 2.09   change 0  maxsize 23584768
+rhs for TT, rhsTT, updated(-=) with 1*coefs 0, oldnew=n
+
+----- c: algebra -----     time 2.09   change 0  maxsize 23584768
+rhsTT =  *(1 * rhsTT + 0)^1 + wflux
+
+----- c: eqnsolves -----     time 2.09   change 0  maxsize 23584768
+on the grid equations with rhs=rhsTT, center_add=, change=dTT
+oldnewdTT n omit 1 pt types: i,  eq range 0, 8669
+ 53 of 8669 active eqs, type deactivated
+no center pt additions
+ init:  err-rms 0.00388329    err-min -4.5228e-13 at 14 13 0 0    err-max 0.0283306 at 123 32 0 0
+Procedure: ijk ,  100 iterations
+ L=0, 85 strings for 8616 equations
+ L=1, 163 strings for 8616 equations
+ L=2, 8616 strings for 8616 equations
+ iter 0  err-rms 0.00384219    err-min -4.37582e-13 at 14 13 0 0    err-max 0.0280595 at 123 32 0 0
+ iter 99  err-rms 0.00133296    err-min -1.65612e-14 at 14 13 0 0    err-max 0.0107331 at 123 32 0 0
+Procedure: end
+end solve
+
+----- c: algebra -----     time 2.44   change 0.35  maxsize 23584768
+TT =  *(1 * TT + 0)^1 + dTT
+
+----- c: rmsminmax -----     time 2.44   change 0  maxsize 23584768
+RMSMM dTT rms 1.07528, min -8.09214e-11 at 14 47 0 0,  max 9.45266 at 119 33 0 0,  ITER 500 
+RMSMM TT rms 119.572, min -2.63683e-05 at 14 35 0 0,  max 516.575 at 119 32 0 0,  ITER 500 
+
+----- c: arraydumpmore -----     time 2.44   change 0  maxsize 23584768
+appending dump to file out/convheat:   rmsmm
+
+--------------input from file inn.heatsolve, loops remaining 5
+
+
+----- c: coefrhs -----     time 2.44   change 0  maxsize 23584768
+rhs for TT, rhsTT, updated(-=) with 1*coefs 0, oldnew=n
+
+----- c: algebra -----     time 2.44   change 0  maxsize 23584768
+rhsTT =  *(1 * rhsTT + 0)^1 + wflux
+
+----- c: eqnsolves -----     time 2.44   change 0  maxsize 23584768
+on the grid equations with rhs=rhsTT, center_add=, change=dTT
+oldnewdTT n omit 1 pt types: i,  eq range 0, 8669
+ 53 of 8669 active eqs, type deactivated
+no center pt additions
+ init:  err-rms 0.00133296    err-min -1.65611e-14 at 14 13 0 0    err-max 0.0107331 at 123 32 0 0
+Procedure: ijk ,  100 iterations
+ L=0, 85 strings for 8616 equations
+ L=1, 163 strings for 8616 equations
+ L=2, 8616 strings for 8616 equations
+ iter 0  err-rms 0.00131869    err-min -1.60209e-14 at 14 13 0 0    err-max 0.0106285 at 123 32 0 0
+ iter 99  err-rms 0.000450452    err-min -5.8446e-16 at 14 13 0 0    err-max 0.00399573 at 123 32 0 0
+Procedure: end
+end solve
+
+----- c: algebra -----     time 2.79   change 0.35  maxsize 23584768
+TT =  *(1 * TT + 0)^1 + dTT
+
+----- c: rmsminmax -----     time 2.79   change 0  maxsize 23584768
+RMSMM dTT rms 0.367048, min -2.92928e-12 at 14 47 0 0,  max 3.58862 at 119 33 0 0,  ITER 500 
+RMSMM TT rms 119.872, min -2.63683e-05 at 14 35 0 0,  max 519.986 at 119 32 0 0,  ITER 500 
+
+----- c: arraydumpmore -----     time 2.79   change 0  maxsize 23584768
+appending dump to file out/convheat:   rmsmm
+
+--------------input from file inn.heatsolve, loops remaining 4
+
+
+----- c: coefrhs -----     time 2.79   change 0  maxsize 23584768
+rhs for TT, rhsTT, updated(-=) with 1*coefs 0, oldnew=n
+
+----- c: algebra -----     time 2.79   change 0  maxsize 23584768
+rhsTT =  *(1 * rhsTT + 0)^1 + wflux
+
+----- c: eqnsolves -----     time 2.79   change 0  maxsize 23584768
+on the grid equations with rhs=rhsTT, center_add=, change=dTT
+oldnewdTT n omit 1 pt types: i,  eq range 0, 8669
+ 53 of 8669 active eqs, type deactivated
+no center pt additions
+ init:  err-rms 0.000450452    err-min -5.84478e-16 at 14 13 0 0    err-max 0.00399573 at 123 32 0 0
+Procedure: ijk ,  100 iterations
+ L=0, 85 strings for 8616 equations
+ L=1, 163 strings for 8616 equations
+ L=2, 8616 strings for 8616 equations
+ iter 0  err-rms 0.000445547    err-min -5.65007e-16 at 14 13 0 0    err-max 0.00395607 at 123 32 0 0
+ iter 99  err-rms 0.000149146    err-min -1.7492e-17 at 14 13 0 0    err-max 0.00145918 at 122 33 0 0
+Procedure: end
+end solve
+
+----- c: algebra -----     time 3.14   change 0.35  maxsize 23584768
+TT =  *(1 * TT + 0)^1 + dTT
+
+----- c: rmsminmax -----     time 3.14   change 0  maxsize 23584768
+RMSMM dTT rms 0.123127, min -1.0034e-13 at 14 47 0 0,  max 1.33516 at 119 33 0 0,  ITER 500 
+RMSMM TT rms 119.968, min -2.63683e-05 at 14 35 0 0,  max 521.246 at 119 32 0 0,  ITER 500 
+
+----- c: arraydumpmore -----     time 3.14   change 0  maxsize 23584768
+appending dump to file out/convheat:   rmsmm
+
+--------------input from file inn.heatsolve, loops remaining 3
+
+
+----- c: coefrhs -----     time 3.14   change 0  maxsize 23584768
+rhs for TT, rhsTT, updated(-=) with 1*coefs 0, oldnew=n
+
+----- c: algebra -----     time 3.14   change 0  maxsize 23584768
+rhsTT =  *(1 * rhsTT + 0)^1 + wflux
+
+----- c: eqnsolves -----     time 3.14   change 0  maxsize 23584768
+on the grid equations with rhs=rhsTT, center_add=, change=dTT
+oldnewdTT n omit 1 pt types: i,  eq range 0, 8669
+ 53 of 8669 active eqs, type deactivated
+no center pt additions
+ init:  err-rms 0.000149146    err-min -1.75094e-17 at 14 13 0 0    err-max 0.00145918 at 122 33 0 0
+Procedure: ijk ,  100 iterations
+ L=0, 85 strings for 8616 equations
+ L=1, 163 strings for 8616 equations
+ L=2, 8616 strings for 8616 equations
+ iter 0  err-rms 0.00014749    err-min -1.68501e-17 at 14 13 0 0    err-max 0.00144449 at 122 33 0 0
+ iter 99  err-rms 4.82924e-05    err-min -1.44146e-19 at 13 64 0 0    err-max 0.000524014 at 122 33 0 0
+Procedure: end
+end solve
+
+----- c: algebra -----     time 3.49   change 0.35  maxsize 23584768
+TT =  *(1 * TT + 0)^1 + dTT
+
+----- c: rmsminmax -----     time 3.49   change 0  maxsize 23584768
+RMSMM dTT rms 0.0404233, min -2.72509e-15 at 14 46 0 0,  max 0.486358 at 119 33 0 0,  ITER 500 
+RMSMM TT rms 119.998, min -2.63683e-05 at 14 35 0 0,  max 521.702 at 119 32 0 0,  ITER 500 
+
+----- c: arraydumpmore -----     time 3.49   change 0  maxsize 23584768
+appending dump to file out/convheat:   rmsmm
+
+--------------input from file inn.heatsolve, loops remaining 2
+
+
+----- c: coefrhs -----     time 3.49   change 0  maxsize 23584768
+rhs for TT, rhsTT, updated(-=) with 1*coefs 0, oldnew=n
+
+----- c: algebra -----     time 3.49   change 0  maxsize 23584768
+rhsTT =  *(1 * rhsTT + 0)^1 + wflux
+
+----- c: eqnsolves -----     time 3.49   change 0  maxsize 23584768
+on the grid equations with rhs=rhsTT, center_add=, change=dTT
+oldnewdTT n omit 1 pt types: i,  eq range 0, 8669
+ 53 of 8669 active eqs, type deactivated
+no center pt additions
+ init:  err-rms 4.82924e-05    err-min -2.07376e-14 at 38 26 0 0    err-max 0.000524014 at 122 33 0 0
+Procedure: ijk ,  100 iterations
+ L=0, 85 strings for 8616 equations
+ L=1, 163 strings for 8616 equations
+ L=2, 8616 strings for 8616 equations
+ iter 0  err-rms 4.77455e-05    err-min -1.40082e-19 at 13 64 0 0    err-max 0.00051861 at 122 33 0 0
+ iter 99  err-rms 1.52956e-05    err-min -2.10211e-13 at 47 18 0 0    err-max 0.000183465 at 122 33 0 0
+Procedure: end
+end solve
+
+----- c: algebra -----     time 3.84   change 0.35  maxsize 23584768
+TT =  *(1 * TT + 0)^1 + dTT
+
+----- c: rmsminmax -----     time 3.84   change 0  maxsize 23584768
+RMSMM dTT rms 0.012968, min -3.13161e-17 at 14 35 0 0,  max 0.173008 at 119 33 0 0,  ITER 500 
+RMSMM TT rms 120.008, min -2.63683e-05 at 14 35 0 0,  max 521.862 at 119 32 0 0,  ITER 500 
+
+----- c: arraydumpmore -----     time 3.84   change 0  maxsize 23584768
+appending dump to file out/convheat:   rmsmm
+
+--------------input from file inn.heatsolve, loops remaining 1
+
+
+----- c: coefrhs -----     time 3.84   change 0  maxsize 23584768
+rhs for TT, rhsTT, updated(-=) with 1*coefs 0, oldnew=n
+
+----- c: algebra -----     time 3.84   change 0  maxsize 23584768
+rhsTT =  *(1 * rhsTT + 0)^1 + wflux
+
+----- c: eqnsolves -----     time 3.84   change 0  maxsize 23584768
+on the grid equations with rhs=rhsTT, center_add=, change=dTT
+oldnewdTT n omit 1 pt types: i,  eq range 0, 8669
+ 53 of 8669 active eqs, type deactivated
+no center pt additions
+ init:  err-rms 1.52956e-05    err-min -2.01019e-13 at 47 18 0 0    err-max 0.000183465 at 122 33 0 0
+Procedure: ijk ,  100 iterations
+ L=0, 85 strings for 8616 equations
+ L=1, 163 strings for 8616 equations
+ L=2, 8616 strings for 8616 equations
+ iter 0  err-rms 1.51192e-05    err-min -2.01863e-13 at 47 18 0 0    err-max 0.000181525 at 122 33 0 0
+ iter 99  err-rms 4.74703e-06    err-min -2.93993e-14 at 47 18 0 0    err-max 6.25207e-05 at 122 33 0 0
+Procedure: end
+end solve
+
+----- c: algebra -----     time 4.18   change 0.34  maxsize 23584768
+TT =  *(1 * TT + 0)^1 + dTT
+
+----- c: rmsminmax -----     time 4.18   change 0  maxsize 23584768
+RMSMM dTT rms 0.00406687, min -4.87458e-11 at 47 18 0 0,  max 0.0599606 at 119 33 0 0,  ITER 500 
+RMSMM TT rms 120.01, min -2.63683e-05 at 14 35 0 0,  max 521.917 at 119 32 0 0,  ITER 500 
+
+----- c: arraydumpmore -----     time 4.18   change 0  maxsize 23584768
+appending dump to file out/convheat:   rmsmm
+
+--------------input from file stdin, loops remaining 1
+
+
+----- c: copy -----     time 4.18   change 0  maxsize 23584768
+copy TT to TTturb  size=28208, type=d
+
+----- c: infile -----     time 4.18   change 0  maxsize 23814144
+
+--------------input from file inn.heatsetuplam, loops remaining 1
+
+
+----- c: cvdcreset -----     time 4.18   change 0  maxsize 23814144
+viscosity vlam, timestep dumdt, t2cvlim 10  using viscosity
+cvd_change 8515 pts, rms: 0.11985 0.116836 0 max 0.475629 dir 1 at 147 28 1 0 ITER 500  
+ set 7012 missed sleeping faces
+sleep done
+face done
+
+----- c: algebra -----     time 4.25   change 0.07  maxsize 23814144
+dpr =  *(1 * prlam + 0)^-1 + 
+
+----- c: algebra -----     time 4.25   change 0  maxsize 23814144
+vtot =  *(1.42857 * vlam + 0)^1 + 
+
+----- c: cvdcreset -----     time 4.25   change 0  maxsize 23814144
+viscosity vtot, timestep dumdt, t2cvlim 10  using viscosity
+cvd_change 8515 pts, rms: 0.00735112 0.00860662 0 max 0.0878736 dir 0 at 131 34 1 0 ITER 500  
+ set 7012 missed sleeping faces
+sleep done
+face done
+
+----- c: coefconv -----     time 4.31   change 0.06  maxsize 23814144
+ convection=coef 1, set for its=0 to ite=0
+
+----- c: coefvisc -----     time 4.39   change 0.08  maxsize 23814144
+ viscosity: vtot, at coef 2
+
+----- c: coefadd -----     time 4.45   change 0.06  maxsize 23814144
+coef_c.0= +1 *coef_c.1 +1 *coef_c.2
+
+----- c: coeffix -----     time 4.45   change 0  maxsize 23814144
+ nyperm 1, coef 0 to -1.  Limits: limsumnz 0  poselim 0.4 displim -1.5
+omit 1 pt types: i ,  its 0 ite 0
+for 8616 points, pose min 0.382169 disp min -1.88354
+pose groups  0 <0,  0 <0.1,  0 <0.2,  0 <0.3,  1 <0.4,  0 <0.5,  3 <0.6,  113 <0.7,  6468 <0.8,  971 <0.9,  991 <1,
+
+----- c: coefrhs -----     time 4.46   change 0.01  maxsize 23814144
+rhs for TT, rhsTT, updated(-=) with 1*coefs 0, oldnew=n
+
+----- c: algebra -----     time 4.46   change 0  maxsize 23814144
+wflux =  *(0 * rhsTT + 0)^1 + 
+
+----- c: wallflux -----     time 4.46   change 0  maxsize 23814144
+adding wall flux to wflux, flux/area= fluxfac
+
+--------------input from file stdin, loops remaining 1
+
+
+----- c: infile -----     time 4.46   change 0  maxsize 23814144
+
+--------------input from file inn.heatsolve, loops remaining 10
+
+
+----- c: coefrhs -----     time 4.46   change 0  maxsize 23814144
+rhs for TT, rhsTT, updated(-=) with 1*coefs 0, oldnew=n
+
+----- c: algebra -----     time 4.46   change 0  maxsize 23814144
+rhsTT =  *(1 * rhsTT + 0)^1 + wflux
+
+----- c: eqnsolves -----     time 4.46   change 0  maxsize 23814144
+on the grid equations with rhs=rhsTT, center_add=, change=dTT
+oldnewdTT n omit 1 pt types: i,  eq range 0, 8669
+ 53 of 8669 active eqs, type deactivated
+no center pt additions
+ init:  err-rms 1.95287    err-min -11.7027 at 133 33 0 0    err-max 34.2877 at 130 45 0 0
+Procedure: ijk ,  100 iterations
+ L=0, 85 strings for 8616 equations
+ L=1, 163 strings for 8616 equations
+ L=2, 8616 strings for 8616 equations
+ iter 0  err-rms 1.18332    err-min -6.33815 at 130 36 0 0    err-max 24.204 at 133 42 0 0
+ iter 99  err-rms 0.11876    err-min -0.0530964 at 140 34 0 0    err-max 0.663316 at 135 36 0 0
+Procedure: end
+end solve
+
+----- c: algebra -----     time 4.83   change 0.37  maxsize 23814144
+TT =  *(1 * TT + 0)^1 + dTT
+
+----- c: rmsminmax -----     time 4.83   change 0  maxsize 23814144
+RMSMM dTT rms 85.6063, min -42.5777 at 141 34 0 0,  max 519.508 at 137 34 0 0,  ITER 500 
+RMSMM TT rms 192.414, min -7.09921 at 140 33 0 0,  max 714.722 at 119 33 0 0,  ITER 500 
+
+----- c: arraydumpmore -----     time 4.83   change 0  maxsize 23814144
+appending dump to file out/convheat:   rmsmm
+
+--------------input from file inn.heatsolve, loops remaining 9
+
+
+----- c: coefrhs -----     time 4.83   change 0  maxsize 23814144
+rhs for TT, rhsTT, updated(-=) with 1*coefs 0, oldnew=n
+
+----- c: algebra -----     time 4.83   change 0  maxsize 23814144
+rhsTT =  *(1 * rhsTT + 0)^1 + wflux
+
+----- c: eqnsolves -----     time 4.83   change 0  maxsize 23814144
+on the grid equations with rhs=rhsTT, center_add=, change=dTT
+oldnewdTT n omit 1 pt types: i,  eq range 0, 8669
+ 53 of 8669 active eqs, type deactivated
+no center pt additions
+ init:  err-rms 0.11876    err-min -0.0530964 at 140 34 0 0    err-max 0.663316 at 135 36 0 0
+Procedure: ijk ,  100 iterations
+ L=0, 85 strings for 8616 equations
+ L=1, 163 strings for 8616 equations
+ L=2, 8616 strings for 8616 equations
+ iter 0  err-rms 0.118056    err-min -0.0528539 at 140 34 0 0    err-max 0.659731 at 135 36 0 0
+ iter 99  err-rms 0.0635021    err-min -0.0301395 at 140 34 0 0    err-max 0.368829 at 135 36 0 0
+Procedure: end
+end solve
+
+----- c: algebra -----     time 5.17   change 0.34  maxsize 23814144
+TT =  *(1 * TT + 0)^1 + dTT
+
+----- c: rmsminmax -----     time 5.17   change 0  maxsize 23814144
+RMSMM dTT rms 40.0596, min -7.22269 at 140 34 0 0,  max 200.215 at 119 33 0 0,  ITER 500 
+RMSMM TT rms 229.301, min -6.555 at 140 33 0 0,  max 914.937 at 119 33 0 0,  ITER 500 
+
+----- c: arraydumpmore -----     time 5.17   change 0  maxsize 23814144
+appending dump to file out/convheat:   rmsmm
+
+--------------input from file inn.heatsolve, loops remaining 8
+
+
+----- c: coefrhs -----     time 5.17   change 0  maxsize 23814144
+rhs for TT, rhsTT, updated(-=) with 1*coefs 0, oldnew=n
+
+----- c: algebra -----     time 5.17   change 0  maxsize 23814144
+rhsTT =  *(1 * rhsTT + 0)^1 + wflux
+
+----- c: eqnsolves -----     time 5.17   change 0  maxsize 23814144
+on the grid equations with rhs=rhsTT, center_add=, change=dTT
+oldnewdTT n omit 1 pt types: i,  eq range 0, 8669
+ 53 of 8669 active eqs, type deactivated
+no center pt additions
+ init:  err-rms 0.0635021    err-min -0.0301395 at 140 34 0 0    err-max 0.368829 at 135 36 0 0
+Procedure: ijk ,  100 iterations
+ L=0, 85 strings for 8616 equations
+ L=1, 163 strings for 8616 equations
+ L=2, 8616 strings for 8616 equations
+ iter 0  err-rms 0.0630891    err-min -0.0299489 at 140 34 0 0    err-max 0.366501 at 135 36 0 0
+ iter 99  err-rms 0.0324864    err-min -0.0156382 at 140 34 0 0    err-max 0.215535 at 123 33 0 0
+Procedure: end
+end solve
+
+----- c: algebra -----     time 5.51   change 0.34  maxsize 23814144
+TT =  *(1 * TT + 0)^1 + dTT
+
+----- c: rmsminmax -----     time 5.51   change 0  maxsize 23814144
+RMSMM dTT rms 20.9466, min -4.2828 at 140 34 0 0,  max 141.759 at 119 33 0 0,  ITER 500 
+RMSMM TT rms 248.322, min -6.65113 at 116 12 0 0,  max 1056.7 at 119 33 0 0,  ITER 500 
+
+----- c: arraydumpmore -----     time 5.51   change 0  maxsize 23814144
+appending dump to file out/convheat:   rmsmm
+
+--------------input from file inn.heatsolve, loops remaining 7
+
+
+----- c: coefrhs -----     time 5.51   change 0  maxsize 23814144
+rhs for TT, rhsTT, updated(-=) with 1*coefs 0, oldnew=n
+
+----- c: algebra -----     time 5.52   change 0.01  maxsize 23814144
+rhsTT =  *(1 * rhsTT + 0)^1 + wflux
+
+----- c: eqnsolves -----     time 5.52   change 0  maxsize 23814144
+on the grid equations with rhs=rhsTT, center_add=, change=dTT
+oldnewdTT n omit 1 pt types: i,  eq range 0, 8669
+ 53 of 8669 active eqs, type deactivated
+no center pt additions
+ init:  err-rms 0.0324864    err-min -0.0156382 at 140 34 0 0    err-max 0.215535 at 123 33 0 0
+Procedure: ijk ,  100 iterations
+ L=0, 85 strings for 8616 equations
+ L=1, 163 strings for 8616 equations
+ L=2, 8616 strings for 8616 equations
+ iter 0  err-rms 0.0322643    err-min -0.0155337 at 140 34 0 0    err-max 0.214454 at 123 33 0 0
+ iter 99  err-rms 0.0161516    err-min -0.00792642 at 140 34 0 0    err-max 0.124994 at 123 33 0 0
+Procedure: end
+end solve
+
+----- c: algebra -----     time 5.86   change 0.34  maxsize 23814144
+TT =  *(1 * TT + 0)^1 + dTT
+
+----- c: rmsminmax -----     time 5.86   change 0  maxsize 23814144
+RMSMM dTT rms 10.5507, min -2.32448 at 140 34 0 0,  max 86.9915 at 119 33 0 0,  ITER 500 
+RMSMM TT rms 257.702, min -7.00425 at 116 12 0 0,  max 1143.69 at 119 33 0 0,  ITER 500 
+
+----- c: arraydumpmore -----     time 5.86   change 0  maxsize 23814144
+appending dump to file out/convheat:   rmsmm
+
+--------------input from file inn.heatsolve, loops remaining 6
+
+
+----- c: coefrhs -----     time 5.86   change 0  maxsize 23814144
+rhs for TT, rhsTT, updated(-=) with 1*coefs 0, oldnew=n
+
+----- c: algebra -----     time 5.86   change 0  maxsize 23814144
+rhsTT =  *(1 * rhsTT + 0)^1 + wflux
+
+----- c: eqnsolves -----     time 5.86   change 0  maxsize 23814144
+on the grid equations with rhs=rhsTT, center_add=, change=dTT
+oldnewdTT n omit 1 pt types: i,  eq range 0, 8669
+ 53 of 8669 active eqs, type deactivated
+no center pt additions
+ init:  err-rms 0.0161516    err-min -0.00792642 at 140 34 0 0    err-max 0.124994 at 123 33 0 0
+Procedure: ijk ,  100 iterations
+ L=0, 85 strings for 8616 equations
+ L=1, 163 strings for 8616 equations
+ L=2, 8616 strings for 8616 equations
+ iter 0  err-rms 0.0160372    err-min -0.00787195 at 140 34 0 0    err-max 0.124269 at 123 33 0 0
+ iter 99  err-rms 0.00783957    err-min -0.00392744 at 140 34 0 0    err-max 0.0679421 at 123 33 0 0
+Procedure: end
+end solve
+
+----- c: algebra -----     time 6.2   change 0.34  maxsize 23814144
+TT =  *(1 * TT + 0)^1 + dTT
+
+----- c: rmsminmax -----     time 6.2   change 0  maxsize 23814144
+RMSMM dTT rms 5.17672, min -1.22712 at 140 34 0 0,  max 49.0559 at 119 33 0 0,  ITER 500 
+RMSMM TT rms 262.183, min -7.17624 at 116 12 0 0,  max 1192.74 at 119 33 0 0,  ITER 500 
+
+----- c: arraydumpmore -----     time 6.2   change 0  maxsize 23814144
+appending dump to file out/convheat:   rmsmm
+
+--------------input from file inn.heatsolve, loops remaining 5
+
+
+----- c: coefrhs -----     time 6.2   change 0  maxsize 23814144
+rhs for TT, rhsTT, updated(-=) with 1*coefs 0, oldnew=n
+
+----- c: algebra -----     time 6.2   change 0  maxsize 23814144
+rhsTT =  *(1 * rhsTT + 0)^1 + wflux
+
+----- c: eqnsolves -----     time 6.2   change 0  maxsize 23814144
+on the grid equations with rhs=rhsTT, center_add=, change=dTT
+oldnewdTT n omit 1 pt types: i,  eq range 0, 8669
+ 53 of 8669 active eqs, type deactivated
+no center pt additions
+ init:  err-rms 0.00783957    err-min -0.00392744 at 140 34 0 0    err-max 0.0679421 at 123 33 0 0
+Procedure: ijk ,  100 iterations
+ L=0, 85 strings for 8616 equations
+ L=1, 163 strings for 8616 equations
+ L=2, 8616 strings for 8616 equations
+ iter 0  err-rms 0.0077822    err-min -0.00389939 at 140 34 0 0    err-max 0.067512 at 123 33 0 0
+ iter 99  err-rms 0.00371907    err-min -0.00188572 at 140 34 0 0    err-max 0.0352582 at 123 33 0 0
+Procedure: end
+end solve
+
+----- c: algebra -----     time 6.55   change 0.35  maxsize 23814144
+TT =  *(1 * TT + 0)^1 + dTT
+
+----- c: rmsminmax -----     time 6.55   change 0  maxsize 23814144
+RMSMM dTT rms 2.48115, min -0.628336 at 140 34 0 0,  max 26.1536 at 119 33 0 0,  ITER 500 
+RMSMM TT rms 264.265, min -7.25699 at 116 12 0 0,  max 1218.9 at 119 33 0 0,  ITER 500 
+
+----- c: arraydumpmore -----     time 6.55   change 0  maxsize 23814144
+appending dump to file out/convheat:   rmsmm
+
+--------------input from file inn.heatsolve, loops remaining 4
+
+
+----- c: coefrhs -----     time 6.55   change 0  maxsize 23814144
+rhs for TT, rhsTT, updated(-=) with 1*coefs 0, oldnew=n
+
+----- c: algebra -----     time 6.55   change 0  maxsize 23814144
+rhsTT =  *(1 * rhsTT + 0)^1 + wflux
+
+----- c: eqnsolves -----     time 6.55   change 0  maxsize 23814144
+on the grid equations with rhs=rhsTT, center_add=, change=dTT
+oldnewdTT n omit 1 pt types: i,  eq range 0, 8669
+ 53 of 8669 active eqs, type deactivated
+no center pt additions
+ init:  err-rms 0.00371907    err-min -0.00188572 at 140 34 0 0    err-max 0.0352582 at 123 33 0 0
+Procedure: ijk ,  100 iterations
+ L=0, 85 strings for 8616 equations
+ L=1, 163 strings for 8616 equations
+ L=2, 8616 strings for 8616 equations
+ iter 0  err-rms 0.00369103    err-min -0.0018716 at 140 34 0 0    err-max 0.0350208 at 123 33 0 0
+ iter 99  err-rms 0.00172597    err-min -0.000873064 at 140 34 0 0    err-max 0.01763 at 123 33 0 0
+Procedure: end
+end solve
+
+----- c: algebra -----     time 6.89   change 0.34  maxsize 23814144
+TT =  *(1 * TT + 0)^1 + dTT
+
+----- c: rmsminmax -----     time 6.89   change 0  maxsize 23814144
+RMSMM dTT rms 1.16249, min -0.309246 at 140 34 0 0,  max 13.3687 at 119 33 0 0,  ITER 500 
+RMSMM TT rms 265.207, min -7.29378 at 116 12 0 0,  max 1232.27 at 119 33 0 0,  ITER 500 
+
+----- c: arraydumpmore -----     time 6.89   change 0  maxsize 23814144
+appending dump to file out/convheat:   rmsmm
+
+--------------input from file inn.heatsolve, loops remaining 3
+
+
+----- c: coefrhs -----     time 6.89   change 0  maxsize 23814144
+rhs for TT, rhsTT, updated(-=) with 1*coefs 0, oldnew=n
+
+----- c: algebra -----     time 6.89   change 0  maxsize 23814144
+rhsTT =  *(1 * rhsTT + 0)^1 + wflux
+
+----- c: eqnsolves -----     time 6.89   change 0  maxsize 23814144
+on the grid equations with rhs=rhsTT, center_add=, change=dTT
+oldnewdTT n omit 1 pt types: i,  eq range 0, 8669
+ 53 of 8669 active eqs, type deactivated
+no center pt additions
+ init:  err-rms 0.00172597    err-min -0.000873064 at 140 34 0 0    err-max 0.01763 at 123 33 0 0
+Procedure: ijk ,  100 iterations
+ L=0, 85 strings for 8616 equations
+ L=1, 163 strings for 8616 equations
+ L=2, 8616 strings for 8616 equations
+ iter 0  err-rms 0.00171259    err-min -0.000866206 at 140 34 0 0    err-max 0.0175053 at 123 33 0 0
+ iter 99  err-rms 0.000784809    err-min -0.000390049 at 140 34 0 0    err-max 0.00853837 at 123 33 0 0
+Procedure: end
+end solve
+
+----- c: algebra -----     time 7.23   change 0.34  maxsize 23814144
+TT =  *(1 * TT + 0)^1 + dTT
+
+----- c: rmsminmax -----     time 7.23   change 0  maxsize 23814144
+RMSMM dTT rms 0.532995, min -0.1458 at 140 34 0 0,  max 6.59979 at 119 33 0 0,  ITER 500 
+RMSMM TT rms 265.623, min -7.31012 at 116 12 0 0,  max 1238.87 at 119 33 0 0,  ITER 500 
+
+----- c: arraydumpmore -----     time 7.23   change 0  maxsize 23814144
+appending dump to file out/convheat:   rmsmm
+
+--------------input from file inn.heatsolve, loops remaining 2
+
+
+----- c: coefrhs -----     time 7.23   change 0  maxsize 23814144
+rhs for TT, rhsTT, updated(-=) with 1*coefs 0, oldnew=n
+
+----- c: algebra -----     time 7.23   change 0  maxsize 23814144
+rhsTT =  *(1 * rhsTT + 0)^1 + wflux
+
+----- c: eqnsolves -----     time 7.23   change 0  maxsize 23814144
+on the grid equations with rhs=rhsTT, center_add=, change=dTT
+oldnewdTT n omit 1 pt types: i,  eq range 0, 8669
+ 53 of 8669 active eqs, type deactivated
+no center pt additions
+ init:  err-rms 0.000784809    err-min -0.000390049 at 140 34 0 0    err-max 0.00853837 at 123 33 0 0
+Procedure: ijk ,  100 iterations
+ L=0, 85 strings for 8616 equations
+ L=1, 163 strings for 8616 equations
+ L=2, 8616 strings for 8616 equations
+ iter 0  err-rms 0.000778574    err-min -0.000386855 at 140 34 0 0    err-max 0.00847543 at 123 33 0 0
+ iter 99  err-rms 0.000350418    err-min -0.000179452 at 135 29 0 0    err-max 0.00402035 at 123 33 0 0
+Procedure: end
+end solve
+
+----- c: algebra -----     time 7.58   change 0.35  maxsize 23814144
+TT =  *(1 * TT + 0)^1 + dTT
+
+----- c: rmsminmax -----     time 7.58   change 0  maxsize 23814144
+RMSMM dTT rms 0.239612, min -0.0666591 at 139 33 0 0,  max 3.16078 at 119 33 0 0,  ITER 500 
+RMSMM TT rms 265.803, min -7.31722 at 116 12 0 0,  max 1242.03 at 119 33 0 0,  ITER 500 
+
+----- c: arraydumpmore -----     time 7.58   change 0  maxsize 23814144
+appending dump to file out/convheat:   rmsmm
+
+--------------input from file inn.heatsolve, loops remaining 1
+
+
+----- c: coefrhs -----     time 7.58   change 0  maxsize 23814144
+rhs for TT, rhsTT, updated(-=) with 1*coefs 0, oldnew=n
+
+----- c: algebra -----     time 7.58   change 0  maxsize 23814144
+rhsTT =  *(1 * rhsTT + 0)^1 + wflux
+
+----- c: eqnsolves -----     time 7.58   change 0  maxsize 23814144
+on the grid equations with rhs=rhsTT, center_add=, change=dTT
+oldnewdTT n omit 1 pt types: i,  eq range 0, 8669
+ 53 of 8669 active eqs, type deactivated
+no center pt additions
+ init:  err-rms 0.000350418    err-min -0.000179452 at 135 29 0 0    err-max 0.00402035 at 123 33 0 0
+Procedure: ijk ,  100 iterations
+ L=0, 85 strings for 8616 equations
+ L=1, 163 strings for 8616 equations
+ L=2, 8616 strings for 8616 equations
+ iter 0  err-rms 0.000347575    err-min -0.000178049 at 135 29 0 0    err-max 0.00398966 at 123 33 0 0
+ iter 99  err-rms 0.000154043    err-min -8.04705e-05 at 135 29 0 0    err-max 0.00184683 at 123 33 0 0
+Procedure: end
+end solve
+
+----- c: algebra -----     time 7.92   change 0.34  maxsize 23814144
+TT =  *(1 * TT + 0)^1 + dTT
+
+----- c: rmsminmax -----     time 7.92   change 0  maxsize 23814144
+RMSMM dTT rms 0.105901, min -0.0296468 at 138 32 0 0,  max 1.4738 at 119 33 0 0,  ITER 500 
+RMSMM TT rms 265.879, min -7.32026 at 116 12 0 0,  max 1243.5 at 119 33 0 0,  ITER 500 
+
+----- c: arraydumpmore -----     time 7.92   change 0  maxsize 23814144
+appending dump to file out/convheat:   rmsmm
+
+--------------input from file stdin, loops remaining 1
+
+
+----- c: arraydump -----     time 7.92   change 0  maxsize 23814144
+dumping to file out/TT:   TT TTturb
+
+----- c: infile -----     time 7.94   change 0.02  maxsize 23814144
+
+--------------input from file inn.nusselt, loops remaining 1
+
+
+----- c: xytocgrid -----     time 7.94   change 0  maxsize 23814144
+ append cgp, c=0 thru 1, (k= 0 ,1) numab=2
+a = 1, 1,  b = 0.5, 0 gives i=119, 119, j=39,27
+a = 1, 0,  b = 0, 0 gives i=119, 33, j=27,27
+norm dist= 0.1, maxnormal=2, expandsion factor -1
+npts around surface= 98
+inormmax 1
+ converting arrays:
+
+----- c: alias -----     time 7.94   change 0  maxsize 23830528
+alias for idim4dcgp 4 parts idimcgp jdimcgp kdimcgp tdimcgp
+
+----- c: copypart -----     time 7.94   change 0  maxsize 23830528
+from xyzcgp  1
+ a 98 98 98
+to s00 1
+ a 1 1 1
+ s00 not found so it is  being created d 1
+
+----- c: xytocgrid -----     time 7.94   change 0  maxsize 23830528
+ append cg, c=0 thru 1, (k= 0 ,1) numab=5
+a = 1, 1,  b = 0.5, 0 gives i=119, 119, j=39,27
+a = 1, 0,  b = 0, 0 gives i=119, 33, j=27,27
+a = 0, 0,  b = 0, 1 gives i=33, 33, j=27,49
+a = 0, 1,  b = 1, 1 gives i=33, 119, j=49,49
+a = 1, 1,  b = 1, 0.5 gives i=119, 119, j=49,39
+norm dist= 0.1, maxnormal=10, expandsion factor -1
+npts around surface= 216
+inormmax 9
+ converting arrays:
+ TT  TTcg
+ TTturb  TTturbcg
+
+----- c: alias -----     time 7.94   change 0  maxsize 23957504
+alias for xyzcg 3 parts xcg ycg zcg
+
+----- c: alias -----     time 7.94   change 0  maxsize 23957504
+alias for idim4dcg 4 parts idimcg jdimcg kdimcg tdimcg
+
+----- c: copypart -----     time 7.94   change 0  maxsize 23957504
+from ycg  3
+ a 216 1 216 b 9 2 2 c 2 1 1
+to ynw 1
+ a 216 1 216
+ ynw not found so it is  being created d 216
+
+----- c: copypart -----     time 7.94   change 0  maxsize 23957504
+from xcg  3
+ a 216 1 216 b 9 1 1 c 2 1 1
+to sw 1
+ a 216 1 216
+ sw not found so it is  being created d 216
+
+----- c: algebra -----     time 7.94   change 0  maxsize 23957504
+s00 =  *(-1 * s00 + 0)^1 + 
+
+----- c: algebra -----     time 7.94   change 0  maxsize 23957504
+sw =  *(1 * sw + -0.220492)^1 + 
+
+----- c: algebra -----     time 7.94   change 0  maxsize 23957504
+dxchord =  *(1 * xchord + 0)^-1 + 
+
+----- c: algebra -----     time 7.94   change 0  maxsize 23957504
+sw =  *(5.84795 * sw + 0)^1 + 
+
+----- c: copypart -----     time 7.94   change 0  maxsize 23957504
+from TTcg  3
+ a 216 1 216 b 9 1 1 c 2 1 1
+to TTw 1
+ a 216 1 216
+ TTw not found so it is  being created d 216
+
+----- c: copypart -----     time 7.94   change 0  maxsize 23957504
+from TTcg  3
+ a 216 1 216 b 9 2 2 c 2 1 1
+to TTnw 1
+ a 216 1 216
+ TTnw not found so it is  being created d 216
+
+----- c: copypart -----     time 7.95   change 0.01  maxsize 23957504
+from TTturbcg  3
+ a 216 1 216 b 9 1 1 c 2 1 1
+to TTwturb 1
+ a 216 1 216
+ TTwturb not found so it is  being created d 216
+
+----- c: copypart -----     time 7.95   change 0  maxsize 23957504
+from TTturbcg  3
+ a 216 1 216 b 9 2 2 c 2 1 1
+to TTnwturb 1
+ a 216 1 216
+ TTnwturb not found so it is  being created d 216
+
+----- c: algebra -----     time 7.95   change 0  maxsize 23957504
+nufac = xchord *(1 * Re + 0)^-0.5 + 
+
+----- c: print -----     time 7.95   change 0  maxsize 23957504
+
+  nufac  size 1  type d values: 0.000665617
+
+----- c: algebra -----     time 7.95   change 0  maxsize 23961600
+nulam =  *(-1 * TTnw + 0)^1 + TTw
+
+----- c: algebra -----     time 7.95   change 0  maxsize 23961600
+nulam = nulam *(1 * ynw + 0)^-1 + 
+
+----- c: algebra -----     time 7.95   change 0  maxsize 23961600
+nulam = nulam *(1 * TTw + 0)^-1 + 
+
+----- c: algebra -----     time 7.95   change 0  maxsize 23961600
+nulam =  *(0.000665617 * nulam + 0)^1 + 
+
+----- c: algebra -----     time 7.95   change 0  maxsize 23961600
+nuturb =  *(-1 * TTnwturb + 0)^1 + TTwturb
+
+----- c: algebra -----     time 7.95   change 0  maxsize 23961600
+nuturb = nuturb *(1 * ynw + 0)^-1 + 
+
+----- c: algebra -----     time 7.95   change 0  maxsize 23961600
+nuturb = nuturb *(1 * TTwturb + 0)^-1 + 
+
+----- c: algebra -----     time 7.95   change 0  maxsize 23961600
+nuturb =  *(0.000665617 * nuturb + 0)^1 + 
+
+----- c: lineoutputijk -----     time 7.95   change 0  maxsize 23961600
+lineoutputijk to file out/linenusselt: sw nulam nuturb TTw TTnw TTwturb TTnwturb ynw
+ dims 1
+ a 216 range a 1 216, 216 values
+ range
+----- c: lineplot -----     time 7.95   change 0  maxsize 23973888
+imagename imagenu datafile out/linenusselt
+ input file Header: m4d lineoutputijk
+     Variables: a sw nulam nuturb TTw TTnw TTwturb TTnwturb ynw    216 values
+comment for bottom of box:  Nu/sqrt(Re) red-lam blue-turb
+x, then y extend of box: 120 620 140 540 boxcolor, gridcolor 1 0
+axis 1:  s -1.5 1.5 0.5
+axis 2:   0 3.5 0.5
+looking for file font.list
+file font.list not found, try directories in p.defaultdir
+using file ../../jgm/font.list
+font 1: letters18x30.fmap
+file letters18x30.fmap not found, try directories in p.defaultdir
+using file ../../jgm/letters18x30.fmap
+font 2: symbol23x23.fmap
+file symbol23x23.fmap not found, try directories in p.defaultdir
+using file ../../jgm/symbol23x23.fmap
+read 2 fonts
+          X-axis, s, from -1.5 to 1.5 by 0.5;   Y-axis, , from 0 to 3.5 by 0.5;
+1 of 1 lines: Nu/sqrt(Re) red-lam blue-turb
+        sw 0 1 nulam 0 1 2 2 .
+          (sw*1 +0) goes from -1.28798 to 1.65349
+          (nulam*1 +0) goes from 0.291747 to 2.59771
+        sw 0 1 nuturb 0 1 5 2 .
+          (sw*1 +0) goes from -1.28798 to 1.65349
+          (nuturb*1 +0) goes from 0.685457 to 2.88423
+
+----- c: image -----     time 7.95   change 0  maxsize 25444352
+ writing image imagenu to file out/nusselt.gif, format gif
+looking for file color.map
+file color.map not found, try default directory
+using file ../../jgm/color.map
+
+----- c: lineplot -----     time 7.98   change 0.03  maxsize 26923008
+imagename imagenu datafile out/linenusselt
+ input file Header: m4d lineoutputijk
+     Variables: a sw nulam nuturb TTw TTnw TTwturb TTnwturb ynw    216 values
+comment for bottom of box:  Nu/sqrt(Re) red-lam blue-turb
+x, then y extend of box: 120 520 140 540 boxcolor, gridcolor 1 0
+axis 1:  s -0.1 0.2 0.1
+axis 2:   1 10 0
+warning, array imagenu  replaced, size: old 358402 new 302402
+          X-axis, s, from -0.1 to 0.2 by 0.1;   Y-axis, , from 1 to 10 by 0;
+1 of 1 lines: Nu/sqrt(Re) red-lam blue-turb
+        sw 0 1 nulam 0 1 2 2 .
+          (sw*1 +0) goes from -1.28798 to 1.65349
+          (nulam*1 +0) goes from 0.291747 to 2.59771
+        sw 0 1 nuturb 0 1 5 2 .
+          (sw*1 +0) goes from -1.28798 to 1.65349
+          (nuturb*1 +0) goes from 0.685457 to 2.88423
+
+----- c: image -----     time 7.99   change 0.01  maxsize 26923008
+ writing image imagenu to file out/nusseltle.gif, format gif
+
+--------------input from file stdin, loops remaining 1
+
+
+----- c: end -----     time 8.01   change 0.02  maxsize 26972160
