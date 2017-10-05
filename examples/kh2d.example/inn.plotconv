@@ -1,0 +1,18 @@
+c: keyword out/converge out/convline
+   3
+   TIME 1 t
+   rmsmmstep 10 dU1rms dU1max dU2rms dU2max U1rms U1max U2rms U2max pprms ppmax
+   rmsmmsubd 6 ddU1rms ddU1max ddU2rms ddU2max ddprms ddpmax
+c: algebra TIMEd2 "" TIME "" .5 0. 1.
+
+c: lineplot imageconv out/convline "red=U2max blue=dU2max         green=err dU2max"
+    120 520 140 540 1 7
+    time 0 TIME TIMEd2 " " 1e-8 10 0
+    t 1 0 U2max 1 0 2 2 '.'
+    t 1 0 dU2max 1 0 5 2 '.'
+    t 1 0 ddU2max 1 0 26 2 '.'
+    end
+c: image outgif imageconv out/conv  end
+
+
+    

@@ -1,0 +1,9 @@
+c: infile inn.plotcc 1       cc plot
+c: bar imagebar 200 50 b
+c: image outgif imagebar out/barcc end
+c: infile inn.plotzvort 1    vorticity from velocity plot
+c: bar imagebar 200 50 b
+c: image outgif imagebar out/barzvort end
+c: infile inn.plotcv 1       control volume plot
+c: bar imagebar 200 50 b
+c: image outgif imagebar out/barcv end

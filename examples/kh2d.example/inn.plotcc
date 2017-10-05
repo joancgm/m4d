@@ -1,0 +1,27 @@
+---------- plot cc fill contours with 5 vector lines -------
+c: constant imw i 1 1150    / plot width in pixels
+c: constant imh i 1 1000     / plot height in pixels
+c: constant impp d 1 140    / magnification, pixels per unit grid length
+
+c: constant p.gnames s 4 idim4d xyz abcd clt  / grid names
+c: constant p.gxx d 6 1 0 0 0 1 0  / across vector, up vector
+c: constant p.grange d 11 0 7 -3.5 3.5 0 0  3.5 0 0 .5 .5  
+			/ as ae bs be cs ce apt bpt cpt facross fup
+c: constant p.gparms i 13 1 1 1 1 1 1 1 1 1 0 0 0 0 
+			/ lwpixel if iw is io jf jw js jo kf kw ks ko
+
+---------- mask velocity to give only 5 vector lines -------
+c: algebra vmaska "" U1 "" 0. 0. 1.
+c: abcmask vmaska 1. a 0 2 3.5 5. 7 0
+c: algebra U1mask U1 vmaska "" 1. 0. 1.
+c: algebra U2mask U2 vmaska "" 1. 0. 1.
+c: constant p.vnames s 3 U1mask U2mask U3   / velocity components
+c: constant p.vparms d 11 .3 .03 .5 0 2  1 1 1 .2 .2 6
+	/ dt head headf nybet lwpixel colotz colors colore dUz Uns Une
+
+c: constant p.fnames s 3 cc fi noout  / prop name, clt-types, nyout
+c: constant p.fparms d 6 -3 0. 1 11 -1 50 
+			/ props propf prope colors colorf colore
+
+c: picture  imagete imw imh impp fv
+c: image outgif imagete out/cc#ITER end

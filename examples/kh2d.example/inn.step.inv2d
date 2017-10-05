@@ -1,0 +1,56 @@
+------- inviscid unsteady iteration with conserved species cc -------
+-------- up-time velocities -----------
+c: copy U1 U1up
+c: copy U2 U2up
+
+------- assume c.v.'s change slowly enough can calc at beginning ----
+-------- set control volumes and related arrays  ---------
+c: cvdcreset dumv dumdt 10.
+c: set_xyzdouble
+c: set_volmom
+c: set_cpsleep
+c: set_cpda  .0 .05 .5 .15 0  1 i
+c: set_cpflop
+c: coefconv 1                    convection coef to set 1
+c: coefdt dt 3 n                 time coefficient to set 3
+
+-------------  up-time contribution to source terms ---------
+c: coefadd 0 2 1 .5  3 -1       coef,  .5*convection -1*time
+c: momrhsr new 0 ""
+c: copy rhsU1 rhsU1up
+c: copy rhsU2 rhsU2up
+c: coefrhs cc rhscc new 0 1.
+
+--------- do SUBITER iterations per time step for U and pp -----
+c: algebra pp "" pp "" 0. 0. 1.         clear pp (optional)
+c: constant ITERS i 1 1                 set subiter parm = 1
+c: infile inn.subiter.inv2d SUBITERS
+
+------------------- solve conserved species equation -------
+c: coefadd 0 2 1 .5  3 1.          downtime coefs .5*conv + time
+c: coefrhs cc rhscc old 0 1.      
+c: eqnsolves rhscc "" dcc new 1 i  ij 30 end 0
+c: algebra cc "" dcc cc 1. 0. 1.
+c: coefrhs dcc rhscc old 0 1.      do again to evaluate error
+c: eqnsolves rhscc "" ddcc new 1 i c 1 end 0
+c: rmsminmax cc dcc ddcc ""
+c: copy rmsmm rmsmmc
+
+c: edit ITER i 1 n 1  add 1  1 1  end 
+c: algebra TIME "" TIME dt 1. 0. 1.
+
+---------------- dumpmore step convergence ---------------
+c: rmsminmax dU1 dU2 U1 U2 pp
+c: copy rmsmm rmsmmstep 
+c: arraydumpmore out/converge TIME ITER rmsmmstep rmsmmsubd rmsmmc
+                 eqnerrp1 eqnerrpe ""
+
+------------------ dump each ITERDUMP time steps ------------
+c: if ITER % ITERDUMP continue find NODUMP
+c: infile inn.dump 1
+NODUMP
+-------------------plot each ITERPLOT time steps ---------------
+c: if ITER % ITERPLOT continue find NOPLOT
+c: infile inn.plot 1
+NOPLOT
+

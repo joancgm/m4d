@@ -1,0 +1,67 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf320
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue255;\red0\green0\blue0;\red128\green0\blue128;
+\red0\green128\blue0;}
+\margl1440\margr1440\vieww12080\viewh15640\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\b\fs28 \cf0 Kelvin-Helmholtz Instability\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b0 \cf0 Time development of an inviscid shear layer, as it first wobbles then rolls up into a discrete vortex. \
+Corresponds to Kelvin-Helmholtz Instability example in paper AIAA-2014-2780, "Using Multi-Dimensional Linear Discretization Over Unsteady Convection Adapted Control Volumes", by Joan G. Moore and John Moore.	\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf2 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 750 time step run of example (t=0 to 50) (CPU 42 minutes)\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b \cf2 Unix instructions
+\b0 \cf0  to run the example\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf0 Bring up a terminal window and cd to kh2d.example then \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf2 mkdir out\
+mkdir out/plotcc\
+mkdir out/plotcv\
+mkdir out/plotvort\
+../../a.m4d < in.kh2d.2steptest > out/print    \cf3    to run just a 2 timestep test of the input\cf2 \
+../../a.m4d < in.kh2d > out/print                      \cf3 to run the full calculation\cf2 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b \cf4 Input\cf0 /\cf5 Output
+\b0 \cf2 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf0 The primary input file - \cf4 in.kh2d\cf0 , uses several other input files for specific tasks.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf4 inn.grid7x7by.1\cf0  - set up a grid covering 0 to 7 in x and -3.5 to 3.5 in y with 0.1 spacing using the master geometry, \cf4 geom.cartesian\cf0 , set up for block pressure solution, then calculate other geometric arrays.\
+\cf4 inn.init.kh2d.disturb \cf0 - set the density(=1). Initialize the velocity as a tanh profile plus a small disturbance. Initialize pressure(=0) and the concentration equal to the vorticity of the initial velocity profile (undisturbed). Set parameters ITER and TIME. \
+\cf4 inn.plotall.bars\cf0  - plot initial concentration, vorticity (from velocity gradients) and control volumes together with the corresponding color bars. Gives \cf5 out/plotcc/cc0.gif\cf0 , \cf5 out/plotvort/vort0.gif\cf0 , \cf5 out/plotcv/fgdv0.gif\cf0 , and the corresponding color bars, \cf5 out/barcc.gif\cf0 , \cf5 out/barvort.gif\cf0  and\cf5  out/barcv.gif\cf0 . Uses \cf4 inn.plotcc\cf0 , \cf4 inn.plotzvort\cf0  and \cf4 inn.plotcv\cf0 .\
+\cf4 inn.plotcc\cf0  - plot the current concentration, cc, as color fill. 5 lines of velocity vectors are also included. (Results in dir. \cf5 out/plotcc/\cf0 ) \
+\cf4 inn.plotzvort \cf0 - plot the current vorticity calculated from the velocity gradients as color fill. The grid and 5 lines of velocity vectors are also included. (Results in dir. \cf5 out/plotvort) \cf0 Note since vorticity is a between-the-points variable it is plotted as uniform between the grid lines. The concentration cc is an on-the-points variable so linear interpolation is used when it is plotted.\
+\cf4 inn.plotcv \cf0 - plot the control volumes (in blue) for the central portion of the grid where the vortex forms. Also on the plot, cc as color fill, the grid (magenta) and velocity vectors (black). (Results in dir. \cf5 out/plotcv)\
+\cf4 inn.step.inv2d\cf0  - take 1 time step using \cf4 inn.subiter.inv2d\cf0  for the (iterative) procedure to calculate velocity and pressure, then solve the conserved species equation for cc, dump convergence info to file \cf5 out/converge\cf0 , and use \cf4 inn.dump\cf0  and \cf4 inn.plot\cf0  for dumping arrays and making plots.\
+\cf4 inn.subiter.inv2d\cf0  - do 1 iteration for the down-time velocity and mean pressure for the time step. Dumps per-iteration convergence info to file \cf5 out/converge.\
+\cf4 inn.dump \cf0 - dump current results to out/u#ITER \cf5 \
+\cf4 inn.plot \cf0 - plot current concentration (\cf4 inn.plotcc\cf0 ), vorticity (\cf4 inn.plotzvort\cf0 ), control volumes (\cf4 inn.plotcv\cf0 ) and convergence (\cf4 inn.plotconv\cf0 ). \cf2 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf4 inn.plotconv\cf0  - gives lineplot file \cf5 out/convline. \cf0 Then plots conv.gif which shows as a function of time, the maximum value of U2 (y-velocity), the maximum change in U2 over each timestep, and the estimated error in the maximum change in U2 over each timestep.\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf2 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf0 Compare results with those obtained by jgm.\cf4 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b \cf0 Post-processing of output by jgm
+\b0 \
+mv out out.jgm. Delete plot files except those at ITERs: 0, 100, 200, 300, 400, 500, 600, 750. Delete dump files (u2, etc) except those at ITERs 200, 400, and 750. Rename file converge to converge.reduced and remove all but the first and last timesteps. (The file convline is complete.) Space for results reduced from 15.4Mb to 3.2Mb.\
+\
+
+\b Suggestions for variations to try
+\b0 \cf2 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf0 Run the calculation with no initial disturbance added to the tanh profile for the velocity. (Set distmag in file in.kh2d to 0.) But before doing so, look at paper AIAA-2014-2780 and make an estimate of the time it will take (and therefore the number of timesteps) to increase the disturbance from roundoff errors, about 1.e-13, to 0.0001 (the current initial disturbance magnitude). Note that with no set initial disturbance, the vortex may form anywhere, depending on the roundoff errors.\
+\
+}

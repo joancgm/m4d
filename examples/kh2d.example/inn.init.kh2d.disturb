@@ -1,0 +1,49 @@
+c: comment initialize properties using tanh velocity + disturburance
+------------------- generic no flow --------------------
+c: varinit U1 0 0. 0. 0.
+c: varinit U2 0 0. 0. 0.
+c: varinit U3 0 0. 0. 0.
+c: varinit rho 0 1. 1. 1.
+c: alias idim4dp 4 idimp jdimp kdimp tdimp
+c: edit pp d 3 i 1 j 1 k 1
+       set 0 1 idimp 1 jdimp 1 kdimp  end  
+c: constant ITER i 1 0
+c: constant TIME d 1 0
+
+--------- initialize using tanh(2y) profile for U1, cc=vorticity ---------- 
+c: alias xyz 3 x y z
+c: algebra temp "" y "" 2. 0. 1.       temp=2y
+c: function U1 tanh temp               U1=tanh(2y)
+c: algebra temp "" temp "" 1. .01 1.   temp=2y+.01
+c: function up01 tanh temp             up01=tanh(2y+.01)
+c: algebra temp "" temp "" 1. -.02 1.  temp=2y-.01
+c: function um01 tanh temp             um01=tanh(2y-.01)
+c: algebra cc "" um01 up01 -1. 0. 1.   cc=tanh(2y+.01)-tanh(2y-.01)
+c: algebra cc "" cc "" -100. 0. 1.     cc=-dU/dy  (vorticity)
+
+---------- calc. disturbance like Lesieur et al. 1988 --------------------
+c: if distmag > 0 continue find NODISTURB
+c: constant pi2 d 1 6.283185307179586    2 pi
+c: constant distdx d 1 7.                  for grid of even multiples of 7!!              
+c: algebra con1 pi2 distdx "" 1. 0. -1.    con1=2pi/distdx
+c: algebra con2 distdx pi2 "" 1. 0. -1.    con2=distdx/(2pi)
+c: algebra con2 "" con2 "" -2. 0. 1.     con2=-2distdx/(2pi)
+
+c: algebra xs "" x "" con1 0. 1.         xs=con1*x
+c: function sxs sin xs                   sxs=sin(xs)
+c: function cxs cos xs                   csx=cos(xs)
+
+c: algebra yy y y "" -1. 0. 1.           yy=  -y^2
+c: function expy exp yy                  expy= exp(-y^2)
+c: algebra Vdisturb sxs expy "" distmag 0. 1. Vdisturb=distmag*sin(2pi*x/distdx)*exp(-y^2)
+c: algebra Udisturb expy y "" 1. 0. 1.       Udisturb=y*exp(-y^2)  
+c: algebra Udisturb cxs Udisturb "" con2 0. 1.   Udisturb=-(distdx/pi)*cos(2pi*x/distdx)*y*exp(-y^2)  
+c: algebra Udisturb "" Udisturb "" distmag 0. 1.  Udisturb=-distmag*(distdx/pi)*cos(2pi*x/distdx)*y*exp(-y^2) 
+ 
+------------add disturbance and set U2 on y boundaries=0 -------
+c: algebra U1 "" U1 Udisturb 1. 0. 1.        
+c: algebra U2 "" U2 Vdisturb 1. 0. 1.
+c: edit U2 d 3 i 0 j 0 k 0
+      set 0 1 1000 1 1 1 1000
+      set 0 1 1000 1000 1000 1 1000  end
+NODISTURB

@@ -1,0 +1,43 @@
+c: comment ******** Kelvin-Helmholtz instability inviscid 2d
+
+c: constant distdx d 1 7.       disturbance dx = grid length/integer
+c: constant distmag d 1 .0001   disturbance magnitude, set = 0 to omit
+
+c: infile inn.grid7x7by.1 1        set up grid
+c: infile inn.init.kh2d.disturb 1  initialize  distdx and distmag
+
+---------------- set up for plot output and initial plots ------------
+c: constant p.defaultdir s 1 ../../jgm    default dir for color.map etc
+c: gridinfo                               needed for control volume plots
+c: constant out/cc#ITER s 1 out/plotcc/cc#ITER         relocate cc plots
+c: constant out/zvort#ITER s 1 out/plotvort/vort#ITER  relocate zvort plots
+c: constant out/fgdv#ITER s 1 out/plotcv/fgdv#ITER     relocate c.v. plots
+c: infile inn.plotall.bars 1                  initial plots and color bars
+
+----------------- set up calculation parameters ----------
+c: cvdcparm .1  1  w f .5          control vol. movement limits
+c: coefinit 4  		           total coef sets needed
+c: constant ddt d 1 15.
+c: algebra dt "" ddt "" 1. 0. -1.   time step dt = 1/15
+c: constant SUBITERS i 1 15	    iterations per time step
+c: arraydump out/converge dt SUBITERS ""     start clean convergence file
+
+--------------- set up output parameters ------------------
+c: constant ITERDUMP i 1 2           time steps between dumps
+c: constant ITERPLOT i 1 2           time steps between plots
+
+----------------- start calculation ----------------------
+c: infile inn.step.inv2d 2          take 2 time steps
+
+c: end             end here (2 step test)
+
+c: constant ITERDUMP i 1 50      time steps between dumps
+c: constant ITERPLOT i 1 25      time steps between plots
+------ Note, for videos, set ITERPLOT = 1 (plot each timestep)
+------- over the range of timesteps wanted for the video
+c: printcontrol off                   turn print off for most of run
+c: infile inn.step.inv2d 748          take 748 time steps, TIME=50
+c: printcontrol on                    turn normal print back on 
+c: infile inn.step.inv2d 1            take 1 extra time step with print on  
+c: end
+

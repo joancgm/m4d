@@ -1,0 +1,60 @@
+--------  time step sub-iteration ---------------------
+-------- save before values -------------------
+c: copy U1 U1a
+c: copy U2 U2a
+c: copy pp ppa
+
+c: coefconv 1                         current downtime conv. coefs
+c: coefadd 0 2 1 .5  3 1.             downtime coefs .5 conv + time
+c: momcam 0.                          abrev. momentum coef.
+
+----------- complete rhs for momentum  -----------------
+c: momrhsr new 0 pp ""                coef 0 and pressure contribution
+c: algebra rhsU1 "" rhsU1 rhsU1up 1. 0. 1.
+c: algebra rhsU2 "" rhsU2 rhsU2up 1. 0. 1.
+c: algebra rhsU3 "" rhsU3 "" 0. 0. 1.      zero for 2-d flow
+c: eqnupdatem 1 2 i w           	update U1 U2 U3 saving dU1 dU2 dU3
+
+--------- equations for pressure, i.e. continuity -----------
+c: contcpcdu
+c: contcpcfixed   1. 1. .5 -1 0 -20
+c: contrhsu                    		rhs based on rho and U
+c: contrhsp                   		add  permanent p-mod for stability
+
+---------- solve for pressure change dp using 2 or 3 level blocks ---
+c: if PSLEVEL = 3 find GOTOPSLEVEL3 continue
+c: eqnsolvep  cij 1 c 1 pqpij 10 c 1 end 0    	       solve for dp level 2
+GOTOPSLEVEL3
+c: if PSLEVEL = 3 continue find ENDPSL3
+c: eqnsolvep  cij 1 pqpij 3 pqrqpij 2 ij 1 c 1 end 0   solve for dp level 3
+ENDPSL3
+------------- copy p convergence analysis ----------
+c: copy eqnerrp eqnerrpe
+c: if ITERS = 1 continue find ITERSNOT1
+c: copy eqnerrp eqnerrp1
+ITERSNOT1
+
+------------------- update velocity and pressure -------------------
+c: contdu                         	Update U based on dp
+c: algebra U3 "" U3 "" 0. 0. 1.         zero for 2-d flow
+c: algebra pp "" pp dp 1. 0. 1.   	Update pp
+
+--------------  convergence analysis  ----------
+--------------  change this subiter   -------
+c: algebra dU1 "" U1a U1 -1. 0. 1.
+c: algebra dU2 "" U2a U2 -1. 0. 1.
+c: algebra dp "" ppa pp -1. 0. 1.
+c: rmsminmax dU1 dU2 dp ""
+c: copy rmsmm rmsmmsubd
+-----------   change over step  ------------------
+c: algebra dU1 "" U1up U1 -1. 0. 1.
+c: algebra dU2 "" U2up U2 -1. 0. 1.
+c: rmsminmax dU1 dU2 pp ""
+c: copy rmsmm rmsmmd
+------------ ratio and dumpmore subiter convergence ----------
+c: algebra rmsmmr rmsmmsubd rmsmmd "" 1. 0. -1.
+c: arraydumpmore out/converge ITERS rmsmmr eqnerrp ""
+
+c: edit ITERS i 1 n 1  add 1  1 1  end      add 1 to subiter parm ITERS
+
+

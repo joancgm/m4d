@@ -1,0 +1,6 @@
+--------------   dump output ---------------
+c: gradprop 3 U1 U2 ""
+c: algebra zvort "" U1ddx2 U2ddx1 -1. 0. 1.       vorticity     
+c: copy_ptom pp pm                                pressure between points
+c: arraydump out/u#ITER TIME zvort cc U1 U2 U3 pm ""
+
