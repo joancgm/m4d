@@ -1,0 +1,47 @@
+------------ calc total pressure loss -------------
+c: interp_ptog 1 pp pg
+c: algebra pt U1 U1 pg .5 0. 1.
+c: algebra pt U2 U2 pt .5 0. 1.
+c: algebra Ptloss "" pt "" -2. 0. 1.      over ppinlet
+ ----------- plot total pressure loss  -----
+
+c: constant imw i 1 800    / plot width in pixels
+c: constant imh i 1 800     / plot height in pixels
+c: constant impp d 1 1500    / magnification, pixels per unit grid length
+
+c: constant p.gxx d 6 1 0 0 0 1 0  / across vector, up vector
+c: constant p.grange d 11 -1 2 -.5 1.5 0 0   .5 .5 0  .5  .8  
+			/ as ae bs be cs ce apt bpt cpt facross fup 
+
+c: constant p.gnames s 4 idim4d xyz abcd clt  / grid names
+c: constant p.gparms i 13  1 2 1 0 0 5 5 0 14 5 0 0 0
+			/ lwpixel if iw is io jf jw js jo kf kw ks ko
+
+c: constant p.fnames s 3 Ptloss fi noout  / prop name, clt-types, nyout
+c: constant p.fparms d 6  -.1 0 3.9 11 -1 50 
+			/ props propf prope colors colorf colore
+
+c: constant p.vnames s 3 U1 U2 U3   / velocity components
+c: constant p.vparms d 11 .001 .03 .3 0 1  1 1 1 .2 .2 6
+	/ dt head headf nybet lwpixel colotz colors colore dUz Uns Une
+
+c: bar imagebar 200 50 b
+c: image outgif imagebar out/ptlossbar end
+
+c: picture  imageg imw imh impp  fv
+c: image outgif imageg out/ptlossv end
+
+c: constant impp d 1 15000 
+c: constant p.grange d 11 -1 2 -.5 1.5 0 0   0 .5 0  .5 .5 
+c: picture  imageg imw imh impp  fv
+c: image outgif imageg out/ptlosslev end
+
+c: constant impp d 1 15000 
+c: constant p.grange d 11 -1 2 -.5 1.5 0 0   1 .5 0  .5 .5 
+c: picture  imageg imw imh impp  fv
+c: image outgif imageg out/ptlosstev end
+
+c: constant impp d 1 15000 
+c: constant p.grange d 11 -1 2 -.5 1.5 0 0   1 .5 0  .5 .5 
+c: picture  imageg imw imh impp  fgv
+c: image outgif imageg out/ptlosstegv end

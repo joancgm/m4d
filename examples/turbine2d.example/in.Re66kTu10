@@ -1,0 +1,32 @@
+c: comment Langston cascade, Butler high turbulence conditions
+
+c: constant xchord d 1 .171   axial chord (scale geometry)
+c: constant Re d 1 66000      Cascade Reynolds number (set lam viscosity)
+
+ ----------------- set up grid and initialize properties --------------
+c: infile inn.grid164x86 1      set grid
+c: infile inn.init.ButlerTu 1   initialize properties
+
+---------------- set up for output---------------
+c: constant p.defaultdir s 1 ../../jgm   dir for color.map for plots
+c: constant ITERDUMP i 1 100           iterations between dumps
+c: constant ITERPLOT i 1 100           iterations between plots
+
+----------------- set up calculation parameters ----------
+c: cvdcparm .01  2 f i .99 w f .5  control vol. movement limits
+c: coefinit 4  		           total coef sets needed 
+c: constant ITCONT i 1 5           5 extra continuity per iteration
+c: constant ITERAVE i 1 2          do pair average
+
+c: arraydump out/converge Re vlamc  ""     start clean convergence file
+
+----------------- start calculation -------------------------
+c: infile inn.iter.uvwpmarvs 2 
+c: printcontrol off                   turn print off for most of run      
+c: infile inn.iter.uvwpmarvs 496    
+c: printcontrol on                    turn normal print back on 
+c: infile inn.iter.uvwpmarvs 2        total 500 iterations 
+
+c: arraydumpmore out/converge timespace ""
+c: end
+

@@ -1,0 +1,59 @@
+--------------- Nusselt numbers from s-n grid--------------------
+
+c: xytocgrid cgp 0 1  2  1 1 .5 0  1 0 0 0  .1 2  -1.  "" 
+c: alias idim4dcgp  4 idimcgp jdimcgp kdimcgp tdimcgp
+c: copypart xyzcgp 1 a idimcgp idimcgp idimcgp
+            s00 1 a 1 1 1
+
+c: xytocgrid cg 0 1  5  1 1 .5 0  1 0 0 0  0 0 0 1   0 1 1 1  1 1 1 .5                    .1 10  -1. TT TTturb "" 
+c: alias xyzcg  3 xcg ycg zcg
+c: alias idim4dcg  4 idimcg jdimcg kdimcg tdimcg
+
+c: copypart ycg 3 a idimcg 1 idimcg b jdimcg 2 2 c kdimcg 1 1
+            ynw 1 a idimcg 1 idimcg
+c: copypart xcg 3 a idimcg 1 idimcg b jdimcg 1 1 c kdimcg 1 1
+            sw 1 a idimcg 1 idimcg
+c: algebra s00 "" s00 "" -1. 0. 1.
+c: algebra sw "" sw "" 1. s00 1.
+c: algebra dxchord "" xchord "" 1. 0. -1.
+c: algebra sw "" sw "" dxchord 0. 1.
+
+c: copypart TTcg 3 a idimcg 1 idimcg b jdimcg 1 1 c kdimcg 1 1
+            TTw 1 a idimcg 1 idimcg
+c: copypart TTcg 3 a idimcg 1 idimcg b jdimcg 2 2 c kdimcg 1 1
+            TTnw 1 a idimcg 1 idimcg
+c: copypart TTturbcg 3 a idimcg 1 idimcg b jdimcg 1 1 c kdimcg 1 1
+            TTwturb 1 a idimcg 1 idimcg
+c: copypart TTturbcg 3 a idimcg 1 idimcg b jdimcg 2 2 c kdimcg 1 1
+            TTnwturb 1 a idimcg 1 idimcg
+
+c: algebra nufac xchord Re "" 1. 0. -.5
+c: print nufac 10
+c: algebra nulam "" TTnw TTw -1. 0. 1.
+c: algebra nulam nulam ynw "" 1. 0. -1.
+c: algebra nulam nulam TTw "" 1. 0. -1.
+c: algebra nulam "" nulam "" nufac 0. 1.
+
+c: algebra nuturb "" TTnwturb TTwturb -1. 0. 1.
+c: algebra nuturb nuturb ynw "" 1. 0. -1.
+c: algebra nuturb nuturb TTwturb "" 1. 0. -1.
+c: algebra nuturb "" nuturb "" nufac 0. 1.
+
+c: lineoutputijk out/linenusselt sw nulam nuturb TTw TTnw TTwturb TTnwturb ynw "" 1 a idimcg 1 idimcg 0 0
+
+c: lineplot imagenu out/linenusselt "Nu/sqrt(Re) red-lam blue-turb"
+    120 620 140 540 1 0
+    s -1.5 1.5 .5  "" 0 3.5 .5
+    sw 1 0 nulam 1 0  2 2 '.'
+    sw 1 0 nuturb 1 0 5 2 '.'
+    end
+c: image outgif imagenu out/nusselt end
+
+c: lineplot imagenu out/linenusselt "Nu/sqrt(Re) red-lam blue-turb"
+    120 520 140 540 1 0
+    s -.1 .2 .1 "" 1 10 0
+    sw 1 0 nulam 1 0  2 2 '.'
+    sw 1 0 nuturb 1 0 5 2 '.'
+    end
+c: image outgif imagenu out/nusseltle end
+

@@ -1,0 +1,39 @@
+c: comment langston cascade 2d scaled 
+-------------- set up grid and boundary conditions ---------
+c: gridfrommefp grid.vpic.015.164.86.2
+  0 0 0 1 
+0
+c: algebra xyz "" xyz "" xchord 0. 1.                scale to SI units
+c: constant csym c 12 n n n n z z   s n r r R R     2-d j-repeat
+
+------------- info for block pressure solution for THIS grid ----
+
+c: blocksetabc p 26 13 2
+-.8  -.7 -.6 -.5 -.4 -.3 -.2 -.1 -.05 .05
+ .15 .25 .35 .45 .55 .65 .75 .85 .95 1.05
+  1.1 1.2 1.3 1.4 1.5 1.6
+-.5 -.4 -.3 -.2 -.1 -.05 .5 1.05 1.1 1.2 1.3 1.4 1.5
+
+c: blocksetabc q 26 13 2
+-.8  -.7 -.6 -.5 -.4 -.3 -.2 -.1 -.05 .05
+ .15 .25 .35 .45 .55 .65 .75 .85 .95 1.05
+  1.1 1.2 1.3 1.4 1.5 1.6
+-.5 -.4 -.3 -.2 -.1 -.05 .5 1.05 1.1 1.2 1.3 1.4 1.5
+
+------------------generic grid initializations --------------
+c: gridmatch
+c: set_wherefw -1 s
+c: set_wherep
+c: cvdcinit .5 0   initialize as centered control volumes
+c: set_xyzdouble
+c: alias idim4d 4 idim jdim kdim tdim
+c: alias idim4dp 4 idimp jdimp kdimp tdimp
+
+----------------- tag inlet as i + other initializations -------
+c: edit clt c 3 i 0 j 0 k 0 
+        reset f  i 1 1 1 jdim 1 kdim
+        end     
+
+c: cvdcparm .01  2 f i .99 w f .5        c.v. movement limitations
+c: wallnorm                              for marv and marvs models
+

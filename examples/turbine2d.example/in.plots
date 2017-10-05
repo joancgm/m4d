@@ -1,0 +1,22 @@
+c: comment additional plots
+
+c: constant xchord d 1 .171   axial chord (scale geometry)
+c: constant Re d 1 66000      Cascade Reynolds number (set lam viscosity)
+
+ ----------------- set up grid and initialize properties --------------
+c: infile inn.grid164x86 1      set grid
+c: infile inn.init.ButlerTu 1   initialize properties
+
+c: arrayread 1 out/u500  input properties from uvwpmarvs calc.
+c: arrayread 1 out/TT    input TT from heat calc. 
+
+----------------  plot output ---------------
+c: constant p.defaultdir s 1 ../../jgm   dir for color.map for plots
+
+c: infile inn.plotgrid 1         plot grid
+c: infile inn.plotq 1		 plot qturb
+c: infile inn.plotptloss 1       plot ptloss
+c: infile inn.plotvectors 1      plot ptloss with vectors
+
+c: end
+

@@ -1,0 +1,37 @@
+c: comment Temperature calc. for heat transfer
+
+c: constant xchord d 1 .171   axial chord (scale geometry)
+c: constant Re d 1 66000      Cascade Reynolds number (set lam viscosity)
+
+ ----------------- set up grid and initialize properties --------------
+c: infile inn.grid164x86 1      set grid
+c: infile inn.init.ButlerTu 1   initialize properties
+
+o: varinit previous 3    omitted, input properties from different grid
+                         note file 'previous' needs old idim4d & abcd in it
+c: arrayread 1 out/u500  input properties from uvwpmarvs calc
+
+---------------- set up for plot output ---------------
+c: constant p.defaultdir s 1 ../../jgm   dir for color.map for plots
+
+----------------- set up calculation parameters ----------
+c: cvdcparm .01  3 f i .99 w f .5 f w .5  control vol. movement limits
+c: coefinit 4  		                  total coef sets needed 
+c: constant prlam d 1 .7                  laminar Prandtl number
+c: varinit TT 0 0 0 0
+c: constant fluxfac d 1 1.
+c: arraydump out/convheat fluxfac ""
+
+----------------------- heat transfer setup & solve equations ------------
+c: infile inn.heatsetup 1
+c: infile inn.heatsolve 10
+c: copy TT TTturb
+c: infile inn.heatsetuplam 1
+c: infile inn.heatsolve 10
+c: arraydump out/TT TT TTturb ""
+
+-----------------------  Nusselt number plots --------------------
+c: infile inn.nusselt 1
+
+c: end
+

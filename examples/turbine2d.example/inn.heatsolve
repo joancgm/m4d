@@ -1,0 +1,8 @@
+c: coefrhs TT rhsTT new 0 1.
+c: algebra rhsTT "" rhsTT wflux 1. 0. 1.
+c: eqnsolves rhsTT "" dTT new  1 i
+       ijk 100  end 0
+c: algebra TT "" TT dTT 1. 0. 1.
+c: rmsminmax dTT TT ""
+c: arraydumpmore out/convheat rmsmm ""
+

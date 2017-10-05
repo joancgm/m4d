@@ -1,0 +1,11 @@
+-------- comment set new control volumes and related arrays  ---------
+c: cvdcreset vlam dumdt 10.
+c: set_xyzdouble
+c: set_volmom
+c: set_cpsleep
+c: ppreset                             interp pp to new grid
+c: set_cpda  .0 .05 .5 .15 0  1 i
+c: set_cpflop
+c: coefconv 1                           convection coef  to 1
+c: coefviscstep vlam 0                  put lam coef (1 for iso) in set 0
+c: coeffix 0 2 0 .4 -1.1   2 i w     	fix viscous and put in set 2

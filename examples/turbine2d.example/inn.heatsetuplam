@@ -1,0 +1,12 @@
+----------------------- heat transfer setup equations laminar ------------
+c: cvdcreset vlam dumdt 10.
+c: algebra dpr "" prlam "" 1. 0. -1.
+c: algebra vtot "" vlam "" dpr 0. 1.
+c: cvdcreset vtot dumdt 10.
+c: coefconv 1
+c: coefvisc vtot 2
+c: coefadd 0 2 1 1. 2 1.
+c: coeffix 0 -1 0 .4 -1.5 1 i
+c: coefrhs TT rhsTT new 0 1.
+c: algebra wflux "" rhsTT "" 0. 0. 1.
+c: wallflux wflux fluxfac
