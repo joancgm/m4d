@@ -1,7 +1,7 @@
 # M4D
 M4D, a CFD code for calculating steady or unsteady fluid flow - inviscid, laminar, turbulent/transitional. The m4d package includes the c-code, documentation, and working examples. See file **m4d.README.pdf**.
 
- *Upload of the original package, m4d.2015.2 currently in progress.*
+ Upload of the original package, m4d.2015.2 completed Oct 5, 2017. Compiled code and finer grid results from the square channel DNS example are omitted here.
 
 **M4D features:**
     Convection adapted control volumes with 3-d 2nd order accurate discetization give naturally stable equations without grid spacing or orthogonality restrictions. Grid for the physics not the numerics.
