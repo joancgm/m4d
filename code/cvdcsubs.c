@@ -924,7 +924,7 @@ void c_cvdcinit(FILE *fpin, FILE *fprint)
   int *i4d,*wherep; char *clt; /* needed arrays */
   double *cvdc, *cvdcdouble;  /* create and initialize */
   double *cvdci,*cvdcj,*cvdck;
-  int i,iall,ip[4],ipt,ipr[4],i4dp[3];
+  int i,iall,ip[4],ipt,ipr[4],i4dp[4];
   double cvdn[3];
   int itest=0;  /* set to zero when debugged */
   

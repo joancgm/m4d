@@ -85,7 +85,7 @@ void c_set_cpda(FILE *fpin, FILE *fprint)
   double cenfac[3],ar1,ar2; /* input parameters */
   int nomit; char omit[20]; 
   
-  int it,iall,idd[3],ialld,idpc[3],iallp,nyclear;
+  int it,iall,idd[4],ialld,idpc[4],iallp,nyclear;
   int i,j,k,n,ip[4],L,L2,L3,ig[4],id[4],ja,jb,jc[3],jg,ipa[4],ia[3],ippt;
   int its,ite;
   double xyzc[3],area[3],xyzpc[2][2][3],fpc[2],ff,ffa,ffb;

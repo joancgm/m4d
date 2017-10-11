@@ -1,5 +1,7 @@
 #  Choose either gcc or g++ compile by commenting in/out lines with #
 #  These are incompatible so must do 'make clean' when changing.
+#   October 2017, needs changes to compile under c++, the compiler objects
+#   to comparing  a pointer (double *) to the integer 0.
 #  If compiler doesn't understand CFLAGS, used reduced set of options.
 
 PROGRAM       = ../a.m4d
@@ -10,7 +12,7 @@ PROGRAM       = ../a.m4d
 CC	      = gcc
 LD	      = gcc
 
-CFLAGS	      = -Wall -O3 -Wuninitialized -funroll-loops -fstrict-aliasing -fsched-interblock  -falign-loops=16 -falign-jumps=16 -falign-functions=16  -falign-jumps-max-skip=15 -falign-loops-max-skip=15 -malign-natural  -ffast-math
+CFLAGS	      = -Wall -O3 -Wuninitialized -ffast-math
 
 #CFLAGS	      = -Wall -O3
 

@@ -18,7 +18,7 @@ void m4dtitle(FILE *fprint)
   printout("normal","              Features: \n");
   printout("normal","    Convection adapted control volumes\n");
   printout("normal","The transitional MARVS Reynolds stress model\n");
-  printout("normal","            Version 2015.2\n\n");
+  printout("normal","            Version 2015.2c\n\n");
 }
 /* -----------------------------  main -------------------------*/
 int  main(void)

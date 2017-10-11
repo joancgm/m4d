@@ -19,7 +19,7 @@ void c_varinit(FILE *fpin, FILE *fprint)
   
   iall=i4d[0]*i4d[1]*i4d[2]*i4d[3];
   /* start with on points arrays */
-  name=readname(fpin);
+  name=readfilename(fpin);      /* changed to readfile name!!! */
   iformat=read1charname(fpin);
   
   if (iformat=='0')    /* read constant */
@@ -82,7 +82,7 @@ void c_varinit(FILE *fpin, FILE *fprint)
       {
         if (na[i]>1) 
         { 
-          if (nynew==0 && (a[i][ig[i]]<aa[i][0] || aa[i][ig[i]]>aa[i][na[i]-1])) nyset=0;
+          if (nynew==0 && (a[i][ig[i]]<aa[i][0] || a[i][ig[i]]>aa[i][na[i]-1]))  nyset=0;
           k=findex(a[i][ig[i]],aa[i],na[i],&f);
           vf=v[i][k]+f*(v[i][k+1]-v[i][k]);
           vv*=vf;
@@ -187,5 +187,6 @@ void c_varinit(FILE *fpin, FILE *fprint)
       }
       printout("normal"," set %d of %d values\n",n,iall*irep);
     }
+    fclose(fp);
   }
 }
